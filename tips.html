@@ -76,6 +76,20 @@ section>header small{color:var(--mut);font-size:13px}
 .ph button.on{background:var(--bone);color:var(--ink);border-color:var(--bone)}
 .note{color:var(--mut);font-size:13px;margin-top:12px}
 
+/* styles */
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:18px 14px;align-items:start}
+.sc{display:block;text-align:left;border-radius:10px;transition:opacity .15s}
+.sc .ti{position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;border:1px solid var(--l2);display:flex;align-items:center;justify-content:center;background:#0f0f12}
+.sc .ti img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.sc .ti em{font:200 22px/1.1 "Josefin Sans",sans-serif;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);font-style:normal;text-align:center;padding:0 10px}
+.sc:hover .ti img{transform:scale(1.04)}
+.sc:hover .ti{border-color:var(--l1)}
+.sc b{display:block;font-weight:500;font-size:15px;margin-top:8px}
+.sc span{display:block;color:var(--mut);font-size:12.5px;line-height:1.45;margin-top:2px}
+.sc.on .ti{outline:2px solid var(--bone);outline-offset:2px}
+.sc.on b::after{content:" ✓";font-family:system-ui}
+.sc .pr{position:absolute;right:6px;bottom:6px;font-size:11px;background:rgba(8,8,10,.7);padding:2px 8px;border-radius:999px;color:var(--soft)}
+.sc .pr:hover{color:var(--bone)}
 /* table rows */
 .rows .r{display:grid;grid-template-columns:56px 200px minmax(0,1fr) 110px;gap:20px;align-items:center;padding:12px 0;border-top:1px solid var(--l2)}
 .rows .r:first-child{border-top:0;padding-top:0}
@@ -156,6 +170,9 @@ footer{max-width:1360px;margin:40px auto 0;padding:28px 32px;border-top:1px soli
 footer a{color:var(--mut);text-decoration:none;font-size:14px}
 
 @media (max-width:960px){
+ .sg{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px}
+ .sc span{font-size:12px}
+ .sc .ti em{font-size:17px}
  .band{height:34vh;min-height:240px}.band .top{left:16px;right:16px}.band h1{left:16px}
  .lay{grid-template-columns:minmax(0,1fr);gap:0;padding:0 16px}
  aside{position:sticky;top:0;z-index:6;background:var(--ink);padding:10px 0 0;margin:0 -16px;padding-left:16px;padding-right:16px;border-bottom:1px solid var(--l2)}
@@ -193,6 +210,7 @@ footer a{color:var(--mut);text-decoration:none;font-size:14px}
  <input class="search" id="q" type="search" placeholder="Hledat… (light, --ar, ComfyUI)" autocomplete="off">
  <nav class="idx" id="idx">
   <a href="#stavba">Stavba <span>9 dílů</span></a>
+  <a href="#styly">Styly <span>36</span></a>
   <a href="#bloky">Bloky <span>frázník</span></a>
   <a href="#parametry">Parametry <span>MJ</span></a>
   <a href="#sref">Styl z obrázku <span>--sref</span></a>
@@ -210,6 +228,13 @@ footer a{color:var(--mut);text-decoration:none;font-size:14px}
   <div><img class="main" id="aImg" alt=""><div class="picks" id="picks"></div></div>
   <div><p class="cdesc" id="cdesc">Pořadí dílů = pořadí v promptu. Najeď nebo klikni.</p><div class="chunks" id="chunks"></div></div>
  </div>
+</section>
+
+<section id="styly">
+ <header><h2>Styly</h2><small>Klik = přidat do promptu</small></header>
+ <div class="tabs" id="sflt"><button class="on" data-f="all">Vše</button><button data-f="foto">Foto</button><button data-f="malba">Malba</button><button data-f="ilu">Ilustrace</button><button data-f="3d">3D a grafika</button></div>
+ <div class="sg" id="sg"></div>
+ <p class="note">S obrázkem = použité v galerii (klik na „prompt“ ukáže celý). Bez obrázku = osvědčená fráze, vyzkoušej.</p>
 </section>
 
 <section id="bloky">
@@ -325,16 +350,63 @@ const BOOK=[
 const sel=new Map();const book=$('#book');
 BOOK.forEach(([name,c,items])=>{const g=document.createElement('div');g.className='grp';g.innerHTML=`<b>${name}</b>`;const w=document.createElement('div');w.className='ph';items.forEach(([t,k])=>{const b=document.createElement('button');b.className='it'+(c==='N'?' m':'');b.textContent=c==='N'?'--no '+t:t;b.dataset.src=k;b.dataset.v=t;b.dataset.c=c;b.onclick=()=>toggle(b);w.append(b)});g.append(w);book.append(g)});
 
+/* styles */
+const STY=[
+['foto','Fotorealismus','ultra realistic photograph, natural skin texture, shot on Canon EOS R5, 85mm lens f/2.2','22'],
+['foto','Dokument','documentary photography, natural dawn light, realistic skin texture and dirt, natural color grading','34'],
+['foto','Filmový záběr','cinematic film still, low-angle medium-wide shot, warm amber and deep teal palette, natural film grain','33'],
+['foto','Analogový film','analog 35mm film photography, Kodak Portra grain, warm sepia palette','38'],
+['foto','Módní editorial','high fashion magazine editorial style, wide shot, realistic skin with visible pores','35'],
+['foto','Produktová fotka','studio product photo, pure black background, strip softbox rim lights, specular highlights','03'],
+['foto','Makro','extreme close-up macro photograph, 100mm macro lens at f/2.8, shallow depth of field','24'],
+['foto','Dron shora','aerial drone photograph shot straight down, soft diffused daylight','25'],
+['foto','Studiový portrét','front view, half-body portrait, soft even studio lighting, clean solid-color backdrop','18'],
+['foto','Fine-art portrét','fine art editorial portrait, dramatic low key single soft key light, deep black background','02'],
+['foto','Černobílá','black and white photograph, high contrast, deep shadows, silver gelatin print',''],
+['foto','Polaroid','vintage polaroid photo, faded colors, soft on-camera flash',''],
+['foto','Dlouhá expozice','long exposure photograph, light trails, silky smooth water',''],
+['foto','Tilt-shift','tilt-shift photography, miniature effect, blurred top and bottom',''],
+['foto','Film noir','film noir, 1940s black and white, hard shadows, venetian blind light',''],
+['malba','Iluminace','painted 13th-century medieval manuscript illumination on gold leaf background','30'],
+['malba','Vitráž','cubist stained-glass mosaic, black lead lines between the tiles, aged cathedral-glass texture','28'],
+['malba','Abstrakce','abstract art composition, flowing organic forms, visible paint grain','27'],
+['malba','Olejomalba','oil painting on canvas, thick impasto brushstrokes',''],
+['malba','Akvarel','watercolor painting, soft bleeding edges, visible paper texture',''],
+['malba','Japonský dřevořez','ukiyo-e woodblock print, flat colors, bold outlines',''],
+['malba','Fresky a ikony','byzantine icon painting, gold background, tempera on wood',''],
+['ilu','2D animace','intricate hand drawn 2D animation, richly painted watercolor backgrounds','19'],
+['ilu','Retro sci-fi','retro futuristic, foggy, moody, gigantic machine emerging from fog','36'],
+['ilu','Jiný svět','otherworldly alien flora, vivid saturated colors, orange sky','26'],
+['ilu','Dekorativní tapeta','wallpaper design, surreal autumn trees, flat decorative shapes','17'],
+['ilu','Anime','anime key visual, clean line art, cel shading',''],
+['ilu','Komiks','comic book illustration, bold ink lines, halftone dots',''],
+['ilu','Kresba uhlem','charcoal sketch on textured paper, rough hatching',''],
+['ilu','Line art','minimal line art, single continuous line, white background',''],
+['ilu','Art nouveau plakát','art nouveau poster, ornamental frame, flowing organic lines',''],
+['3d','3D render','3D render, soft global illumination, physically based materials',''],
+['3d','Claymation','claymation, handmade clay figures, stop-motion look',''],
+['3d','Low poly','low poly 3D, flat shaded facets, simple geometry',''],
+['3d','Izometrický diorama','isometric 3D diorama, miniature scene, soft lighting',''],
+['3d','Pixel art','16-bit pixel art, limited color palette',''],
+['3d','Synthwave','synthwave, neon grid, magenta and cyan glow, 1980s retro',''],
+['3d','Papírová vrstva','layered paper cut art, soft shadows between layers','']];
+const sg=$('#sg');
+STY.forEach(([f,n,ph,k])=>{const b=document.createElement('button');b.className='sc it';b.dataset.f=f;b.dataset.v=ph;b.dataset.c='Y';
+ b.innerHTML=`<div class="ti">${k?`<img src="thumb/${k}.webp" alt="" loading="lazy"><span class="pr" data-open="${k}">prompt</span>`:`<em>${n}</em>`}</div><b>${n}</b><span>${ph}</span>`;
+ b.onclick=e=>{const o=e.target.closest('[data-open]');if(o){openLb(o.dataset.open);return}toggle(b)};sg.append(b)});
+$('a[href="#styly"] span').textContent=STY.length;
+$('#sflt').onclick=e=>{const b=e.target.closest('button');if(!b)return;[...$('#sflt').children].forEach(x=>x.classList.toggle('on',x===b));$$('#sg .sc').forEach(c=>c.classList.toggle('hide',b.dataset.f!=='all'&&c.dataset.f!==b.dataset.f))};
+
 /* params */
 const PR=[['--ar 16:9','celá čísla','Poměr stran. Na výšku 9:16, 3:4. Na šířku 16:9, 3:2.','25','--ar 16:9'],['--raw','přepínač','Bez zkrášlování. Realističtější, drží prompt.','24','--raw'],['--stylize','0–1000 (100)','Míra MJ estetiky. 0 drží prompt, 750 si vymýšlí.','38','--stylize 150'],['--chaos','0–100 (0)','Rozdílnost 4 variant.','31','--chaos 10'],['--weird','0–3000 (0)','Experimentální, divné výsledky.','36','--weird 13'],['--no','seznam','Vyloučí věci z obrázku.','13',null],['--sref','URL','Styl z referenčního obrázku. Síla --sw.','05',null],['--profile','kód','Osobní styl z tvého hodnocení obrázků.','35',null],['--seed','číslo','Pevný start. Měň jedno slovo a porovnávej.','',null],['--exp','0–100 (0)','Extra estetika a detail. Zkus 10 nebo 25.','',null],['--tile','přepínač','Bezešvý vzor, textury.','',null]];
 $('#rows').innerHTML=PR.map(([c,r,d,k,a])=>`<div class="r it">${k?`<img src="thumb/${k}.webp" data-k="${k}" alt="">`:'<span></span>'}<div>${a?`<button class="add" data-v="${a}" data-c="P">${a}</button>`:`<code>${c}</code>`}</div><span class="d">${d}</span><span class="rg">${r}</span></div>`).join('');
 $$('#rows .add').forEach(b=>b.onclick=()=>toggle(b));
 
 /* composer */
-const ORDER='TSDEKLMNP';
+const ORDER='YTSDEKLMNP';
 function toggle(b){const v=b.dataset.v;if(sel.has(v))sel.delete(v);else{if(b.dataset.c==='P'){const key=v.split(' ')[0];[...sel.keys()].forEach(x=>{if(sel.get(x)==='P'&&x.split(' ')[0]===key)sel.delete(x)})}sel.set(v,b.dataset.c)}render()}
 function render(){const items=[...sel.entries()];const s=$('#subj').value.trim();
-const tech=items.filter(([,c])=>c==='T').map(([v])=>v);const rest=items.filter(([,c])=>!'TNP'.includes(c)).sort((a,b)=>ORDER.indexOf(a[1])-ORDER.indexOf(b[1])).map(([v])=>v);
+const tech=items.filter(([,c])=>c==='Y').concat(items.filter(([,c])=>c==='T')).map(([v])=>v);const rest=items.filter(([,c])=>!'YTNP'.includes(c)).sort((a,b)=>ORDER.indexOf(a[1])-ORDER.indexOf(b[1])).map(([v])=>v);
 const txt=[...tech,s,...rest].filter(Boolean);
 const no=items.filter(([,c])=>c==='N').map(([v])=>v);const par=items.filter(([,c])=>c==='P').map(([v])=>v);
 $('#out').textContent=[txt.join(', '),no.length?'--no '+no.join(', '):'',par.join(' ')].filter(Boolean).join(' ')||'Vyber bloky nebo napiš subjekt.';
