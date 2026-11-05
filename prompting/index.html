@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Příručka promptu | woffx</title>
+<link rel="icon" href="/wx.png"><link rel="stylesheet" href="/site.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#08080a;--bone:#f2f1ec;--soft:#d8d7d2;--mut:#acaba8;--l1:#4a4a4e;--l2:#2b2b2d}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{background:var(--ink);color:var(--bone);font:400 16px/1.6 Montserrat,system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding-bottom:140px}
+a{color:inherit}
+button,input{font:inherit;color:inherit;background:none;border:0}
+button{cursor:pointer}
+code{font-family:ui-monospace,Consolas,monospace}
+h1,h2{font-family:"Josefin Sans",sans-serif;font-weight:200;text-transform:uppercase;letter-spacing:.08em;line-height:1.05}
+.arr{font-family:system-ui}
+.hide{display:none!important}
+
+.band{position:relative;height:38vh;min-height:280px;overflow:hidden}
+.band>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%}
+.band .scrim{position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,8,10,1) 0%,rgba(8,8,10,.5) 55%,rgba(8,8,10,.1) 100%)}
+.band .top{position:absolute;top:24px;left:32px;right:32px;display:flex;justify-content:space-between;align-items:center}
+.band .top a{font-size:14px;color:var(--soft);text-decoration:none;letter-spacing:.06em}
+.band h1{position:absolute;left:32px;bottom:24px;font-size:clamp(40px,6.5vw,96px)}
+.logo{width:52px;height:40px;object-fit:contain;display:block}
+
+.lay{display:grid;grid-template-columns:220px minmax(0,1fr);gap:48px;max-width:1400px;margin:0 auto;padding:0 32px}
+aside{position:sticky;top:24px;align-self:start;padding-top:24px}
+.search{width:100%;border-bottom:1px solid var(--l1);padding:8px 0;font-size:15px;outline:none;margin-bottom:20px}
+.search:focus{border-color:var(--bone)}
+.search::placeholder{color:var(--mut)}
+.idx a{display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid var(--l2);font-size:14px;color:var(--mut);text-decoration:none}
+.idx a:first-child{border-color:var(--l1)}
+.idx a:hover,.idx a.on{color:var(--bone)}
+.idx a span{font-size:12px}
+main{min-width:0;padding-top:24px}
+section{padding:0 0 64px}
+section>header{display:flex;justify-content:space-between;align-items:baseline;gap:16px;border-bottom:1px solid var(--l1);padding-bottom:10px;margin-bottom:18px}
+h2{font-size:clamp(28px,3vw,40px)}
+section>header small{color:var(--mut);font-size:13px;text-align:right}
+.tabs{display:flex;gap:20px;margin-bottom:16px;flex-wrap:wrap}
+.tabs button{font-size:14px;color:var(--mut);padding-bottom:3px;border-bottom:1px solid transparent}
+.tabs button.on{color:var(--bone);border-color:var(--bone)}
+.formula{font:13px/1.6 ui-monospace,Consolas,monospace;color:var(--mut);margin-bottom:18px}
+.formula b{color:var(--soft);font-weight:400}
+
+/* examples */
+.ex{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px 22px}
+.card .im{position:relative;aspect-ratio:16/10;border-radius:10px;overflow:hidden;cursor:zoom-in;display:block;width:100%}
+.card .im img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.card .im:hover img{transform:scale(1.03)}
+.card .im span{position:absolute;right:8px;bottom:8px;font-size:11px;background:rgba(8,8,10,.7);padding:2px 9px;border-radius:999px;color:var(--soft)}
+.card ul{list-style:none;margin-top:10px}
+.card li{display:grid;grid-template-columns:76px minmax(0,1fr);gap:10px;padding:5px 0;border-top:1px solid var(--l2);align-items:baseline}
+.card li small{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.card li button{text-align:left;font-size:13.5px;line-height:1.45;color:var(--soft);border-radius:4px;padding:1px 4px;margin:-1px -4px;transition:.15s}
+.card li button.m{font:12.5px/1.5 ui-monospace,Consolas,monospace}
+.card li button:hover{color:var(--bone);background:#16161a}
+.card li button.on{background:var(--bone);color:var(--ink)}
+
+/* styles */
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px 14px;align-items:start}
+.sc{display:block;text-align:left}
+.sc .ti{position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;border:1px solid var(--l2);background:#0f0f12}
+.sc .ti img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.sc:hover .ti img{transform:scale(1.04)}
+.sc b{display:block;font-weight:500;font-size:15px;margin-top:8px}
+.sc span{display:block;color:var(--mut);font-size:12.5px;line-height:1.45;margin-top:2px}
+.sc.on .ti{outline:2px solid var(--bone);outline-offset:2px}
+.sc.on b::after{content:" ✓";font-family:system-ui}
+.sc .pr{position:absolute;right:6px;bottom:6px;font-size:11px;background:rgba(8,8,10,.7);padding:2px 8px;border-radius:999px;color:var(--soft)}
+
+/* params */
+.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0 28px}
+.pi{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:center;padding:9px 0;border-top:1px solid var(--l2)}
+.pi img{width:40px;height:40px;border-radius:6px;object-fit:cover;cursor:zoom-in;display:block}
+.pi i{width:40px;height:40px;display:block}
+.pi code,.pi button{font:13.5px ui-monospace,Consolas,monospace;color:var(--bone);justify-self:start}
+.pi button{border:1px solid var(--l1);border-radius:5px;padding:1px 7px}
+.pi button:hover{border-color:var(--bone)}
+.pi button.on{background:var(--bone);color:var(--ink);border-color:var(--bone)}
+.pi p{font-size:13px;color:var(--mut);line-height:1.4}
+
+/* sref */
+.srefw{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:28px;align-items:end}
+.cmp{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;user-select:none;touch-action:none;cursor:ew-resize}
+.cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.cmp .b{clip-path:inset(0 0 0 var(--x,50%))}
+.cmp .bar{position:absolute;top:0;bottom:0;left:var(--x,50%);width:2px;background:var(--bone);transform:translateX(-1px)}
+.cmp .bar::after{content:"";position:absolute;top:50%;left:50%;width:36px;height:36px;border:2px solid var(--bone);border-radius:50%;transform:translate(-50%,-50%);background:rgba(8,8,10,.35)}
+.cmp .lab{position:absolute;bottom:8px;font-size:12px;background:rgba(8,8,10,.6);padding:2px 9px;border-radius:999px}
+.cmp .la{left:8px}.cmp .lb{right:8px}
+.srefw .kv div{padding:8px 0;border-top:1px solid var(--l2);font-size:13px;display:flex;gap:12px;align-items:baseline}
+.srefw .kv small{color:var(--mut);width:18px}
+.srefw .kv code{word-break:break-all;color:var(--soft)}
+
+/* tools */
+.tools a{display:grid;grid-template-columns:190px minmax(0,1fr) 130px 20px;gap:20px;align-items:baseline;padding:11px 0;border-top:1px solid var(--l2);text-decoration:none}
+.tools a:first-child{border-color:var(--l1)}
+.tools a:hover b{text-decoration:underline}
+.tools b{font-weight:500}
+.tools span{color:var(--mut);font-size:15px}
+.tools i{font-style:normal;font-size:12px;color:var(--mut);text-align:right;letter-spacing:.05em}
+.tools em{font-style:normal;color:var(--mut)}
+
+/* composer */
+#bar{position:fixed;left:0;right:0;bottom:0;background:var(--ink);border-top:1px solid var(--l1);z-index:8;transform:translateY(100%);transition:transform .25s}
+#bar.on{transform:none}
+#bar .in{max-width:1400px;margin:auto;padding:12px 32px;display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr) auto;gap:8px 20px;align-items:center}
+#bar input{border-bottom:1px solid var(--l1);padding:6px 0;font-size:15px;outline:none;width:100%}
+#bar input:focus{border-color:var(--bone)}
+#bar input::placeholder{color:var(--mut)}
+#bar p{font:13px/1.5 ui-monospace,Consolas,monospace;color:var(--soft);max-height:60px;overflow:auto;word-break:break-word}
+#bar .btns{display:flex;gap:10px}
+#bar .btns button{border:1px solid var(--l1);border-radius:6px;padding:7px 14px;font-size:14px}
+#bar .btns button.pri{background:var(--bone);color:var(--ink);border-color:var(--bone)}
+.try{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font-size:13px;color:var(--mut)}
+.try a{color:var(--soft);text-decoration:none;border-bottom:1px solid var(--l1);padding-bottom:1px}
+.try a:hover{color:var(--bone);border-color:var(--bone)}
+#bar .try{grid-column:1/-1}
+
+#pv{position:fixed;width:140px;border-radius:8px;pointer-events:none;z-index:7;opacity:0;transition:opacity .12s;box-shadow:0 0 0 1px var(--l1)}
+#pv.on{opacity:1}
+#lb{position:fixed;inset:0;background:var(--ink);display:none;z-index:9;padding:32px;overflow:auto}
+#lb.open{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:40px;align-items:center}
+#lb img{width:100%;max-height:88vh;object-fit:contain;border-radius:12px}
+#lb p{font:14px/1.7 ui-monospace,Consolas,monospace;color:var(--soft);max-height:66vh;overflow:auto;margin-bottom:14px}
+#lb .x{position:fixed;top:16px;right:24px;font-size:34px;line-height:1;color:var(--mut)}
+#lb .cp{border-bottom:1px solid var(--l1);font-size:14px;color:var(--mut);margin-bottom:16px}
+#toast{position:fixed;left:50%;top:24px;transform:translate(-50%,-20px);background:var(--bone);color:var(--ink);padding:7px 16px;border-radius:999px;font-size:14px;opacity:0;transition:.2s;z-index:10;pointer-events:none}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+footer{max-width:1400px;margin:30px auto 0;padding:28px 32px;border-top:1px solid var(--l2);display:flex;justify-content:space-between;align-items:center}
+footer a{color:var(--mut);text-decoration:none;font-size:14px}
+
+@media (max-width:960px){
+ .band{height:30vh;min-height:220px}.band .top{left:16px;right:16px}.band h1{left:16px}
+ .lay{grid-template-columns:minmax(0,1fr);gap:0;padding:0 16px}
+ aside{position:sticky;top:0;z-index:6;background:var(--ink);margin:0 -16px;padding:10px 16px 0;border-bottom:1px solid var(--l2)}
+ .search{margin-bottom:6px}
+ .idx{display:flex;overflow-x:auto;gap:18px;scrollbar-width:none}
+ .idx a{border:0;white-space:nowrap;padding:6px 0 10px}.idx a span{display:none}
+ html{scroll-padding-top:110px}
+ .ex{grid-template-columns:minmax(0,1fr)}
+ .sg{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px}
+ .sc span{font-size:12px}
+ .srefw{grid-template-columns:minmax(0,1fr)}
+ .tools a{grid-template-columns:minmax(0,1fr) 20px;gap:2px 12px}
+ .tools span,.tools i{grid-column:1;text-align:left}.tools em{grid-row:1;grid-column:2}
+ #bar .in{grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;padding:10px 16px}
+ #bar p{grid-column:1/3;grid-row:2;max-height:44px;font-size:12px}
+ #bar .btns button{padding:6px 10px;font-size:13px}
+ #lb.open{grid-template-columns:minmax(0,1fr);align-content:start;gap:20px}
+ footer{padding:24px 16px}
+}
+</style></head><body>
+
+<div class="band">
+ <img src="../img/22.webp" alt="">
+ <div class="scrim"></div>
+ <nav class="sitenav"><a class="brand" href="/"><img src="/wx.png" alt="Logo WX"></a><div class="links"><a href="/skoleni/">Školení</a><a href="/prompting/" class="on">Prompting</a><a href="/#galerie">Galerie</a></div></nav>
+ <h1>Příručka promptu</h1>
+</div>
+
+<div class="lay">
+<aside>
+ <input class="search" id="q" type="search" placeholder="Hledat… (light, --ar, anime)" autocomplete="off">
+ <nav class="idx" id="idx">
+  <a href="#ukazky">Ukázky <span>12</span></a>
+  <a href="#styly">Styly <span>38</span></a>
+  <a href="#parametry">Parametry <span>MJ</span></a>
+  <a href="#sref">--sref</a>
+  <a href="#nastroje">Nástroje <span>free</span></a>
+ </nav>
+</aside>
+
+<main>
+
+<section id="ukazky">
+ <header><h2>Ukázky</h2><small>Prompty z galerie, zkrácené. Klik na řádek = do promptu</small></header>
+ <p class="formula"><b>styl / technika</b> + <b>subjekt</b> + detail + prostředí + kompozice + <b>světlo</b> + nálada <b>--no</b> … <b>--parametry</b></p>
+ <div class="ex" id="ex"></div>
+</section>
+
+<section id="styly">
+ <header><h2>Styly</h2><small>Klik = přidat do promptu</small></header>
+ <div class="tabs" id="sflt"><button class="on" data-f="all">Vše</button><button data-f="foto">Foto</button><button data-f="malba">Malba</button><button data-f="ilu">Ilustrace</button><button data-f="3d">3D a grafika</button></div>
+ <div class="sg" id="sg"></div>
+</section>
+
+<section id="parametry">
+ <header><h2>Parametry</h2><small>Midjourney V8, vždy na konec</small></header>
+ <div class="pg" id="pg"></div>
+</section>
+
+<section id="sref">
+ <header><h2>--sref</h2><small>Stejný text, jiný styl z obrázku</small></header>
+ <div class="tabs" id="pairs"><button class="on" data-p="0">Princ</button><button data-p="1">Čarodějnice</button></div>
+ <div class="srefw">
+  <div class="cmp" id="cmp"><img class="a" alt=""><img class="b" alt=""><div class="bar"></div><span class="lab la">A</span><span class="lab lb">B</span></div>
+  <div class="kv"><div><small>A</small><code id="sA"></code></div><div><small>B</small><code id="sB"></code></div></div>
+ </div>
+</section>
+
+<section id="nastroje">
+ <header><h2>Nástroje</h2><small>Free tier k 11/2026</small></header>
+ <div class="tabs" id="flt"><button class="on" data-f="all">Vše</button><button data-f="on">Online</button><button data-f="loc">Lokálně</button></div>
+ <div class="tools" id="tools">
+  <a class="it" data-t="on" href="https://www.midjourney.com" target="_blank" rel="noopener"><b>Midjourney</b><span>Celá galerie. Nejlepší estetika.</span><i>PLACENÝ</i><em>&#8599;</em></a>
+  <a class="it" data-t="on" href="https://leonardo.ai" target="_blank" rel="noopener"><b>Leonardo.ai</b><span>Víc modelů, editace, upscale. Výstupy veřejné.</span><i>150 TOKENŮ/DEN</i><em>&#8599;</em></a>
+  <a class="it" data-t="on" href="https://ideogram.ai" target="_blank" rel="noopener"><b>Ideogram</b><span>Text v obrázku, plakáty, loga.</span><i>FREE TÝDNĚ</i><em>&#8599;</em></a>
+  <a class="it" data-t="on" href="https://www.krea.ai" target="_blank" rel="noopener"><b>Krea</b><span>Realtime generování, upscale.</span><i>FREE DENNĚ</i><em>&#8599;</em></a>
+  <a class="it" data-t="on" href="https://gemini.google.com" target="_blank" rel="noopener"><b>Gemini</b><span>Úprava fotek větou (Nano Banana).</span><i>FREE DENNĚ</i><em>&#8599;</em></a>
+  <a class="it" data-t="on" href="https://firefly.adobe.com" target="_blank" rel="noopener"><b>Adobe Firefly</b><span>Licencovaná data, komerce.</span><i>FREE MĚSÍČNĚ</i><em>&#8599;</em></a>
+  <a class="it" data-t="loc" href="https://www.comfy.org/download" target="_blank" rel="noopener"><b>ComfyUI</b><span>Flux, SDXL a další. Bez limitů, GPU 8 GB+.</span><i>ZDARMA</i><em>&#8599;</em></a>
+  <a class="it" data-t="loc" href="https://comfyanonymous.github.io/ComfyUI_examples/" target="_blank" rel="noopener"><b>ComfyUI examples</b><span>Hotová workflow, přetáhni obrázek do Comfy.</span><i>WORKFLOW</i><em>&#8599;</em></a>
+  <a class="it" data-t="loc" href="https://docs.comfy.org" target="_blank" rel="noopener"><b>ComfyUI docs</b><span>Instalace, nody, první workflow.</span><i>DOCS</i><em>&#8599;</em></a>
+  <a class="it" data-t="loc" href="https://civitai.com" target="_blank" rel="noopener"><b>Civitai</b><span>Modely, LoRA, styly i s prompty.</span><i>MODELY</i><em>&#8599;</em></a>
+  <a class="it" data-t="loc" href="https://huggingface.co" target="_blank" rel="noopener"><b>Hugging Face</b><span>Oficiální váhy modelů, online dema.</span><i>MODELY</i><em>&#8599;</em></a>
+  <a class="it" data-t="loc" href="https://upscayl.org" target="_blank" rel="noopener"><b>Upscayl</b><span>Upscale offline.</span><i>ZDARMA</i><em>&#8599;</em></a>
+  <a class="it" data-t="on" href="https://docs.midjourney.com" target="_blank" rel="noopener"><b>Midjourney docs</b><span>Všechny parametry a jejich rozsahy.</span><i>DOCS</i><em>&#8599;</em></a>
+ </div>
+</section>
+
+</main>
+</div>
+
+<footer><img class="logo" src="/wx.png" alt="Logo WX"><a href="/"><span class="arr">&larr;</span> AI rozcestník</a></footer>
+
+<div id="bar"><div class="in">
+ <input id="subj" placeholder="Subjekt: a lone lighthouse keeper" autocomplete="off">
+ <p id="out"></p>
+ <div class="btns"><button class="pri" id="bCopy">Kopírovat</button><button id="bClr">Vymazat</button></div>
+ <div class="try" data-from="bar"></div>
+</div></div>
+<div id="lb"><button class="x" aria-label="Zavřít">&times;</button><img alt=""><div><p></p><button class="cp">Kopírovat prompt</button><div class="try" data-from="lb"></div></div></div>
+<div id="toast">Zkopírováno</div>
+
+<script>
+const P={"02": "Ultra realistic fine art portrait of a bald albino man with translucent porcelain white skin, white eyebrows and eyelashes, pale pink eyes. A large black hairy tarantula crawls out of his open mouth - legs over his lower lip and chin, body half inside. He stares straight into the lens, calm and emotionless. Deep black background. Dramatic low key single soft key light sculpting his bald head and cheekbones; subtle rim light separating him from darkness. Strong contrast between white skin and matte black spider. Macro detail: skin pores, faint blue veins, fine hairs on spider's legs, moisture on lips. Sharp focus on eyes and spider, shallow depth of field. Surreal, unsettling, elegant editorial photography. Negative prompt: hair on head, colorful background, cartoon, illustration, CGI, plastic skin, deformed face, extra spider legs, blurry, text, watermark. --v 8.2", "03": "Ultra realistic fine art studio product photo of a crumpled, capless clear blue PET plastic bottle standing upright on a glossy black surface against a pure black background. Bottle is crushed and twisted into sharp faceted folds catching light like cut crystal. Fresh condensation covers it: fine mist, tiny beads, and larger droplets running down the folds. Dramatic low key lighting with strip softbox rim lights tracing the silhouette in thin bright lines. Soft backlight glows through translucent plastic, revealing pale blue tint. Caustic reflections and specular highlights glint on droplets and threaded neck. Faint mirror reflection below. Macro detail on water beads and plastic texture, sharp focus, high contrast, minimalistic and moody. Negative prompt: label, cap, white background, dust, fingerprints, cartoon, illustration, CGI look, blurry, text, watermark, logo. --v 8.2", "04": "Ultra-realistic, dreamlike portrait of a woman with long jet-black hair and a simple flowing white silk dress, standing calm and still at the center. The camera focuses sharply on her eyes. Every iris fiber and eyelash is crisp, and her intense gaze looks straight into the lens. A dense swirling vortex of countless black crows circles her, hundreds upon hundreds of them, so many that they nearly blot out the space around her. Their wings blur mid-flight and a few feathers drift through the air. Behind her the sky is full of turbulent blood-red clouds, thick and billowing with a soft haze. The mood is surreal and ethereal, with the white silk glowing against the crimson. Photorealistic skin texture, fine detail in hair and feathers, shallow depth of field with the eyes as the sharpest point, soft diffused lighting, cinematic composition. Negative prompt: blurry eyes, cartoon, illustration, extra limbs, deformed hands, distorted face, colorful birds, clear sky, text, watermark. --v 8.2", "05": "A 12th-century prince kneeling on a high rocky cliff with his soldiers kneeling behind him, all in medieval chainmail, surcoats and helmets, banners lowered in reverence. From the night sky above, the Archangel Michael descends - vast wings spread, armored, holding a sword - his radiance filling the entire night sky with beams of light that break through the clouds and wash over the cliff. Beyond the angel’s glow, the sky is densely covered with stars. Far below in the background lies the prince’s medieval kingdom - a walled town, castle towers, villages and fields stretching into the dark valley. Sacred, awe-struck atmosphere, warm angelic light against cool starlit night, volumetric light rays, dramatic shadows across the kneeling men. Negative prompt: modern clothing, daylight, cartoon, extra wings, deformed hands, text, watermark. --sref https://s.mj.run/QzxYBHNx9To --v 8.2", "06": "A 12th-century prince kneeling on a high rocky cliff with his soldiers kneeling behind him, all in medieval chainmail, surcoats and helmets, banners lowered in reverence. From the night sky above, the Archangel Michael descends - vast wings spread, armored, holding a sword - his radiance filling the entire night sky with beams of light that break through the clouds and wash over the cliff. Beyond the angel’s glow, the sky is densely covered with stars. Far below in the background lies the prince’s medieval kingdom - a walled town, castle towers, villages and fields stretching into the dark valley. Sacred, awe-struck atmosphere, warm angelic light against cool starlit night, volumetric light rays, dramatic shadows across the kneeling men. Negative prompt: modern clothing, daylight, cartoon, extra wings, deformed hands, text, watermark. --sref https://s.mj.run/lpOqmulmFws --v 8.2", "07": "Three witches performing an ancient Slavic blood magic ritual inside a weathered stone circle, deep within an impenetrably dense, primeval Slavic forest - towering ancient spruces and oaks pressing in from every side, thick undergrowth, moss-covered roots, mist creeping between the trunks. The trees form a tight dark wall around the clearing, their branches reaching overhead and framing a single opening to the sky. Through that gap, the night sky is almost completely covered in stars - a dense, blazing Milky Way. The witches gaze upward in trance, blood ritual symbols on the stones, faint ember light from a small fire. Dark folk-horror atmosphere, volumetric fog, deep shadows between the trees. Negative prompt: open field, sparse trees, daylight, city, modern clothing, cartoon. --sref https://s.mj.run/TKjUz99w_KQ --v 8.2", "08": "Three witches performing an ancient Slavic blood magic ritual inside a weathered stone circle, deep within an impenetrably dense, primeval Slavic forest - towering ancient spruces and oaks pressing in from every side, thick undergrowth, moss-covered roots, mist creeping between the trunks. The trees form a tight dark wall around the clearing, their branches reaching overhead and framing a single opening to the sky. Through that gap, the night sky is almost completely covered in stars - a dense, blazing Milky Way. The witches gaze upward in trance, blood ritual symbols on the stones, faint ember light from a small fire. Dark folk-horror atmosphere, volumetric fog, deep shadows between the trees. Negative prompt: open field, sparse trees, daylight, city, modern clothing, cartoon. --sref https://s.mj.run/3_PufCp6b3Y --v 8.2", "09": "三位女巫进行古斯拉夫血魔法仪式的图片，背景是斯拉夫森林、石圈，凝视着几乎完全被星星覆盖的天空，98% 请用英文回答。 --ar 1:1 --edit https://s.mj.run/lpOqmulmFws --v 8.2", "10": "Goal - Generate an image based on the description. Context - The image should depict a knight. Requirements - The knight must be in white armor with a red cloak. - The knight must be riding a white horse. - The scene takes place in the sky, above a rural landscape. - The landscape should include forests, villages, and a small fortress. - The sky must be starry. Constraints - None. Expected output - An image matching the description. --sref https://s.mj.run/lpOqmulmFws --v 8.2", "11": "ultra realistic documentary photograph, a small African village in bright midday sunlight, low clay-brick houses with hand-painted facades in bold red, yellow, turquoise and orange patterns, the painted walls slightly weathered and cracked, dirt paths between the houses with dry grass and scattered stones, a few wooden carts and clay pots, tall acacia trees casting soft shadows, a clear deep blue sky with a few small white clouds, strong natural sunlight with warm highlights and crisp shadows, realistic dust, weathered paint and clay texture, a lively everyday atmosphere, shot on Canon EOS R5, 35mm lens f/8, natural film grain --no text, letters, numbers, writing, logos, watermarks, brand names, faces, people in close-up, CGI look, illustration, HDR, oversaturated --chaos 10 --ar 16:9 --raw --weird 45 --v 8.2", "12": "small african wilige, gloomy weathr, autumn --chaos 10 --ar 9:16 --raw --stylize 250 --weird 45 --v 8.2", "13": "ultra realistic cockpit photograph, modern fighter jet cockpit, camera mounted low on the instrument panel looking back toward the pilot, a ram-headed pilot with long curved horns and a dense curly woolen fleece covering the face and muzzle, a stern frowning expression visible through the wool, a modern flight helmet with a tinted visor covering the eyes, both hands gripping the control stick and throttle in the foreground, a modern glass cockpit display glowing softly in the background, through the canopy behind the pilot a V-shaped twin tail of the aircraft visible in the foreground, a wingman jet flying in formation in the distance, a vast sky with scattered cumulus clouds and soft sunlight, realistic metal and carbon surfaces with fine wear, shot on Canon EOS R5, 24mm lens f/8, natural film grain --no text, letters, numbers, writing, logos, watermarks, human face, insignia, badges, national markings, emblems, CGI look, illustration, plastic skin --chaos 10 --ar 16:9 --raw --weird 45 --v 8.2", "15": "高幻想的王子，身穿装饰华丽的制服，配有金色和白色的点缀，身披长长的白色大衣，向镜头走来，手中拿着一把简单但闪闪发光的银剑，剑无护手，他的脸上有一道穿过眼睛的伤疤，但他微笑着，背景是一个阴沉的战场，但王子的白皙让他显得光彩照人，写实，纹理，微小细节，175mm，写实人物，没有塑料感，没有动漫美学，没有超自然元素 请用英文回答。 --chaos 10 --ar 9:16 --raw --sref https://s.mj.run/TKjUz99w_KQ --profile xemvzjt --stylize 250 --weird 45 --v 8.2", "16": "vysoky fantasi bolondaty princ v ornamentovane uniforme se zlatimi a bílimi doplnky a ve dlouhým bílim kabátu rozhodne kračejci smerem do kamery v ruce tříma jednoduchý ale blískajcí se stříbrný meč s bez zaštity v e tvaří má jizvu přes oko ale usmívá se pozadí je pochmurne čmoudici bojište ale princova belost jej rozařuje , realisticke , texkury , mikrodetaily ,175mm , realisticka postava , ne žadne plastove tvare ne anime estetika ne nadpřirozene deje --chaos 10 --ar 9:16 --raw --stylize 250 --weird 45 --v 8.2", "17": "Create an wallpaper design based on an sureall autumn trees scene --ar 9:16 --raw --stylize 0 --v 8.2", "18": "40-year-old Chinese man, square face, expressionless, cold sharp piercing gaze, stocky powerful build, wearing a dark blue knitted wool beanie, worn old dark bus driver work jacket over a dark crew-neck shirt, facing the camera directly, standing still, clean solid-color backdrop, front view, half-body portrait, character costume test shot, centered composition, soft even studio lighting, muted dark tones, realistic cinematic texture, film still quality, fine skin and fabric detail --ar 9:16 --raw --profile xemvzjt --stylize 0 --v 8.2", "19": "Original basilisk creature for a dark Japanese fantasy animated film inspired by Princess Mononoke. Colossal ancient legless serpent deity with an unforgettable silhouette - immense muscular snake body, broad flattened serpentine skull, enormous pale hypnotic eyes radiating petrifying power, crown of sharp overlapping reptilian fins and asymmetrical bony crests, expandable cobra like neck hood covered in intricate circular fossilized eye patterns, powerful venomous jaws, ancient scales transitioning from dark emerald skin to cracked ivory stone, coils bearing mysterious natural markings. Neither good nor evil - sacred, terrifying, intelligent beyond humanity. Surrounded by ancient statues turning to stone, lush primordial overgrown forest. Muted green and cream palette, richly painted watercolor backgrounds, intricate hand drawn 2D Japanese animation, atmospheric natural lighting, mythical creature concept art. No legs, arms, wings, or antlers. --ar 16:9 --raw --stylize 0 --v 8.2", "20": "Photorealistic sky view of a large white data center that has an attached cooling tower. Building at sunset. Flat land, Texas hill country background, adjacent river --ar 16:9 --raw --profile riph62k --stylize 0 --v 8.2", "21": "the kingdom of heaven --ar 16:9 --raw --sref https://s.mj.run/ctj4uioDQFo --stylize 0 --v 8.2", "22": "ultra realistic photograph of a beautiful young woman standing in a sunlit birch forest, holding a red fox calmly in her arms against her chest, the fox's bushy tail hanging down, soft natural smile, wind moving her hair, warm morning light filtering through the leaves, shot on Canon EOS R5, 85mm lens f/2.2, natural film grain, realistic fur and fabric texture --no text, letters, numbers, writing, logos, watermarks, CGI look, illustration, plastic skin, airbrushed skin --ar 16:9 --raw --v 8.2", "23": "small japan fishing/whaling village, gloomy weather, autumn --ar 16:9 --raw --stylize 0 --v 8.2", "24": "ultra realistic extreme close-up photograph of a pair of human eyes, only the eye area and the bridge of the nose visible, one iris bright blue and the other vivid green, natural heterochromia with fine radial iris fibers and a slightly darker limbal ring, realistic moist sclera with fine capillaries, natural lash line with individual lashes and a faint shadow from the upper lid, skin texture with visible pores, fine vellus hair, micro-lines around the eyes and subtle redness at the inner corners, soft directional key light from the upper left with a gentle fill, natural catchlights in both irises, shallow depth of field with the far eye slightly softer, shot on Canon EOS R5, 100mm macro lens at f/2.8, 1/200 s, ISO 200, natural film grain, neutral dark background, photorealistic, true-to-life skin detail, unretouched --no text, letters, numbers, writing, logos, watermarks, full face, mouth, CGI look, illustration, plastic skin, airbrushed skin, oversmoothing --ar 16:9 --raw --stylize 50 --v 8.2", "25": "Ultra realistic cinematic aerial drone photograph, shot straight down from a drone at high altitude, a vast lavender field with thousands of purple rows covering the entire landscape to the horizon, forming dense natural stripes. Exactly ONE single person is precisely centered in the composition, a lone figure in a plain white linen outfit standing among the lavender rows, seen from directly above, head and face not visible, the figure small and naturally proportioned against the enormous field. Deep green-grey foliage visible between the rows adds texture and depth. Elevated wide angle perspective reveals enormous field scale. Soft diffused daylight, realistic petal and stem textures, subtle natural shadows, cinematic color grading, photorealistic botanical detail. No buildings, paths, text, or watermarks. Not ground level, not close up, not macro. Vertical 9:16 composition --no text, letters, numbers, writing, logos, watermarks, faces, buildings, roads, CGI look, illustration --ar 9:16 --raw --stylize 150 --v 8.2", "26": "exoplante flora in a prosperus colurfule enviorement, sky si orange, there is a blue river near the garden, lot of alien flowers --ar 16:9 --raw --sref https://s.mj.run/Fq9mWECaFrY --stylize 0 --v 8.2", "27": "abstract art composition, flowing organic forms of translucent glass and soft matte paint layered across the canvas, sweeping curves overlapping with sharp geometric planes, a rich interplay of deep indigo, warm ochre, blush pink and pale silver, soft gradients bleeding into fine textured brushstrokes, light refracting through the forms into subtle color bands, large open negative space with a single dominant form slightly off-center, museum-print quality, tactile surface with visible paint grain, minimal and contemplative --no text, letters, numbers, writing, logos, faces, figures, buildings, landscape, recognizable objects --ar 16:9 --raw --stylize 300 --v 8.2", "28": "cubist stained-glass mosaic, a single unified scene made entirely of glass tiles, a grand rococo chateau facade in the background with ornate scrollwork, decorative curling patterns and tall arched windows, a formal palace park with clipped hedges, symmetrical gravel paths and fountains in the foreground, winged angels descending from the sky onto the park, mingling with a group of people, figures built from sharp geometric facets, several small wooden sailing ships drifting far apart across the upper sky, each ship only a small detail, the main focus on the angels and people in the center, no separate frame or border around the scene, each tile in a distinct color: ruby, sapphire, amber, emerald and violet, pale gold accents on the chateau facade, black lead lines between the tiles, aged cathedral-glass texture, faces rendered as abstract facets with no features, symmetrical radiating composition --no text, letters, numbers, writing, logos, emblems, insignia, realistic faces, photograph, CGI look, UFO, saucer, border, frame, background panel --ar 3:4 --raw --sref https://s.mj.run/TKjUz99w_KQ --stylize 250 --v 8.2", "29": "cubist stained-glass mosaic, a single unified scene made entirely of glass tiles, winged angels descending from the sky onto a sunlit plaza, mingling with a group of people, figures built from sharp geometric facets, several small wooden sailing ships drifting far apart across the upper sky, each ship only a small detail with amber and brown glass tiles and pale ivory sails, the ships scattered and not dominant, the main focus on the angels and people in the center, no separate frame or border around the scene, each tile in a distinct color: ruby, sapphire, amber, emerald and violet, black lead lines between the tiles, aged cathedral-glass texture, faces rendered as abstract facets with no features, symmetrical radiating composition --no text, letters, numbers, writing, logos, emblems, insignia, realistic faces, photograph, CGI look, UFO, saucer, border, frame, background panel --ar 3:4 --raw --profile riph62k --stylize 250 --v 8.2", "30": "painted 13th-century medieval manuscript illumination on gold leaf background, very light and airy palette of pale ivory, soft sky blue, pastel rose and bright gold leaf, a young prince in embroidered light armor and a pale rose cloak riding a white-grey horse, the rider as the main focus placed off-center on the right third of the frame, face hidden under a closed helm, flat stylized perspective with delicate outlines, a walled medieval city with pale crenellated towers and small pennants on the left, a bright gold leaf sky with stylized clouds, a few stylized trees with rounded pastel canopies, flat decorative borders, aged parchment texture, asymmetric composition --no text, letters, numbers, writing, logos, faces, emblems, insignia, HUD, video game, CGI look, modern objects, dark shadows, photograph --chaos 100 --ar 16:9 --raw --sref https://s.mj.run/ym9mdk5-DLQ --profile xemvzjt --stylize 250 --v 8.2", "31": "a knaz riding a horese with his man overlooking citi background forests and mountains --chaos 100 --ar 16:9 --raw --sref https://s.mj.run/QzxYBHNx9To --profile xemvzjt --stylize 0 --v 8.2", "32": "photorealistic portrait of a shrouded figure, the entire body wrapped in layers of white scarves and sheets, one hand reaching out from the white fabric, its skin covered in black and red blisters, the hand gripping a silver lance, a solid rod of pure polished silver metal with no detail, metallic finish, the face completely covered by the white sheets with only a few drops of blood on the area of the face, solid sky blue background, hyper realistic, microdetails, professional studio lighting, faint film grain, ethereal glow, shot on Nikon Z5, 175mm lens --no text, letters, numbers, writing, logos, emblems, insignia, CGI look, illustration, video game --ar 3:4 --raw --sref https://s.mj.run/jB-V8vUZlQM --profile xemvzjt --stylize 150 --v 8.2", "33": "cinematic street photograph at dusk, a narrow Mexican street with pastel-painted concrete walls, hanging strings of lights and old neon signs with no letters, a vintage classic car with chrome bumpers pulling up to the curb, a lieutenant in a crisp white suit jacket stepping out, a group of men in dark jackets lining up on both sides of the street, several holding rifles and handguns at their sides, one man lighting a cigarette with a cupped hand, smoke drifting in the warm air, a hidden hideout deep in a mangrove forest and dense jungle visible behind the street as a dark green backdrop, tangled mangrove roots and hanging vines, warm amber and deep teal palette with deep shadows, low-angle medium-wide shot, shot on Canon EOS R5, 35mm lens f/2.8, natural film grain --no text, letters, numbers, writing, logos, faces, emblems, insignia, brand names, drugs, blood --chaos 10 --ar 16:9 --raw --profile b7akcgw --stylize 150 --weird 13 --v 8.2", "34": "photorealistic historical scene, Mexica warriors defending the causeway of Tenochtitlan during the 1521 siege, painted cotton armor and feathered headdresses, obsidian-edged macuahuitl clubs and wooden shields, dust and sweat on bare shoulders, shallow lake water splashing around bare feet, smoke from burning canoes drifting across a grey-blue dawn sky, a dense line of warriors in the middle ground, low-angle medium shot, shot on Canon EOS 5D Mark IV, 35mm lens f/4, natural dawn light, realistic skin texture and dirt, documentary photography, muted earth palette with natural color grading --no text, letters, numbers, writing, logos, CGI look, 3D, render, plastic skin, painting, illustration --chaos 10 --ar 3:2 --raw --profile b7akcgw --stylize 150 --weird 13 --v 8.2", "35": "A fashion photoshoot in a 1970s Mid-Century house, designer furniture, shot on Canon EOS 6D Mark II, 24mm lens f/5.6, wide shot, high fashion magazine editorial style, offbeat and alternative aesthetic, model with unconventional facial features, realistic skin, natural skin texture with visible pores, natural skin glow, realistic facial expressions --no CGI look, no 3D, no render, no plastic skin, no bald, no unreal faces, no skinny, no botox --chaos 30 --ar 3:4 --raw --sref 1903707600 --profile y2mypgs na5itic --stylize 90 --v 8.2", "36": "greenplains hills with bit of rock showint over dense grass, grupe of 5 old earth soldiers with solid green uniforms and visible retro militari insignia camping, one soldier is starting campfier, cople of donkes saddeld near soldiers one soldiers si tending the donkes, foggy, moody, retro futuristic, beckground: gigantic war maching emerging form fog, photorealistic --chaos 10 --ar 4:3 --raw --weird 13 --v 8.2", "37": "remaster --chaos 10 --ar 4:3 --raw --sref https://s.mj.run/lfAlrONYsjY --weird 13 --v 8.2", "38": "a deep valley at dusk with grey granite rocks peeking through dark vegetation, in the middle a colossal white brutalist archive building with deep rhythmic window slits glowing warm orange from inside, thousands of blank paper receipts streaming out of its openings and flying toward the camera, a few receipts large and slightly motion-blurred in the foreground, low mist along the valley floor, low-angle wide shot, analog 35mm film photography, Kodak Portra grain, warm sepia palette with deep near-black shadows and pale sand highlights, sense of immense scale, quiet surreal atmosphere --no text, letters, logos, faces, blue --ar 4:3 --raw --stylize 750 --v 8.1", "s-cernobila": "black and white photograph of a beautiful young woman standing in a sunlit birch forest, high contrast, deep shadows, silver gelatin print --ar 4:3", "s-polaroid": "vintage polaroid photo of a beautiful young woman standing in a sunlit birch forest, faded colors, soft on-camera flash --ar 4:3", "s-dlouha-expozice": "long exposure photograph of a beautiful young woman standing in a sunlit birch forest, light trails, silky smooth water --ar 4:3", "s-tilt-shift": "tilt-shift photography of a beautiful young woman standing in a sunlit birch forest, miniature effect, blurred top and bottom --ar 4:3", "s-film-noir": "film noir still of a beautiful young woman standing in a sunlit birch forest, 1940s black and white, hard shadows, venetian blind light --ar 4:3", "s-olejomalba": "oil painting on canvas of a beautiful young woman standing in a sunlit birch forest, thick impasto brushstrokes --ar 4:3", "s-akvarel": "watercolor painting of a beautiful young woman standing in a sunlit birch forest, soft bleeding edges, visible paper texture --ar 4:3", "s-drevorez": "ukiyo-e woodblock print of a beautiful young woman standing in a sunlit birch forest, flat colors, bold outlines --ar 4:3", "s-ikony": "byzantine icon painting of a beautiful young woman standing in a sunlit birch forest, gold background, tempera on wood --ar 4:3", "s-anime": "anime key visual of a beautiful young woman standing in a sunlit birch forest, clean line art, cel shading --ar 4:3", "s-komiks": "comic book illustration of a beautiful young woman standing in a sunlit birch forest, bold ink lines, halftone dots --ar 4:3", "s-uhel": "charcoal sketch on textured paper of a beautiful young woman standing in a sunlit birch forest, rough hatching --ar 4:3", "s-line-art": "minimal line art of a beautiful young woman standing in a sunlit birch forest, single continuous line, white background --ar 4:3", "s-art-nouveau": "art nouveau poster of a beautiful young woman standing in a sunlit birch forest, ornamental frame, flowing organic lines --ar 4:3", "s-3d-render": "3D render of a beautiful young woman standing in a sunlit birch forest, soft global illumination, physically based materials --ar 4:3", "s-claymation": "claymation of a beautiful young woman standing in a sunlit birch forest, handmade clay figures, stop-motion look --ar 4:3", "s-low-poly": "low poly 3D of a beautiful young woman standing in a sunlit birch forest, flat shaded facets, simple geometry --ar 4:3", "s-izometrie": "isometric 3D diorama of a beautiful young woman standing in a sunlit birch forest, miniature scene, soft lighting --ar 4:3", "s-pixel-art": "16-bit pixel art of a beautiful young woman standing in a sunlit birch forest, limited color palette --ar 4:3", "s-synthwave": "synthwave artwork of a beautiful young woman standing in a sunlit birch forest, neon grid, magenta and cyan glow, 1980s retro --ar 4:3", "s-papir": "layered paper cut art of a beautiful young woman standing in a sunlit birch forest, soft shadows between layers --ar 4:3"};
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const toast=t=>{const e=$('#toast');e.textContent=t||'Zkopírováno';e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),1400)};
+const copy=s=>{const ok=()=>toast();navigator.clipboard?navigator.clipboard.writeText(s).then(ok,ok):ok()};
+const hover=matchMedia('(hover:hover)').matches;
+let lbK;
+
+/* free AI: copy prompt + open tool */
+const FREE=[['Leonardo','https://leonardo.ai'],['Ideogram','https://ideogram.ai'],['Krea','https://www.krea.ai'],['Gemini','https://gemini.google.com'],['Firefly','https://firefly.adobe.com']];
+$$('.try').forEach(w=>{w.innerHTML='<span>Zkusit zdarma:</span>'+FREE.map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${n} <span class="arr">&#8599;</span></a>`).join('');
+ w.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{const s=w.dataset.from==='lb'?P[lbK]:$('#out').textContent;if(navigator.clipboard)navigator.clipboard.writeText(s).catch(()=>{});toast('Prompt zkopírován, vlož ho přes Ctrl+V')}))});
+
+/* lightbox */
+const lb=$('#lb');
+function openLb(k){if(!P[k])return;lbK=k;lb.querySelector('img').src='../img/'+k+'.webp';lb.querySelector('p').textContent=P[k];lb.classList.add('open');document.body.style.overflow='hidden'}
+function closeLb(){lb.classList.remove('open');document.body.style.overflow=''}
+lb.querySelector('.x').onclick=closeLb;lb.onclick=e=>{if(e.target===lb)closeLb()};lb.querySelector('.cp').onclick=()=>copy(P[lbK]);
+addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();$('#q').focus()}});
+document.addEventListener('click',e=>{const t=e.target.closest('[data-k]');if(t)openLb(t.dataset.k)});
+
+/* composer */
+const sel=new Map();const ORDER='YTSDEKLMNP';
+function toggle(b){const v=b.dataset.v;if(sel.has(v))sel.delete(v);else{if(b.dataset.c==='P'){const key=v.split(' ')[0];[...sel.keys()].forEach(x=>{if(sel.get(x)==='P'&&x.split(' ')[0]===key)sel.delete(x)})}sel.set(v,b.dataset.c)}render()}
+function render(){const it=[...sel.entries()];const s=$('#subj').value.trim();
+ const head=it.filter(([,c])=>c==='Y').concat(it.filter(([,c])=>c==='T')).map(([v])=>v);
+ const subj=it.filter(([,c])=>c==='S').map(([v])=>v);
+ const rest=it.filter(([,c])=>!'YTSNP'.includes(c)).sort((a,b)=>ORDER.indexOf(a[1])-ORDER.indexOf(b[1])).map(([v])=>v);
+ const txt=[...head,s,...subj,...rest].filter(Boolean);
+ const no=it.filter(([,c])=>c==='N').map(([v])=>v.replace(/^--no\s*/,''));const par=it.filter(([,c])=>c==='P').map(([v])=>v);
+ $('#out').textContent=[txt.join(', '),no.length?'--no '+no.join(', '):'',par.join(' ')].filter(Boolean).join(' ')||'Vyber styl nebo řádek z ukázky.';
+ $('#bar').classList.toggle('on',sel.size>0||!!s);$$('[data-v]').forEach(b=>b.classList.toggle('on',sel.has(b.dataset.v)))}
+$('#subj').oninput=render;$('#bCopy').onclick=()=>copy($('#out').textContent);$('#bClr').onclick=()=>{sel.clear();$('#subj').value='';render()};
+document.addEventListener('click',e=>{const b=e.target.closest('button[data-v]');if(b&&!e.target.closest('[data-k]'))toggle(b)});
+
+/* examples: real gallery prompts, condensed to their key parts */
+const TAG={Y:'styl',T:'technika',S:'subjekt',D:'detail',E:'prostředí',K:'kompozice',L:'světlo',M:'nálada',N:'--no',P:'param'};
+const EX=[
+['24',[['T','ultra realistic extreme close-up photograph'],['S','a pair of human eyes, one iris bright blue and the other vivid green'],['D','fine radial iris fibers, realistic moist sclera with fine capillaries'],['L','soft directional key light from the upper left with a gentle fill'],['T','shot on Canon EOS R5, 100mm macro lens at f/2.8'],['P','--ar 16:9 --raw --stylize 50']]],
+['22',[['T','ultra realistic photograph'],['S','a young woman holding a red fox calmly in her arms'],['E','standing in a sunlit birch forest'],['L','warm morning light filtering through the leaves'],['T','shot on Canon EOS R5, 85mm lens f/2.2, natural film grain'],['P','--ar 16:9 --raw']]],
+['38',[['E','a deep valley at dusk with grey granite rocks'],['S','a colossal white brutalist archive building, window slits glowing warm orange'],['K','low-angle wide shot'],['T','analog 35mm film photography, Kodak Portra grain'],['M','sense of immense scale, quiet surreal atmosphere'],['P','--ar 4:3 --raw --stylize 750']]],
+['13',[['T','ultra realistic cockpit photograph'],['S','a ram-headed pilot with long curved horns and dense curly woolen fleece'],['K','camera mounted low on the instrument panel looking back toward the pilot'],['T','shot on Canon EOS R5, 24mm lens f/8'],['N','--no human face, insignia'],['P','--ar 16:9 --raw --weird 45']]],
+['25',[['K','aerial drone photograph, shot straight down from high altitude'],['S','exactly ONE single person in a plain white linen outfit, precisely centered'],['E','a vast lavender field with thousands of purple rows'],['L','soft diffused daylight'],['P','--ar 9:16 --raw --stylize 150']]],
+['11',[['T','ultra realistic documentary photograph'],['S','a small African village, low clay-brick houses with hand-painted facades'],['L','strong natural sunlight with warm highlights and crisp shadows'],['T','shot on Canon EOS R5, 35mm lens f/8'],['N','--no text, faces, CGI look'],['P','--chaos 10 --ar 16:9 --raw --weird 45']]],
+['33',[['T','cinematic street photograph at dusk'],['E','a narrow Mexican street with pastel-painted concrete walls'],['S','a lieutenant in a crisp white suit jacket stepping out of a vintage car'],['L','warm amber and deep teal palette with deep shadows'],['K','low-angle medium-wide shot, 35mm lens f/2.8'],['P','--ar 16:9 --raw --stylize 150 --weird 13']]],
+['03',[['T','studio product photo'],['S','a crumpled, capless clear blue PET plastic bottle'],['D','fresh condensation: fine mist, tiny beads and larger droplets'],['L','strip softbox rim lights tracing the silhouette'],['E','pure black background, glossy black surface']]],
+['28',[['Y','cubist stained-glass mosaic, a single unified scene made entirely of glass tiles'],['S','winged angels descending from the sky onto a palace park'],['D','ruby, sapphire, amber, emerald and violet tiles, black lead lines'],['K','symmetrical radiating composition'],['N','--no border, frame, realistic faces'],['P','--ar 3:4 --raw --stylize 250']]],
+['30',[['Y','painted 13th-century medieval manuscript illumination on gold leaf background'],['S','a young prince riding a white-grey horse, on the right third of the frame'],['D','pale ivory, soft sky blue, pastel rose and bright gold leaf'],['P','--chaos 100 --ar 16:9 --raw --stylize 250']]],
+['19',[['Y','intricate hand drawn 2D Japanese animation, richly painted watercolor backgrounds'],['S','a colossal ancient legless serpent deity'],['D','scales transitioning from dark emerald skin to cracked ivory stone'],['E','lush primordial overgrown forest, statues turning to stone'],['P','--ar 16:9 --raw --stylize 0']]],
+['27',[['Y','abstract art composition'],['S','flowing organic forms of translucent glass and soft matte paint'],['D','deep indigo, warm ochre, blush pink and pale silver'],['K','large open negative space, a single dominant form slightly off-center'],['N','--no text, faces, recognizable objects'],['P','--ar 16:9 --raw --stylize 300']]]];
+$('#ex').innerHTML=EX.map(([k,rows])=>`<article class="card it"><div class="im" data-k="${k}"><img src="../thumb/${k}.webp" alt="" loading="lazy"><span>celý prompt</span></div><ul>${rows.map(([c,t])=>`<li><small>${TAG[c]}</small><button data-v="${t.replace(/"/g,'&quot;')}" data-c="${c}"${'NP'.includes(c)?' class="m"':''}>${t}</button></li>`).join('')}</ul></article>`).join('');
+
+/* styles */
+const STY=[
+['foto','Fotorealismus','ultra realistic photograph, natural skin texture, shot on Canon EOS R5, 85mm lens f/2.2','22'],
+['foto','Dokument','documentary photography, natural dawn light, realistic skin texture and dirt, natural color grading','34'],
+['foto','Filmový záběr','cinematic film still, low-angle medium-wide shot, warm amber and deep teal palette, natural film grain','33'],
+['foto','Analogový film','analog 35mm film photography, Kodak Portra grain, warm sepia palette','38'],
+['foto','Módní editorial','high fashion magazine editorial style, wide shot, realistic skin with visible pores','35'],
+['foto','Produktová fotka','studio product photo, pure black background, strip softbox rim lights, specular highlights','03'],
+['foto','Makro','extreme close-up macro photograph, 100mm macro lens at f/2.8, shallow depth of field','24'],
+['foto','Dron shora','aerial drone photograph shot straight down, soft diffused daylight','25'],
+['foto','Studiový portrét','front view, half-body portrait, soft even studio lighting, clean solid-color backdrop','18'],
+['foto','Fine-art portrét','fine art editorial portrait, dramatic low key single soft key light, deep black background','02'],
+['foto','Černobílá','black and white photograph, high contrast, deep shadows, silver gelatin print','s-cernobila'],
+['foto','Polaroid','vintage polaroid photo, faded colors, soft on-camera flash','s-polaroid'],
+['foto','Dlouhá expozice','long exposure photograph, light trails, silky smooth water','s-dlouha-expozice'],
+['foto','Tilt-shift','tilt-shift photography, miniature effect, blurred top and bottom','s-tilt-shift'],
+['foto','Film noir','film noir, 1940s black and white, hard shadows, venetian blind light','s-film-noir'],
+['malba','Iluminace','painted 13th-century medieval manuscript illumination on gold leaf background','30'],
+['malba','Vitráž','cubist stained-glass mosaic, black lead lines between the tiles, aged cathedral-glass texture','28'],
+['malba','Abstrakce','abstract art composition, flowing organic forms, visible paint grain','27'],
+['malba','Olejomalba','oil painting on canvas, thick impasto brushstrokes','s-olejomalba'],
+['malba','Akvarel','watercolor painting, soft bleeding edges, visible paper texture','s-akvarel'],
+['malba','Japonský dřevořez','ukiyo-e woodblock print, flat colors, bold outlines','s-drevorez'],
+['malba','Fresky a ikony','byzantine icon painting, gold background, tempera on wood','s-ikony'],
+['ilu','2D animace','intricate hand drawn 2D animation, richly painted watercolor backgrounds','19'],
+['ilu','Retro sci-fi','retro futuristic, foggy, moody, gigantic machine emerging from fog','36'],
+['ilu','Jiný svět','otherworldly alien flora, vivid saturated colors, orange sky','26'],
+['ilu','Dekorativní tapeta','wallpaper design, surreal autumn trees, flat decorative shapes','17'],
+['ilu','Anime','anime key visual, clean line art, cel shading','s-anime'],
+['ilu','Komiks','comic book illustration, bold ink lines, halftone dots','s-komiks'],
+['ilu','Kresba uhlem','charcoal sketch on textured paper, rough hatching','s-uhel'],
+['ilu','Line art','minimal line art, single continuous line, white background','s-line-art'],
+['ilu','Art nouveau plakát','art nouveau poster, ornamental frame, flowing organic lines','s-art-nouveau'],
+['3d','3D render','3D render, soft global illumination, physically based materials','s-3d-render'],
+['3d','Claymation','claymation, handmade clay figures, stop-motion look','s-claymation'],
+['3d','Low poly','low poly 3D, flat shaded facets, simple geometry','s-low-poly'],
+['3d','Izometrický diorama','isometric 3D diorama, miniature scene, soft lighting','s-izometrie'],
+['3d','Pixel art','16-bit pixel art, limited color palette','s-pixel-art'],
+['3d','Synthwave','synthwave, neon grid, magenta and cyan glow, 1980s retro','s-synthwave'],
+['3d','Papírová vrstva','layered paper cut art, soft shadows between layers','s-papir']];
+const sg=$('#sg');
+STY.forEach(([f,n,ph,k])=>{const b=document.createElement('button');b.className='sc it';b.dataset.f=f;b.dataset.v=ph;b.dataset.c='Y';
+ b.innerHTML=`<div class="ti"><img src="../thumb/${k}.webp" alt="" loading="lazy"><span class="pr" data-k="${k}">prompt</span></div><b>${n}</b><span>${ph}</span>`;sg.append(b)});
+$('#sflt').onclick=e=>{const b=e.target.closest('button');if(!b)return;[...$('#sflt').children].forEach(x=>x.classList.toggle('on',x===b));$$('#sg .sc').forEach(c=>c.classList.toggle('hide',b.dataset.f!=='all'&&c.dataset.f!==b.dataset.f))};
+
+/* params */
+const PR=[['--ar 16:9','Poměr stran. Na výšku 9:16, 3:4.','25',1],['--raw','Bez zkrášlování, víc drží prompt.','24',1],['--stylize 150','0–1000. Nízko drží prompt, vysoko si vymýšlí.','38',1],['--chaos 10','0–100. Rozdílnost 4 variant.','31',1],['--weird 13','0–3000. Divné, experimentální.','36',1],['--no','Vyloučí věci z obrázku.','13',0],['--sref URL','Styl z obrázku. Síla --sw 0–1000.','05',0],['--profile','Tvůj osobní styl z hodnocení.','35',0],['--seed 42','Pevný start, porovnávej změny.','',1],['--exp 10','0–100. Extra estetika a detail.','',1],['--tile','Bezešvý vzor.','',1]];
+$('#pg').innerHTML=PR.map(([c,d,k,add])=>`<div class="pi it">${k?`<img src="../thumb/${k}.webp" data-k="${k}" alt="">`:'<i></i>'}<div>${add?`<button data-v="${c}" data-c="P">${c}</button>`:`<code>${c}</code>`}<p>${d}</p></div></div>`).join('');
+
+/* sref compare */
+const PAIRS=[['05','06'],['07','08']];
+const sref=k=>(P[k].match(/--sref \S+/)||[''])[0];const cmp=$('#cmp');
+function setPair(i){const [a,b]=PAIRS[i];cmp.querySelector('.a').src='../img/'+a+'.webp';cmp.querySelector('.b').src='../img/'+b+'.webp';$('#sA').textContent=sref(a);$('#sB').textContent=sref(b);[...$('#pairs').children].forEach((x,j)=>x.classList.toggle('on',i===j));cmp.style.setProperty('--x','50%')}
+$('#pairs').onclick=e=>{const b=e.target.closest('button');if(b)setPair(+b.dataset.p)};
+let drag=false;const mv=e=>{const r=cmp.getBoundingClientRect();cmp.style.setProperty('--x',Math.min(Math.max((e.clientX-r.left)/r.width,0),1)*100+'%')};
+cmp.addEventListener('pointerdown',e=>{drag=true;cmp.setPointerCapture(e.pointerId);mv(e)});cmp.addEventListener('pointermove',e=>{if(drag)mv(e)});cmp.addEventListener('pointerup',()=>drag=false);setPair(0);
+
+/* tools filter */
+$('#flt').onclick=e=>{const b=e.target.closest('button');if(!b)return;[...$('#flt').children].forEach(x=>x.classList.toggle('on',x===b));$$('#tools a').forEach(a=>a.classList.toggle('hide',b.dataset.f!=='all'&&a.dataset.t!==b.dataset.f))};
+
+/* search */
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+$('#q').oninput=e=>{const q=norm(e.target.value.trim());
+ $$('main section').forEach(sec=>{const its=sec.querySelectorAll('.it');if(!its.length){sec.classList.toggle('hide',!!q);return}let any=false;
+  its.forEach(it=>{const m=!q||norm(it.textContent).includes(q);it.classList.toggle('hide',!m);if(m)any=true});sec.classList.toggle('hide',!!q&&!any)});
+ if(!q){$('#flt .on').click();$('#sflt .on').click()}};
+
+/* index highlight */
+const secs=$$('main section');let ticking=false;
+function spy(){ticking=false;let cur=secs[0];secs.forEach(s=>{if(!s.classList.contains('hide')&&s.getBoundingClientRect().top<innerHeight*.35)cur=s});$$('#idx a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur.id))}
+addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(spy)}},{passive:true});spy();
+render();
+</script>
+</body></html>

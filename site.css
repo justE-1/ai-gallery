@@ -1,0 +1,8 @@
+.sitenav{position:absolute;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:20px clamp(16px,3vw,40px)}
+.sitenav .brand img{width:52px;height:40px;object-fit:contain;display:block}
+.sitenav .links{display:flex;gap:6px}
+.sitenav .links a{font:500 14px/1 Montserrat,system-ui,sans-serif;color:#f2f1ecb3;text-decoration:none;padding:10px 14px;border-radius:999px;border:1px solid transparent;transition:.2s}
+.sitenav .links a:hover{color:#f2f1ec;border-color:#ffffff24}
+.sitenav .links a.on{color:#08080a;background:#f2f1ec}
+@media (max-width:560px){.sitenav .links a{padding:8px 10px;font-size:13px}.sitenav .links{gap:2px}}
+.pagehead{position:relative;height:96px}
