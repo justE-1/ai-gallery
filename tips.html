@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tipy &amp; triky | woffx</title>
+<style>
+:root{--bg:#0b0b0c;--card:#141416;--line:#26262a;--tx:#e8e6e3;--mut:#9a9690;--dim:#5c5a57;--acc:#d9b26f}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:900px;margin:auto;padding:0 20px}
+header{padding:40px 0 10px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+header .t{font-weight:500;letter-spacing:.3em;text-transform:uppercase;font-size:14px;color:var(--mut)}
+h1{font-size:clamp(28px,5vw,42px);font-weight:600;line-height:1.15;margin:28px 0 10px}
+.lead{color:var(--mut);max-width:640px}
+h2{font-size:22px;font-weight:600;margin:56px 0 6px}
+h2+p.sub{color:var(--mut);margin-bottom:18px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px 18px;display:block;color:var(--tx);transition:border-color .2s}
+.card:hover{border-color:var(--acc);text-decoration:none}
+.card b{display:block;font-size:17px;margin-bottom:4px}
+.card span{color:var(--mut);font-size:14px;display:block}
+.card i{font-style:normal;font-size:12px;color:var(--acc);display:inline-block;margin-top:8px;letter-spacing:.05em}
+.prompt{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px;font:15px/1.8 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
+.prompt span{border-bottom:2px solid;padding-bottom:1px}.prompt span.c8{white-space:nowrap}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:14px 0 6px;font-size:14px}
+.legend em{font-style:normal;display:inline-flex;align-items:center;gap:6px}
+.legend em::before{content:"";width:10px;height:10px;border-radius:2px;background:currentColor}
+.c1{color:#e8846b}.c2{color:#e6b85c}.c3{color:#9fd36b}.c4{color:#5cc9c4}.c5{color:#6fa3ef}.c6{color:#b18cf0}.c7{color:#e889c9}.c8{color:#a3a09b}
+.prompt .c1,.prompt .c2,.prompt .c3,.prompt .c4,.prompt .c5,.prompt .c6,.prompt .c7,.prompt .c8{color:var(--tx)}
+.prompt .c1{border-color:#e8846b}.prompt .c2{border-color:#e6b85c}.prompt .c3{border-color:#9fd36b}.prompt .c4{border-color:#5cc9c4}.prompt .c5{border-color:#6fa3ef}.prompt .c6{border-color:#b18cf0}.prompt .c7{border-color:#e889c9}.prompt .c8{border-color:#a3a09b}
+ol.parts{padding-left:22px;margin-top:18px}ol.parts li{margin:6px 0}ol.parts b{font-weight:600}
+code{background:#1d1d20;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font:14px ui-monospace,Consolas,monospace;color:#f0d9a8}
+table{width:100%;border-collapse:collapse;font-size:15px}
+td,th{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--mut);font-weight:500;font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+td:first-child{white-space:nowrap}
+.tw{overflow-x:auto}
+ul.tips{list-style:none;padding:0;display:grid;gap:10px}
+ul.tips li{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 18px}
+ul.tips b{display:block;margin-bottom:2px}
+.note{color:var(--dim);font-size:13px;margin-top:12px}
+footer{text-align:center;padding:60px 20px 30px;color:var(--dim);font-size:12px}
+</style></head><body>
+<div class="wrap">
+<header><a class="t" href="./">&larr; Gallery</a><span class="t">Tipy &amp; triky</span></header>
+
+<h1>Jak na AI obrázky zadarmo</h1>
+<p class="lead">Všechno z galerie vzniklo v Midjourney, ale stejně dobře se dá začít úplně zdarma. Tady je seznam nástrojů, které fakt stojí za to, a pod tím rozebraný prompt, ať víš, co do něj psát.</p>
+
+<h2>Online generátory s free verzí</h2>
+<p class="sub">Stačí se zaregistrovat, nic se neinstaluje.</p>
+<div class="cards">
+<a class="card" href="https://leonardo.ai" target="_blank" rel="noopener"><b>Leonardo.ai</b><span>Hodně modelů a stylů na jednom místě, umí i editaci a upscale. Free verze má 150 tokenů denně, obrázky jsou ale veřejné.</span><i>DENNÍ TOKENY</i></a>
+<a class="card" href="https://ideogram.ai" target="_blank" rel="noopener"><b>Ideogram</b><span>Nejlepší na text v obrázku: plakáty, loga, nápisy. Free kredity se obnovují každý týden.</span><i>TEXT V OBRÁZKU</i></a>
+<a class="card" href="https://www.krea.ai" target="_blank" rel="noopener"><b>Krea</b><span>Realtime generování (kreslíš a obrázek se mění živě), upscale a přístup k víc modelům. Free kredity každý den.</span><i>REALTIME</i></a>
+<a class="card" href="https://gemini.google.com" target="_blank" rel="noopener"><b>Google Gemini (Nano Banana)</b><span>Super na úpravy existujících fotek obyčejnou větou: „změň pozadí na les“, „přidej mlhu“. Pár obrázků denně zdarma.</span><i>EDITACE FOTEK</i></a>
+<a class="card" href="https://firefly.adobe.com" target="_blank" rel="noopener"><b>Adobe Firefly</b><span>Trénovaný na licencovaných datech, takže bezpečnější pro komerci. Free verze má malý měsíční balík kreditů.</span><i>KOMERČNĚ BEZPEČNĚJŠÍ</i></a>
+<a class="card" href="https://www.midjourney.com" target="_blank" rel="noopener"><b>Midjourney</b><span>Placený, ale na estetiku pořád špička. Na tom vznikla celá galerie.</span><i>PLACENÝ</i></a>
+</div>
+
+<h2>Lokálně na vlastním PC, úplně zdarma</h2>
+<p class="sub">Bez limitů a bez cenzury free verzí. Chce to grafiku Nvidia s aspoň 8 GB VRAM (ideálně 12 GB a víc).</p>
+<div class="cards">
+<a class="card" href="https://www.comfy.org/download" target="_blank" rel="noopener"><b>ComfyUI</b><span>Uzlový editor na Stable Diffusion, Flux a další open modely. Ze začátku vypadá děsivě, ale umí úplně všechno. Má desktop instalačku pro Windows i Mac.</span><i>HLAVNÍ NÁSTROJ</i></a>
+<a class="card" href="https://docs.comfy.org" target="_blank" rel="noopener"><b>ComfyUI dokumentace</b><span>Oficiální návody od instalace po první workflow.</span><i>NÁVOD</i></a>
+<a class="card" href="https://comfyanonymous.github.io/ComfyUI_examples/" target="_blank" rel="noopener"><b>ComfyUI examples</b><span>Hotová workflow: obrázek stačí přetáhnout do ComfyUI a celé zapojení se načte samo.</span><i>HOTOVÁ WORKFLOW</i></a>
+<a class="card" href="https://civitai.com" target="_blank" rel="noopener"><b>Civitai</b><span>Největší knihovna modelů, LoRA a stylů od komunity, u každého jsou ukázky i s prompty.</span><i>MODELY A LORA</i></a>
+<a class="card" href="https://huggingface.co" target="_blank" rel="noopener"><b>Hugging Face</b><span>Oficiální váhy modelů (Flux, SDXL…) a hodně Spaces, kde si modely zkusíš rovnou v prohlížeči.</span><i>MODELY</i></a>
+<a class="card" href="https://upscayl.org" target="_blank" rel="noopener"><b>Upscayl</b><span>Open-source aplikace na zvětšení obrázků, která běží offline. Ideální na finální výstup do tisku.</span><i>UPSCALE</i></a>
+</div>
+<p class="note">Limity free verzí se často mění, údaje platí k listopadu 2026. Před komerčním použitím si projdi podmínky konkrétního nástroje.</p>
+
+<h2>Anatomie promptu</h2>
+<p class="sub">Dobrý prompt je skládačka. Každý díl řeší jednu věc a pořadí hraje roli, protože začátek má pro model největší váhu.</p>
+<div class="prompt">
+<span class="c1">Ultra-realistic portrait of a woman with long jet-black hair</span>,
+<span class="c2">standing still while hundreds of black crows circle around her</span>,
+<span class="c3">turbulent blood-red clouds in the background</span>,
+<span class="c4">close-up, sharp focus on her eyes, shallow depth of field</span>,
+<span class="c5">soft diffused light, subtle rim light</span>,
+<span class="c6">fine-art editorial photography, shot on 85mm</span>,
+<span class="c7">surreal, haunting, dreamlike</span>
+<span class="c8">--ar 2:3 --raw --s 150</span>
+</div>
+<div class="legend"><em class="c1">subjekt</em><em class="c2">akce</em><em class="c3">prostředí</em><em class="c4">kompozice</em><em class="c5">světlo</em><em class="c6">styl / technika</em><em class="c7">nálada</em><em class="c8">parametry</em></div>
+<ol class="parts">
+<li><b>Subjekt:</b> kdo nebo co. Čím konkrétněji, tím líp (věk, vlasy, oblečení, materiál).</li>
+<li><b>Akce:</b> co dělá a co se kolem děje.</li>
+<li><b>Prostředí:</b> kde to je, pozadí, počasí, denní doba.</li>
+<li><b>Kompozice:</b> typ záběru (close-up, wide shot, aerial), úhel kamery a kam má jít ostrost.</li>
+<li><b>Světlo:</b> úplně nejvíc mění výsledek. Golden hour, low-key, rim light, volumetric fog…</li>
+<li><b>Styl / technika:</b> fotka, olejomalba, 3D render, objektiv (35mm, 85mm), film (Kodak Portra).</li>
+<li><b>Nálada:</b> pár slov o atmosféře.</li>
+<li><b>Parametry:</b> poměr stran, stylizace a podobně. Vždycky až na konec.</li>
+</ol>
+
+<h2>Negative prompt</h2>
+<p class="sub">Tím říkáš, co v obrázku nechceš.</p>
+<p>V ComfyUI, Leonardu a Stable Diffusion je na to samostatné pole, třeba <code>cartoon, blurry, extra fingers, text, watermark</code>. V Midjourney se to píše přes <code>--no text, watermark</code>. Nikdy nepiš „no birds“ do hlavního promptu, model uvidí slovo „birds“ a ptáky tam dá.</p>
+
+<h2>Váhy v ComfyUI a Stable Diffusion</h2>
+<p><code>(dense forest:1.4)</code> zesílí, <code>(fog:0.7)</code> zeslabí. Rozumný rozsah je zhruba 0.6 až 1.5, nad tím se obrázek začne rozpadat. Midjourney tenhle zápis nezná, tam pomůže dát důležitou věc na začátek nebo ji zopakovat.</p>
+
+<h2>Midjourney parametry</h2>
+<div class="tw"><table>
+<tr><th>Parametr</th><th>Rozsah</th><th>Co dělá</th></tr>
+<tr><td><code>--ar 16:9</code></td><td>celá čísla</td><td>Poměr stran. Na výšku 2:3 nebo 9:16, na šířku 16:9 nebo 3:2.</td></tr>
+<tr><td><code>--s</code></td><td>0–1000 (100)</td><td>Stylizace. Nízká drží prompt, vysoká dodá víc umělecké „MJ estetiky“.</td></tr>
+<tr><td><code>--c</code></td><td>0–100 (0)</td><td>Chaos: jak moc se od sebe liší 4 varianty. Dobré na hledání nápadů.</td></tr>
+<tr><td><code>--raw</code></td><td>přepínač</td><td>Vypne zkrášlování, výsledek je realističtější a víc drží prompt.</td></tr>
+<tr><td><code>--no</code></td><td>seznam</td><td>Negative prompt, třeba <code>--no text, people</code>.</td></tr>
+<tr><td><code>--sref URL</code></td><td>obrázek</td><td>Převezme styl (barvy, světlo, texturu) z referenčního obrázku. Sílu nastavíš přes <code>--sw</code> 0–1000.</td></tr>
+<tr><td><code>--seed</code></td><td>číslo</td><td>Pevný start, takže můžeš měnit jedno slovo a porovnávat.</td></tr>
+<tr><td><code>--exp</code></td><td>0–100 (0)</td><td>Extra estetika a detail. Zkus 10 nebo 25, nad 50 přebije ostatní nastavení.</td></tr>
+<tr><td><code>--w</code></td><td>0–3000 (0)</td><td>Weird: divné, experimentální výsledky.</td></tr>
+<tr><td><code>--tile</code></td><td>přepínač</td><td>Bezešvý vzor na textury a tapety.</td></tr>
+</table></div>
+<p class="note">Platí pro Midjourney V8. Kompletní seznam je v <a href="https://docs.midjourney.com" target="_blank" rel="noopener">oficiální dokumentaci</a>.</p>
+
+<h2>Tipy &amp; triky</h2>
+<ul class="tips">
+<li><b>Piš anglicky</b>Všechny modely se učily hlavně na angličtině. Česky to sice pochopí, ale výsledek je slabší.</li>
+<li><b>Nejdůležitější dopředu</b>Co chceš mít v obrázku hlavně, dej na začátek. Detaily a parametry až na konec.</li>
+<li><b>Konkrétně místo obecně</b>„beautiful lighting“ nic neřekne. „golden hour backlight through mist“ už ano.</li>
+<li><b>Na fotorealismus zmiň foťák</b><code>shot on 85mm, f/1.8, natural skin texture</code> a v Midjourney k tomu <code>--raw</code>. Slova jako „8k, masterpiece“ dneska skoro nic nedělají.</li>
+<li><b>Měň jednu věc najednou</b>Se stejným seedem změň jedno slovo. Tak se nejrychleji naučíš, co který díl promptu dělá.</li>
+<li><b>Text do uvozovek</b><code>a neon sign that says "OPEN"</code>. Na delší text je nejlepší Ideogram.</li>
+<li><b>Kradni styl, ne obrázek</b>V Midjourney <code>--sref</code>, v ComfyUI IP-Adapter. Převezmeš atmosféru a obsah zůstane tvůj.</li>
+<li><b>Nech si prompt napsat</b>Popiš nápad česky Claudovi nebo ChatGPT a nech si ho přepsat do anglického promptu podle anatomie výš.</li>
+<li><b>Upscale až nakonec</b>Generuj v malém a rychle, a teprve vybraný kousek zvětši (Upscayl, Krea, MJ upscale).</li>
+</ul>
+</div>
+<footer><a href="./">Gallery</a> &middot; &copy; woffx</footer>
+</body></html>
