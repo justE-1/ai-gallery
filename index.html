@@ -23,7 +23,7 @@ h1,h2{font-family:"Josefin Sans",sans-serif;font-weight:200;text-transform:upper
 .hero .eb{font-size:14px;font-weight:500;color:var(--soft);letter-spacing:.06em;margin-bottom:16px}
 .hero h1{font-size:clamp(56px,11vw,168px)}
 .hero p.sub{font-size:clamp(17px,1.6vw,22px);color:var(--soft);max-width:640px;margin-top:20px}
-.jump{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:clamp(28px,5vh,48px);border-top:1px solid var(--l1)}
+.jump{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:clamp(28px,5vh,48px);border-top:1px solid var(--l1)}
 .jump a{padding:16px 18px 0 0;border-right:1px solid var(--l2);margin-right:18px;color:var(--soft);font-size:15px;transition:color .2s}
 .jump a:last-child{border:0}
 .jump a span{display:block;color:var(--mut);font-size:12px;letter-spacing:.06em}
@@ -95,15 +95,14 @@ footer a:hover{color:var(--bone)}
 <header class="hero">
  <img src="img/09.webp" alt="">
  <div class="scrim"></div>
- <nav class="sitenav"><a class="brand" href="/"><img src="/wx.png" alt="Logo WX"></a><div class="links"><a href="/skoleni/">Školení</a><a href="/prompting/">Prompting</a><a href="#galerie">Galerie</a></div></nav>
+ <nav class="sitenav"><a class="brand" href="/"><img src="/wx.png" alt="Logo WX"></a><div class="links"><a href="/skoleni/">Školení</a><a href="/#galerie">Galerie</a></div></nav>
  <div class="in"><div class="wrap">
   <p class="eb">Antonín Woff · woffx</p>
   <h1>AI</h1>
   <p class="sub">Prezentace z mých školení, příručka k psaní promptů a obrázky, které u toho vznikly.</p>
   <div class="jump">
    <a href="#skoleni"><span>01</span>Školení</a>
-   <a href="#prompting"><span>02</span>Prompting</a>
-   <a href="#galerie"><span>03</span>Galerie</a>
+   <a href="#galerie"><span>02</span>Galerie</a>
   </div>
  </div></div>
 </header>
@@ -111,29 +110,12 @@ footer a:hover{color:var(--bone)}
 <main class="wrap">
 
 <section id="skoleni">
- <div class="sh"><h2>Školení</h2><small>Prezentace · šipkami nebo swipem</small></div>
+ <div class="sh"><h2>Školení</h2><small>Prezentace a příručka</small></div>
  <div class="decks">
   <a href="/skoleni/kreativni-ai/"><img src="skoleni/assets/cover-kreativni-ai.webp" alt="" loading="lazy"><div><h3>Kreativní AI</h3><p>Jak tvořit s umělou inteligencí, od pixelu po obraz. Jak neuronka vidí obrázek, seed, formy AI, anatomie promptu a praktická část.</p><small>ČESKY · 20 SLIDŮ · MULTIMEDIÁLNÍ AI KROUŽEK</small></div><span class="btn">Otevřít <span class="arr">&rarr;</span></span></a>
   <a href="/skoleni/ai-v-kancelari/"><img src="skoleni/assets/cover-ai-v-kancelari.webp" alt="" loading="lazy"><div><h3>AI v kanceláři</h3><p>Co uleví, co zklame a co se stane bez jediného kliknutí. Copilot v praxi, třídy podkladů, asistent vs. workflow vs. agent a automatizace, která běží sama.</p><small>ČESKY · 20 SLIDŮ · KANCELÁŘ A ADMINISTRATIVA</small></div><span class="btn">Otevřít <span class="arr">&rarr;</span></span></a>
   <a href="/skoleni/ai-frontier-effect/"><img src="skoleni/assets/cover-ai-frontier-effect.webp" alt="" loading="lazy"><div><h3>The AI Frontier Effect</h3><p>Scaling laws, agent horizons, inference economics and quantization. How fast the edge of AI spreads into cheaper models and real work.</p><small>ENGLISH · 9 SLIDES · LECTURE</small></div><span class="btn">Otevřít <span class="arr">&rarr;</span></span></a>
- </div>
-</section>
-
-<section id="prompting">
- <div class="sh"><h2>Prompting</h2><small>Příručka promptu</small></div>
- <div class="pr">
-  <div class="mosaic"><img src="thumb/s-akvarel.webp" alt="" loading="lazy"><img src="thumb/s-film-noir.webp" alt="" loading="lazy"><img src="thumb/s-claymation.webp" alt="" loading="lazy"><img src="thumb/s-ikony.webp" alt="" loading="lazy"><img src="thumb/22.webp" alt="" loading="lazy"><img src="thumb/s-synthwave.webp" alt="" loading="lazy"></div>
-  <div>
-   <h3>Příručka promptu</h3>
-   <p>Skutečné prompty rozebrané na díly, styly na kliknutí, parametry Midjourney a nástroje, které jdou zdarma.</p>
-   <ul>
-    <li><a href="/prompting/#ukazky">Ukázky <span>12 rozebraných promptů</span></a></li>
-    <li><a href="/prompting/#styly">Styly <span>38 stylů s ukázkou</span></a></li>
-    <li><a href="/prompting/#parametry">Parametry <span>--ar, --raw, --sref…</span></a></li>
-    <li><a href="/prompting/#nastroje">Nástroje <span>free a lokálně</span></a></li>
-   </ul>
-   <a class="btn" href="/prompting/">Otevřít příručku <span class="arr">&rarr;</span></a>
-  </div>
+  <a href="/prompting/"><img src="skoleni/assets/cover-prompting.webp" alt="" loading="lazy"><div><h3>Příručka promptu</h3><p>Skutečné prompty z galerie rozebrané na díly, 38 stylů na kliknutí, parametry Midjourney a nástroje, které jdou zdarma.</p><small>ČESKY · INTERAKTIVNÍ PŘÍRUČKA · MIDJOURNEY A DALŠÍ</small></div><span class="btn">Otevřít <span class="arr">&rarr;</span></span></a>
  </div>
 </section>
 
