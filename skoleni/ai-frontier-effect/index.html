@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The AI Frontier Effect | woffx</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;height:100%;background:#08080a;overflow:hidden;-webkit-font-smoothing:antialiased}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;cursor:pointer;touch-action:pan-y}
+#deck{position:relative;width:1920px;height:1080px;flex:none;transform-origin:center center}
+#deck>section{position:absolute;left:0;top:0;width:1920px;height:1080px;box-sizing:border-box;overflow:hidden;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+#deck>section.on{opacity:1;visibility:visible}
+#deck section *{box-sizing:border-box;margin:0}
+#deck>section>*{position:relative}
+#deck section h1,#deck section h2,#deck section h3{font-weight:400}
+#deck section a{cursor:pointer}
+#ui{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:18px;padding:14px 20px;font:500 14px Montserrat,system-ui,sans-serif;color:#f2f1ec;background:linear-gradient(0deg,rgba(8,8,10,.85),rgba(8,8,10,0));transition:opacity .4s;z-index:5}
+#ui.idle{opacity:0}
+#ui a,#ui button{color:#f2f1ec;text-decoration:none;background:none;border:1px solid #ffffff24;border-radius:999px;padding:7px 14px;font:inherit;cursor:pointer;backdrop-filter:blur(14px)}
+#ui a:hover,#ui button:hover{border-color:#ffffff60}
+#ui .sp{flex:1}
+#ui .n{color:#acaba8;min-width:64px;text-align:center;font-variant-numeric:tabular-nums}
+#bar{position:fixed;left:0;top:0;height:2px;background:#f2f1ec;transition:width .35s;z-index:6}
+.arr{font-family:system-ui}
+</style></head><body>
+<div id="bar"></div>
+<div id="stage"><div id="deck">
+<section id="cover" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:flex-end;gap:48px">
+<svg aria-label="Exponential curve rising to the top right" style="position:absolute;left:1000px;top:180px;width:792px;height:290px" width="792" height="290" viewBox="0 0 792 290"><line x1="0" y1="280" x2="792" y2="280" stroke="#2c2c2f" stroke-width="1.5"/><line x1="0" y1="10" x2="0" y2="280" stroke="#2c2c2f" stroke-width="1.5"/><polyline points="0,270 99,269 198,267 297,263 396,255 495,238 594,206 693,140 792,12" fill="none" stroke="#5a5a5e" stroke-width="2.5"/><circle cx="792" cy="12" r="7" fill="#f2f1ec"/></svg>
+<p style="position:absolute;left:128px;top:128px;width:800px;font-size:24px;font-weight:500;letter-spacing:4px;color:#acaba8">LECTURE · FOR MY AI BROTHERS IN ARMS</p>
+<h1 style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:120px;line-height:1.05;letter-spacing:10px">THE AI<br>FRONTIER EFFECT</h1>
+<p style="font-size:40px;font-weight:400;line-height:1.35;color:#acaba8;width:1300px">Scaling laws · agent horizons · inference economics · quantization</p>
+<p style="position:absolute;left:128px;bottom:64px;width:900px;font-size:24px;color:#acaba8">Antonín Woff · woffx.eu</p>
+
+</section>
+<section id="frontier" data-transition="fade" style="background:#0f0f12;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:flex-start;gap:56px">
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:72px;line-height:1.1;letter-spacing:6px">THE COMPUTE-EFFICIENT FRONTIER</h2>
+<div style="display:flex;gap:96px;align-items:center">
+<div style="width:560px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:96px;line-height:1.05">5×</p>
+<p style="font-size:26px;line-height:1.4;color:#acaba8">annual growth in training compute</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:96px;line-height:1.05">5.2 mo</p>
+<p style="font-size:26px;line-height:1.4;color:#acaba8">doubling time for training compute</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:96px;line-height:1.05">2.2×</p>
+<p style="font-size:26px;line-height:1.4;color:#acaba8">annual growth in power draw; runs now exceed 100 MW</p>
+</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px">
+<svg aria-label="Schematic log-log chart: individual training runs lower their loss with compute but none crosses a single power-law line, the compute-efficient frontier, which flattens towards an irreducible loss floor" width="1008" height="520" viewBox="0 0 1008 520"><text x="0" y="22" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24">LOSS · cross-entropy, log</text><line x1="120" y1="40" x2="120" y2="440" stroke="#3a3a3e" stroke-width="1.5"/><line x1="120" y1="440" x2="980" y2="440" stroke="#3a3a3e" stroke-width="1.5"/><polygon points="120,70.0 163,104.4 206,135.2 249,162.8 292,187.5 335,209.6 378,229.4 421,247.2 464,263.1 507,277.4 550,290.2 593,301.6 636,311.8 679,321.0 722,329.3 765,336.6 808,343.2 851,349.1 894,354.4 937,359.2 980,363.4 980,400 120,400" fill="#f2f1ec" fill-opacity="0.07"/><polyline points="120,-13.6 137,34.9 154,71.3 172,98.7 189,119.3 206,134.7 223,146.3 240,155.1 258,161.6 275,166.5 292,170.2 309,173.0 326,175.1 344,176.7 361,177.9 378,178.8 395,179.4 412,179.9 430,180.3 447,180.6 464,180.8 481,181.0 498,181.1 516,181.2 533,181.2 550,181.3 567,181.3 584,181.4 602,181.4 619,181.4 636,181.4 653,181.4 670,181.4 688,181.4 705,181.4 722,181.4 739,181.4 756,181.4 774,181.4 791,181.4 808,181.4 825,181.4 842,181.4 860,181.4 877,181.4 894,181.4 911,181.4 928,181.4 946,181.4 963,181.4 980,181.4" fill="none" stroke="#6e6d6a" stroke-width="2.5"/><polyline points="206,1.3 223,52.1 240,92.8 258,125.4 275,151.4 292,172.3 309,189.1 326,202.5 344,213.2 361,221.8 378,228.6 395,234.1 412,238.6 430,242.1 447,244.9 464,247.2 481,249.0 498,250.4 516,251.6 533,252.5 550,253.3 567,253.9 584,254.4 602,254.7 619,255.0 636,255.3 653,255.5 670,255.6 688,255.8 705,255.9 722,256.0 739,256.0 756,256.1 774,256.1 791,256.1 808,256.2 825,256.2 842,256.2 860,256.2 877,256.2 894,256.2 911,256.2 928,256.3 946,256.3 963,256.3 980,256.3" fill="none" stroke="#6e6d6a" stroke-width="2.5"/><polyline points="326,24.7 344,73.4 361,114.0 378,147.9 395,176.1 412,199.7 430,219.3 447,235.7 464,249.3 481,260.7 498,270.2 516,278.1 533,284.7 550,290.1 567,294.7 584,298.6 602,301.7 619,304.4 636,306.6 653,308.5 670,310.0 688,311.3 705,312.3 722,313.2 739,314.0 756,314.6 774,315.1 791,315.6 808,315.9 825,316.2 842,316.5 860,316.7 877,316.8 894,317.0 911,317.1 928,317.2 946,317.3 963,317.4 980,317.4" fill="none" stroke="#6e6d6a" stroke-width="2.5"/><polyline points="481,43.2 498,88.4 516,127.2 533,160.4 550,188.9 567,213.4 584,234.3 602,252.3 619,267.7 636,280.9 653,292.2 670,301.9 688,310.2 705,317.3 722,323.5 739,328.7 756,333.2 774,337.1 791,340.4 808,343.2 825,345.6 842,347.7 860,349.5 877,351.0 894,352.3 911,353.5 928,354.4 946,355.3 963,356.0 980,356.6" fill="none" stroke="#6e6d6a" stroke-width="2.5"/><polyline points="120,70.0 163,104.4 206,135.2 249,162.8 292,187.5 335,209.6 378,229.4 421,247.2 464,263.1 507,277.4 550,290.2 593,301.6 636,311.8 679,321.0 722,329.3 765,336.6 808,343.2 851,349.1 894,354.4 937,359.2 980,363.4" fill="none" stroke="#f2f1ec" stroke-width="3.5"/><line x1="120" y1="400" x2="980" y2="400" stroke="#acaba8" stroke-width="1.5" stroke-dasharray="8 8"/><text x="140" y="385" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="24">no model has trained into this region</text><text x="980" y="430" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">irreducible loss · E ≈ 1.69 nats</text><text x="550" y="490" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">COMPUTE · training FLOP, log</text></svg>
+<p style="font-size:24px;line-height:1.4;color:#acaba8">Schematic · light: frontier · grey: training runs · dashed: floor E<br><span style="color:#f2f1ec">L(N, D) = E + A·N⁻ᵅ + B·D⁻ᵝ</span> · <span style="color:#f2f1ec">L ∝ C⁻⁰·⁰⁵</span>: 10× compute buys ~11 % lower loss</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1400px;font-size:24px;color:#acaba8">I · BREAKTHROUGH — Epoch AI (2024–25); Kaplan et al. (2020); Hoffmann et al., Chinchilla (2022)</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;text-align:right;color:#acaba8">02 / 09</p>
+
+</section>
+<section id="ripple" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:flex-start;gap:56px">
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:72px;line-height:1.1;letter-spacing:6px">THE AGENT HORIZON</h2>
+<div style="display:flex;gap:96px;align-items:center">
+<div style="width:1000px;display:flex;flex-direction:column;gap:16px">
+<svg aria-label="Schematic: success rate falls as task length grows; the newer model's 50 percent point sits at longer tasks, doubling about every 7 months" width="1000" height="560" viewBox="0 0 1000 560"><line x1="120" y1="480" x2="960" y2="480" stroke="#3a3a3e" stroke-width="1.5"/><line x1="120" y1="40" x2="120" y2="480" stroke="#3a3a3e" stroke-width="1.5"/><line x1="120" y1="260" x2="960" y2="260" stroke="#5a5a5e" stroke-width="1.5" stroke-dasharray="8 8"/><text x="100" y="48" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">100 %</text><text x="100" y="268" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">50 %</text><text x="100" y="488" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">0 %</text><polyline points="120,44 180,52 240,73 300,124 360,221 420,336 480,418 540,457 600,472 660,477 720,479 960,480" fill="none" stroke="#6e6d6a" stroke-width="3"/><polyline points="120,40 300,41 360,41 420,44 480,52 540,73 600,124 660,221 720,336 780,418 840,457 900,472 960,477" fill="none" stroke="#f2f1ec" stroke-width="3"/><circle cx="380" cy="260" r="8" fill="#6e6d6a"/><circle cx="680" cy="260" r="8" fill="#f2f1ec"/><line x1="396" y1="290" x2="654" y2="290" stroke="#f2f1ec" stroke-width="2"/><polygon points="664,290 650,282 650,298" fill="#f2f1ec"/><text x="530" y="330" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="26" text-anchor="middle">×2 ≈ 7 months</text><text x="120" y="525" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="start">seconds</text><text x="400" y="525" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">minutes</text><text x="680" y="525" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">hours</text><text x="960" y="525" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">days</text><text x="0" y="20" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="start">SUCCESS RATE · P(task solved)</text><text x="960" y="248" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">50 % time horizon</text><text x="540" y="556" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">TIME · task length in human expert time · log</text></svg>
+<p style="font-size:24px;line-height:1.4;color:#acaba8">Schematic of the method · <span style="color:#f2f1ec">— newer model</span> · — older model<br><span style="color:#f2f1ec">P(success | t) = σ(a − b·log₂ t)</span> · time horizon h₅₀ = t at which P = 0.5</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:96px;line-height:1.05">~7 mo</p>
+<p style="font-size:26px;line-height:1.4;color:#acaba8">doubling time of the 50 % time horizon</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:96px;line-height:1.05">&lt;3 mo</p>
+<p style="font-size:26px;line-height:1.4;color:#acaba8">doubling time on SWE-bench Verified</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:96px;line-height:1.05">170</p>
+<p style="font-size:26px;line-height:1.4;color:#acaba8">software, cyber-security and ML tasks, 2019–2025</p>
+</div>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1400px;font-size:24px;color:#acaba8">I · BREAKTHROUGH — METR, Kwa et al. (2025), Measuring AI Ability to Complete Long Tasks</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;text-align:right;color:#acaba8">03 / 09</p>
+
+</section>
+<section id="balance" data-transition="fade" style="background:#0f0f12;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:flex-start;gap:56px">
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:72px;line-height:1.1;letter-spacing:6px">FRONTIER VS BUDGET MODELS</h2>
+<div style="display:flex;gap:96px;align-items:center">
+<div style="width:1000px;display:flex;flex-direction:column;gap:16px">
+<svg aria-label="Scissors chart, log scale over two years: the cost of running the frontier rises 3 to 18 times per year while the price of a fixed capability falls 5 to 10 times per year" width="1000" height="560" viewBox="0 0 1000 560"><line x1="140" y1="40" x2="960" y2="40" stroke="#2c2c2f" stroke-width="1"/><line x1="140" y1="128" x2="960" y2="128" stroke="#2c2c2f" stroke-width="1"/><line x1="140" y1="216" x2="960" y2="216" stroke="#2c2c2f" stroke-width="1"/><line x1="140" y1="304" x2="960" y2="304" stroke="#5a5a5e" stroke-width="1.5"/><line x1="140" y1="392" x2="960" y2="392" stroke="#2c2c2f" stroke-width="1"/><line x1="140" y1="480" x2="960" y2="480" stroke="#3a3a3e" stroke-width="1.5"/><text x="120" y="48" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">1000×</text><text x="120" y="136" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">100×</text><text x="120" y="224" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">10×</text><text x="120" y="312" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">1×</text><text x="120" y="400" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">0.1×</text><text x="120" y="488" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">0.01×</text><polygon points="140,304 550,194 960,83 960,220 550,262" fill="#f2f1ec" fill-opacity="0.35" stroke="#f2f1ec" stroke-width="2"/><polygon points="140,304 550,366 960,427 960,480 550,392" fill="#6e6d6a" fill-opacity="0.6" stroke="#acaba8" stroke-width="2"/><text x="940" y="64" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="26" text-anchor="end">frontier: ×9 to ×324</text><text x="580" y="455" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="26" text-anchor="end">fixed level: ÷25 to ÷100</text><text x="140" y="525" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">today</text><text x="550" y="525" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">+1 year</text><text x="960" y="525" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">+2 years</text><text x="0" y="20" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="start">COST · USD per task, relative to today · log</text><text x="550" y="556" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">TIME · years from today</text></svg>
+<p style="font-size:24px;line-height:1.4;color:#acaba8"><span style="color:#f2f1ec">Light band</span>: cost of running the frontier · <span style="color:#f2f1ec">grey band</span>: price of a fixed capability<br><span style="color:#f2f1ec">cost / task = price / token × tokens / task</span> · reasoning inflates the second term</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:96px;line-height:1.05">280×</p>
+<p style="font-size:26px;line-height:1.4;color:#acaba8">cheaper at GPT-3.5 level, Nov 2022 → Oct 2024</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:96px;line-height:1.05">50× / yr</p>
+<p style="font-size:26px;line-height:1.4;color:#acaba8">median annual price decline at fixed capability</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:96px;line-height:1.05">3–18× / yr</p>
+<p style="font-size:26px;line-height:1.4;color:#acaba8">annual rise in the cost of running the frontier</p>
+</div>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1450px;font-size:24px;color:#acaba8">II · DIFFUSION — Stanford AI Index 2025; Epoch AI (2025); Gundlach et al., MIT (2025)</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;text-align:right;color:#acaba8">04 / 09</p>
+
+</section>
+<section id="data" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:flex-start;gap:56px">
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:72px;line-height:1.1;letter-spacing:6px">THE DATA WALL, AND HOW TO FLIP IT</h2>
+<div style="display:flex;gap:64px">
+<div style="width:512px;display:flex;flex-direction:column;gap:16px">
+<h3 style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:32px;line-height:1.1;letter-spacing:3px">1 · CHEAPER TO TRAIN</h3>
+<svg aria-label="Log chart: compute needed for a fixed performance level halves about every 8 months, falling to roughly 1.6 percent after four years" width="512" height="420" viewBox="0 0 512 420"><text x="0" y="22" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24">COMPUTE for fixed result · log</text><line x1="90" y1="60" x2="500" y2="60" stroke="#2c2c2f" stroke-width="1"/><line x1="90" y1="200" x2="500" y2="200" stroke="#2c2c2f" stroke-width="1"/><line x1="90" y1="340" x2="500" y2="340" stroke="#3a3a3e" stroke-width="1.5"/><text x="80" y="68" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">1×</text><text x="80" y="208" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">0.1×</text><text x="80" y="348" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">0.01×</text><polyline points="90,60 190,123 290,186 390,250 490,313" fill="none" stroke="#f2f1ec" stroke-width="3"/><circle cx="90" cy="60" r="6" fill="#f2f1ec"/><circle cx="490" cy="313" r="6" fill="#f2f1ec"/><text x="500" y="110" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">÷2 every ~8 months</text><text x="90" y="378" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">0</text><text x="290" y="378" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">+2</text><text x="490" y="378" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">+4</text><text x="290" y="412" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">TIME · years</text></svg>
+<p style="font-size:24px;line-height:1.4;color:#acaba8">Algorithmic progress halves the compute needed for a given result roughly every eight months.</p>
+</div>
+<div style="width:512px;display:flex;flex-direction:column;gap:16px">
+<h3 style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:32px;line-height:1.1;letter-spacing:3px">2 · RUNNING OUT OF TEXT</h3>
+<svg aria-label="Schematic log chart: training dataset size rises until it meets the stock of public human text, about 300 trillion tokens, with exhaustion expected between 2026 and 2032, median 2028" width="512" height="420" viewBox="0 0 512 420"><text x="0" y="22" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24">TOKENS · log</text><rect x="250" y="60" width="240" height="280" fill="#f2f1ec" fill-opacity="0.06"/><rect x="90" y="60" width="410" height="93" fill="#6e6d6a" fill-opacity="0.45"/><line x1="90" y1="109" x2="500" y2="109" stroke="#acaba8" stroke-width="1.5" stroke-dasharray="6 6"/><line x1="90" y1="247" x2="500" y2="247" stroke="#2c2c2f" stroke-width="1"/><line x1="90" y1="340" x2="500" y2="340" stroke="#3a3a3e" stroke-width="1.5"/><text x="80" y="68" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">1000T</text><text x="80" y="161" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">100T</text><text x="80" y="255" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">10T</text><text x="80" y="348" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">1T</text><text x="100" y="140" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="24">≈ 300T stock</text><polyline points="90,296 393,60" fill="none" stroke="#f2f1ec" stroke-width="3"/><circle cx="330" cy="109" r="7" fill="#f2f1ec"/><line x1="330" y1="60" x2="330" y2="340" stroke="#f2f1ec" stroke-width="1.5" stroke-dasharray="4 6"/><text x="330" y="52" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">median 2028</text><text x="200" y="322" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24">data used</text><text x="90" y="378" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">2022</text><text x="250" y="378" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">2026</text><text x="490" y="378" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">2032</text><text x="290" y="412" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">TIME · year</text></svg>
+<p style="font-size:24px;line-height:1.4;color:#acaba8">Public human text, ≈ 300T tokens, is likely exhausted between 2026 and 2032. Schematic.</p>
+</div>
+<div style="width:512px;display:flex;flex-direction:column;gap:16px">
+<h3 style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:32px;line-height:1.1;letter-spacing:3px">3 · FLIP IT: QUANTIZE</h3>
+<svg aria-label="Bar chart: weights of a 32-billion-parameter model need 64 GB in FP16, 32 GB in INT8 and 16 GB in 4-bit, which fits under a 24 GB consumer GPU" width="512" height="420" viewBox="0 0 512 420"><text x="0" y="22" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24">WEIGHTS · GB, 32B-param model</text><line x1="90" y1="84" x2="500" y2="84" stroke="#2c2c2f" stroke-width="1"/><line x1="90" y1="212" x2="500" y2="212" stroke="#2c2c2f" stroke-width="1"/><line x1="90" y1="340" x2="500" y2="340" stroke="#3a3a3e" stroke-width="1.5"/><text x="80" y="92" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">64</text><text x="80" y="220" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">32</text><text x="80" y="348" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">0</text><rect x="110" y="84" width="80" height="256" fill="#6e6d6a"/><rect x="230" y="212" width="80" height="128" fill="#acaba8"/><rect x="350" y="276" width="80" height="64" fill="#f2f1ec"/><line x1="90" y1="244" x2="500" y2="244" stroke="#f2f1ec" stroke-width="2" stroke-dasharray="8 6"/><text x="500" y="236" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">24 GB GPU</text><text x="150" y="74" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">64</text><text x="270" y="202" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">32</text><text x="390" y="268" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">16</text><text x="150" y="378" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">FP16</text><text x="270" y="378" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">INT8</text><text x="390" y="378" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">4-bit</text><text x="290" y="412" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">BYTES / WEIGHT · 2 · 1 · 0.5</text></svg>
+<p style="font-size:24px;line-height:1.4;color:#acaba8">Memory = parameters × bytes per weight. At 4 bits, a 32B model fits one consumer GPU.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1450px;font-size:24px;color:#acaba8">II · DIFFUSION — Ho et al., NeurIPS 2024; Villalobos et al., Epoch AI 2024; Dettmers et al., QLoRA 2023</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;text-align:right;color:#acaba8">05 / 09</p>
+
+</section>
+<section id="quant" data-transition="fade" style="background:#0f0f12;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:flex-start;gap:56px">
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:72px;line-height:1.1;letter-spacing:6px">SAVINGS VS DEMENTIA</h2>
+<div style="display:flex;gap:64px;align-items:center">
+<div style="width:1100px;display:flex;flex-direction:column;gap:16px">
+<svg aria-label="Measured curve for Llama 3 70B: as quantization shrinks the model from 70 GiB (Q8_0) to 14 GiB (IQ1_S), perplexity loss stays under 5 percent down to Q4_K_M at 40 GiB, then explodes to 249 percent in the dementia zone below about 26 GiB" width="1100" height="580" viewBox="0 0 1100 580"><text x="0" y="22" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="start">DEMENTIA · perplexity increase vs FP16, log</text><rect x="110" y="50" width="239" height="450" fill="#6e6d6a" fill-opacity="0.25"/><text x="229" y="486" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">DEMENTIA ZONE</text><rect x="513" y="50" width="157" height="450" fill="#f2f1ec" fill-opacity="0.08"/><text x="591" y="486" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">SWEET SPOT</text><line x1="110" y1="50" x2="1080" y2="50" stroke="#2c2c2f" stroke-width="1"/><text x="100" y="58" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">1000 %</text><line x1="110" y1="140" x2="1080" y2="140" stroke="#2c2c2f" stroke-width="1"/><text x="100" y="148" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">100 %</text><line x1="110" y1="230" x2="1080" y2="230" stroke="#2c2c2f" stroke-width="1"/><text x="100" y="238" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">10 %</text><line x1="110" y1="320" x2="1080" y2="320" stroke="#2c2c2f" stroke-width="1"/><text x="100" y="328" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">1 %</text><line x1="110" y1="410" x2="1080" y2="410" stroke="#2c2c2f" stroke-width="1"/><text x="100" y="418" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">0.1 %</text><line x1="110" y1="500" x2="1080" y2="500" stroke="#2c2c2f" stroke-width="1"/><text x="100" y="508" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">0.01 %</text><line x1="110" y1="500" x2="1080" y2="500" stroke="#3a3a3e" stroke-width="1.5"/><line x1="628" y1="110" x2="628" y2="500" stroke="#f2f1ec" stroke-width="2" stroke-dasharray="8 6"/><text x="638" y="134" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="start">48 GB VRAM</text><polyline points="174,104.4 226,128.1 296,152.7 327,154.7 343,175.7 437,205.4 488,243.6 552,258.4 655,311.9 765,349.5 1003,457.1" fill="none" stroke="#f2f1ec" stroke-width="3"/><circle cx="174" cy="104.4" r="6" fill="#f2f1ec"/><text x="186" y="88" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="start">IQ1_S</text><circle cx="226" cy="128.1" r="6" fill="#f2f1ec"/><circle cx="296" cy="152.7" r="6" fill="#f2f1ec"/><circle cx="327" cy="154.7" r="6" fill="#f2f1ec"/><text x="339" y="141" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="start">Q2_K</text><circle cx="343" cy="175.7" r="6" fill="#f2f1ec"/><circle cx="437" cy="205.4" r="6" fill="#f2f1ec"/><text x="451" y="191" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="start">Q3_K_M</text><circle cx="488" cy="243.6" r="6" fill="#f2f1ec"/><circle cx="552" cy="258.4" r="9" fill="#f2f1ec"/><text x="538" y="292" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">Q4_K_M</text><circle cx="655" cy="311.9" r="6" fill="#f2f1ec"/><text x="669" y="298" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="start">Q5_K_M</text><circle cx="765" cy="349.5" r="6" fill="#f2f1ec"/><text x="779" y="336" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="start">Q6_K</text><circle cx="1003" cy="457.1" r="6" fill="#f2f1ec"/><text x="991" y="441" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">Q8_0</text><text x="259" y="536" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">20</text><text x="408" y="536" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">30</text><text x="558" y="536" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">40</text><text x="707" y="536" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">50</text><text x="856" y="536" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">60</text><text x="1005" y="536" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">70</text><text x="595" y="574" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">MEMORY · model file size, GiB  (← more savings)</text></svg>
+<p style="font-size:24px;color:#acaba8">Measured: Llama 3 70B, GGUF quants, wikitext-2 perplexity. <span style="color:#f2f1ec">Q4_K_M</span> highlighted.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:8px"><p style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:96px;line-height:1.05">≈ 70 %</p><p style="font-size:26px;line-height:1.4;color:#acaba8">smaller than FP16 at Q4_K_M (131 → 40 GiB)</p></div>
+<div style="display:flex;flex-direction:column;gap:8px"><p style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:96px;line-height:1.05">+4.8 %</p><p style="font-size:26px;line-height:1.4;color:#acaba8">perplexity cost at Q4_K_M, ~4.8 bits per weight</p></div>
+<div style="display:flex;flex-direction:column;gap:8px"><p style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:96px;line-height:1.05">+249 %</p><p style="font-size:26px;line-height:1.4;color:#acaba8">at IQ1_S, ~1.7 bits per weight: coherence collapses</p></div>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1450px;font-size:24px;color:#acaba8">II · DIFFUSION — llama.cpp perplexity measurements, Llama 3 70B (dranger003); llama.cpp Llama 2 70B scoreboard</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;text-align:right;color:#acaba8">06 / 09</p>
+
+</section>
+<section id="jagged" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:flex-start;gap:48px">
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:72px;line-height:1.1;letter-spacing:6px">THE JAGGED FRONTIER</h2>
+<p style="font-size:28px;line-height:1.4;color:#acaba8">758 BCG consultants · GPT-4 · 18 realistic tasks · randomised field experiment</p>
+<svg aria-label="Diverging bar chart: inside the frontier, AI users completed 12.2 percent more tasks, were 25.1 percent faster and had over 40 percent higher quality; outside the frontier they were 19 percentage points less likely to be correct" width="1664" height="440" viewBox="0 0 1664 440"><text x="0" y="28" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" letter-spacing="3">INSIDE THE FRONTIER</text><text x="0" y="98" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="28">Tasks completed</text><rect x="900" y="60" width="195" height="56" fill="#f2f1ec"/><text x="1115" y="98" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="30">+12.2 %</text><text x="0" y="178" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="28">Speed</text><rect x="900" y="140" width="402" height="56" fill="#f2f1ec"/><text x="1322" y="178" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="30">+25.1 %</text><text x="0" y="258" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="28">Quality</text><rect x="900" y="220" width="640" height="56" fill="#f2f1ec"/><text x="1560" y="258" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="30">+40 %</text><line x1="0" y1="310" x2="1664" y2="310" stroke="#2c2c2f" stroke-width="1.5"/><text x="0" y="350" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" letter-spacing="3">OUTSIDE THE FRONTIER</text><text x="0" y="408" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="28">Correct answers</text><rect x="596" y="370" width="304" height="56" fill="#6e6d6a"/><text x="576" y="408" fill="#f2f1ec" font-family="Montserrat, Arial, sans-serif" font-size="30" text-anchor="end">−19 pp</text><text x="1664" y="28" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="end">CHANGE vs no-AI control group</text><text x="900" y="44" fill="#acaba8" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">0</text><line x1="900" y1="50" x2="900" y2="436" stroke="#acaba8" stroke-width="2"/></svg>
+<p style="font-size:28px;line-height:1.4;color:#acaba8">Inside the frontier, gains skew to the bottom: below-average performers <span style="color:#f2f1ec">+43 %</span>, above-average <span style="color:#f2f1ec">+17 %</span></p>
+<p style="position:absolute;left:128px;bottom:64px;width:1400px;font-size:24px;color:#acaba8">III · IMPACT &amp; PRACTICE — Dell'Acqua et al. (2023), Harvard Business School &amp; BCG</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;text-align:right;color:#acaba8">07 / 09</p>
+
+</section>
+<section id="adapt" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:flex-start;gap:56px">
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:72px;line-height:1.1;letter-spacing:6px">CHOOSING THE TIER</h2>
+<div style="display:flex;flex-direction:column">
+<div style="display:grid;grid-template-columns:380px 440px 400px 444px;padding-bottom:20px;border-bottom:1px solid #3a3a3e">
+<p style="font-size:24px;letter-spacing:3px;color:#acaba8">TIER</p>
+<p style="font-size:24px;letter-spacing:3px;color:#acaba8">COST DYNAMICS</p>
+<p style="font-size:24px;letter-spacing:3px;color:#acaba8">CAPABILITY</p>
+<p style="font-size:24px;letter-spacing:3px;color:#acaba8">BEST FOR</p>
+</div>
+<div style="display:grid;grid-template-columns:380px 440px 400px 444px;padding-top:28px;padding-bottom:28px;border-bottom:1px solid #2c2c2f;align-items:start">
+<h3 style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:36px;line-height:1.2;letter-spacing:3px;padding-right:32px">FRONTIER API</h3>
+<p style="font-size:28px;line-height:1.4;color:#acaba8;padding-right:32px">running cost up 3–18× a year</p>
+<p style="font-size:28px;line-height:1.4;color:#acaba8;padding-right:32px">state of the art</p>
+<p style="font-size:28px;line-height:1.4;color:#acaba8">novel, long-horizon, high-stakes tasks</p>
+</div>
+<div style="display:grid;grid-template-columns:380px 440px 400px 444px;padding-top:28px;padding-bottom:28px;border-bottom:1px solid #2c2c2f;align-items:start">
+<h3 style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:36px;line-height:1.2;letter-spacing:3px;padding-right:32px">BUDGET API</h3>
+<p style="font-size:28px;line-height:1.4;color:#acaba8;padding-right:32px">same score 5–10× cheaper each year</p>
+<p style="font-size:28px;line-height:1.4;color:#acaba8;padding-right:32px">roughly last year's frontier</p>
+<p style="font-size:28px;line-height:1.4;color:#acaba8">high-volume, routine workloads</p>
+</div>
+<div style="display:grid;grid-template-columns:380px 440px 400px 444px;padding-top:28px;padding-bottom:28px;border-bottom:1px solid #2c2c2f;align-items:start">
+<h3 style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:36px;line-height:1.2;letter-spacing:3px;padding-right:32px">LOCAL OPEN WEIGHTS</h3>
+<p style="font-size:28px;line-height:1.4;color:#acaba8;padding-right:32px">hardware only, no per-token fee</p>
+<p style="font-size:28px;line-height:1.4;color:#acaba8;padding-right:32px">~6–12 mo behind; weights ≤28–40B params fit one GPU</p>
+<p style="font-size:28px;line-height:1.4;color:#acaba8">sensitive data, air-gapped agents</p>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#acaba8">Pattern: <span style="color:#f2f1ec">route to the cheapest tier that clears the bar, escalate on low confidence</span> · n8n · Ollama · NeMo Guardrails</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1450px;font-size:24px;color:#acaba8">III · IMPACT &amp; PRACTICE — Gundlach et al., MIT (2025); Epoch AI (2025–2026)</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;text-align:right;color:#acaba8">08 / 09</p>
+
+</section>
+<section id="close" data-transition="fade" style="background:#f2f1ec;color:#08080a;font-family:'Montserrat', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:flex-start;gap:56px">
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:72px;line-height:1.1;letter-spacing:6px">DISCUSSION</h2>
+<div style="display:flex;flex-direction:column">
+<div style="display:flex;gap:48px;border-top:1px solid #c9c8c2;padding-top:32px;padding-bottom:32px;align-items:flex-start">
+<p style="width:96px;font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:56px;line-height:1">01</p>
+<p style="flex:1;font-size:36px;line-height:1.35">If a fixed capability grows ~50× cheaper each year, what still justifies frontier prices?</p>
+</div>
+<div style="display:flex;gap:48px;border-top:1px solid #c9c8c2;padding-top:32px;padding-bottom:32px;align-items:flex-start">
+<p style="width:96px;font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:56px;line-height:1">02</p>
+<p style="flex:1;font-size:36px;line-height:1.35">How would we even notice our own agents straying beyond the jagged edge?</p>
+</div>
+<div style="display:flex;gap:48px;border-top:1px solid #c9c8c2;border-bottom:1px solid #c9c8c2;padding-top:32px;padding-bottom:32px;align-items:flex-start">
+<p style="width:96px;font-family:'Josefin Sans', Arial, sans-serif;font-weight:200;font-size:56px;line-height:1">03</p>
+<p style="flex:1;font-size:36px;line-height:1.35">With open weights trailing the frontier by mere months, can capability-based regulation still bite?</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1000px;font-size:24px;letter-spacing:3px;color:#4b4a47">STAY CURIOUS · STAY CRITICAL · THANK YOU</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:24px;text-align:right;color:#4b4a47">09 / 09</p>
+
+</section>
+</div></div>
+<div id="ui">
+ <a href="../"><span class="arr">&larr;</span> Školení</a>
+ <span class="sp"></span>
+ <button id="prev" aria-label="Předchozí"><span class="arr">&larr;</span></button>
+ <span class="n" id="n"></span>
+ <button id="next" aria-label="Další"><span class="arr">&rarr;</span></button>
+ <button id="fs" aria-label="Celá obrazovka">⛶</button>
+</div>
+<script>
+const deck=document.getElementById('deck'),S=[...deck.children],N=S.length;let i=0;
+function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);deck.style.transform='scale('+s+')'}
+function go(k){i=Math.max(0,Math.min(N-1,k));S.forEach((s,j)=>s.classList.toggle('on',j===i));document.getElementById('n').textContent=(i+1)+' / '+N;document.getElementById('bar').style.width=((i+1)/N*100)+'%';history.replaceState(null,'','#'+(i+1))}
+addEventListener('resize',fit);fit();
+go((parseInt(location.hash.slice(1))||1)-1);
+addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();go(i+1)}else if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){e.preventDefault();go(i-1)}else if(e.key==='Home')go(0);else if(e.key==='End')go(N-1);else if(e.key==='f'||e.key==='F')fs()});
+document.getElementById('stage').addEventListener('click',e=>{if(e.target.closest('a'))return;go(e.clientX<innerWidth*.3?i-1:i+1)});
+document.getElementById('prev').onclick=()=>go(i-1);document.getElementById('next').onclick=()=>go(i+1);
+function fs(){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()}
+document.getElementById('fs').onclick=fs;
+let x0=null;addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});addEventListener('touchend',e=>{if(x0===null)return;const d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>50)go(d<0?i+1:i-1);x0=null});
+const ui=document.getElementById('ui');let t;function wake(){ui.classList.remove('idle');clearTimeout(t);t=setTimeout(()=>ui.classList.add('idle'),2500)}addEventListener('mousemove',wake);addEventListener('touchstart',wake,{passive:true});wake();
+</script>
+</body></html>

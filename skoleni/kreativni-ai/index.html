@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kreativní AI | woffx</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;height:100%;background:#08080a;overflow:hidden;-webkit-font-smoothing:antialiased}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;cursor:pointer;touch-action:pan-y}
+#deck{position:relative;width:1920px;height:1080px;flex:none;transform-origin:center center}
+#deck>section{position:absolute;left:0;top:0;width:1920px;height:1080px;box-sizing:border-box;overflow:hidden;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+#deck>section.on{opacity:1;visibility:visible}
+#deck section *{box-sizing:border-box;margin:0}
+#deck>section>*{position:relative}
+#deck section h1,#deck section h2,#deck section h3{font-weight:400}
+#deck section a{cursor:pointer}
+#ui{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:18px;padding:14px 20px;font:500 14px Montserrat,system-ui,sans-serif;color:#f2f1ec;background:linear-gradient(0deg,rgba(8,8,10,.85),rgba(8,8,10,0));transition:opacity .4s;z-index:5}
+#ui.idle{opacity:0}
+#ui a,#ui button{color:#f2f1ec;text-decoration:none;background:none;border:1px solid #ffffff24;border-radius:999px;padding:7px 14px;font:inherit;cursor:pointer;backdrop-filter:blur(14px)}
+#ui a:hover,#ui button:hover{border-color:#ffffff60}
+#ui .sp{flex:1}
+#ui .n{color:#acaba8;min-width:64px;text-align:center;font-variant-numeric:tabular-nums}
+#bar{position:fixed;left:0;top:0;height:2px;background:#f2f1ec;transition:width .35s;z-index:6}
+.arr{font-family:system-ui}
+</style></head><body>
+<div id="bar"></div>
+<div id="stage"><div id="deck">
+<section id="cover" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:flex-end;gap:40px">
+<img src="../assets/c5a42fd9c1a31a733365937b96e2971b.webp" alt="" style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover">
+<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:linear-gradient(0deg, rgba(8,8,10,0.92) 0%, rgba(8,8,10,0.45) 55%, rgba(8,8,10,0.05) 100%)"></div>
+<img src="../assets/wx.png" alt="Logo WX" style="width:157px;height:120px;object-fit:contain">
+<h1 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:168px;font-weight:200;letter-spacing:0.08em;line-height:1">KREATIVNÍ AI</h1>
+<p style="font-size:36px;font-weight:400;color:#d8d7d2;line-height:1.3;width:1100px">Jak tvořit s umělou inteligencí – od pixelu po obraz</p>
+<hr style="border:none;border-top:1px solid #4a4a4e;width:1100px">
+<p style="font-size:24px;font-weight:400;color:#f2f1ec">Multimediální AI kroužek</p>
+
+</section>
+<section id="co-je-ai" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;gap:48px">
+<img src="../assets/162bcb2caa314c3ed54f316b1ccfeec7.webp" alt="" style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover">
+<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:linear-gradient(270deg, rgba(8,8,10,0.9) 0%, rgba(8,8,10,0.7) 50%, rgba(8,8,10,0.1) 100%)"></div>
+<p style="font-size:24px;font-weight:500;color:#c9c8c3;width:960px">Co je AI</p>
+<p style="font-size:64px;font-weight:400;line-height:1.2;width:960px">AI nemyslí jako člověk. Hledá vzory v obrovském množství dat a předpovídá, co nejspíš přijde dál.</p>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="jak-funguje" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:space-between;gap:64px">
+<img src="../assets/29972228fd74f96fdabf3fd9f534163e.webp" alt="" style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover">
+<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:linear-gradient(180deg, rgba(8,8,10,0.55) 0%, rgba(8,8,10,0.8) 100%)"></div>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">JAK FUNGUJE</h2>
+<div style="display:flex;gap:48px;align-items:flex-start">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;border-top:1px solid #f2f1ec;padding-top:32px">
+<h3 style="font-size:44px;font-weight:400">Data</h3>
+<p style="font-size:28px;color:#d8d7d2;line-height:1.4">Miliony textů, obrázků, videí a zvuků</p>
+</div>
+<p style="font-size:44px;color:#d8d7d2;padding-top:32px">→</p>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;border-top:1px solid #f2f1ec;padding-top:32px">
+<h3 style="font-size:44px;font-weight:400">Trénink</h3>
+<p style="font-size:28px;color:#d8d7d2;line-height:1.4">Model v nich hledá vzory a souvislosti</p>
+</div>
+<p style="font-size:44px;color:#d8d7d2;padding-top:32px">→</p>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;border-top:1px solid #f2f1ec;padding-top:32px">
+<h3 style="font-size:44px;font-weight:400">Generování</h3>
+<p style="font-size:28px;color:#d8d7d2;line-height:1.4">Z tvého zadání (promptu) skládá nový výstup</p>
+</div>
+</div>
+<p style="font-size:32px;line-height:1.4;width:1400px;border-top:1px solid #4a4a4e;padding-top:32px">Model viděl tisíce fotek koček – a proto umí nakreslit kočku, kterou ještě nikdo neviděl.</p>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="nn-pixely" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:64px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Jak neuronka vidí obrázek · 1/5</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">OBRÁZEK = ČÍSLA</h2>
+</div>
+<div style="display:flex;gap:28px;align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:20px">
+<img src="../assets/fe46d40de93d29da3409df07ff03d68b.webp" alt="AI obrázek rohaté postavy s vyznačeným čtvercem u oka" style="width:660px;height:372px;object-fit:cover;border-radius:16px">
+<p style="font-size:24px;color:#acaba8">Obrázek</p>
+</div>
+<p style="font-size:44px;color:#acaba8;padding-top:160px">→</p>
+<div style="display:flex;flex-direction:column;gap:20px">
+<img src="../assets/b5813b80cc9dd4ae9f9fc569f33d8989.webp" alt="Přiblížený výřez – jednotlivé pixely" style="width:372px;height:372px;object-fit:cover;border-radius:16px">
+<p style="font-size:24px;color:#acaba8">Zoom: pixely</p>
+</div>
+<p style="font-size:44px;color:#acaba8;padding-top:160px">→</p>
+<div style="display:flex;flex-direction:column;gap:20px">
+<img src="../assets/8507ce50d4bef1fc4a7bc261ae366d1b.webp" alt="Mřížka 8×8 pixelů s hodnotami jasu 0–255" style="width:372px;height:372px;object-fit:cover;border-radius:16px">
+<p style="font-size:24px;color:#acaba8">Čísla 0–255</p>
+</div>
+</div>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="nn-hrany" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Jak neuronka vidí obrázek · 2/5</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">HLEDÁ HRANY</h2>
+</div>
+<div style="display:flex;gap:24px;align-items:flex-start">
+<div style="display:flex;flex-direction:column;gap:16px">
+<img src="../assets/2309409c0a995ca428960306f1d7f3b8.webp" alt="Výřez s rohatou postavou" style="width:360px;height:405px;object-fit:cover;border-radius:16px">
+<p style="font-size:24px;color:#acaba8">Vstup</p>
+</div>
+<p style="font-size:40px;color:#acaba8;padding-top:180px">→</p>
+<div style="display:flex;flex-direction:column;gap:16px">
+<img src="../assets/631000df3ffbb8117a021d2dd16e8064.webp" alt="Filtr na svislé hrany" style="width:360px;height:405px;object-fit:cover;border-radius:16px">
+<p style="font-size:24px;color:#acaba8">Filtr: svislé hrany</p>
+</div>
+<p style="font-size:40px;color:#acaba8;padding-top:180px">→</p>
+<div style="display:flex;flex-direction:column;gap:16px">
+<img src="../assets/3ffcb073e26234cacd24547367f015bc.webp" alt="Všechny hrany v obrázku" style="width:360px;height:405px;object-fit:cover;border-radius:16px">
+<p style="font-size:24px;color:#acaba8">Všechny hrany</p>
+</div>
+<p style="font-size:40px;color:#acaba8;padding-top:180px">→</p>
+<div style="display:flex;flex-direction:column;gap:16px">
+<img src="../assets/46b1cc03022e1fa93423c5ce21dfaaf3.webp" alt="Zvýrazněné obrysy a tvary" style="width:360px;height:405px;object-fit:cover;border-radius:16px">
+<p style="font-size:24px;color:#acaba8">Obrysy a tvary</p>
+</div>
+</div>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="nn-vrstvy" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Jak neuronka vidí obrázek · 3/5</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">VRSTVY</h2>
+</div>
+<svg aria-label="Schéma neuronové sítě: vrstvy pixely, hrany, tvary, části a výsledek „postava s rohy“, každý uzel propojený se všemi v další vrstvě" viewBox="0 0 1664 620" width="1664" height="620">
+<line x1="90" y1="60" x2="450" y2="100" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="60" x2="450" y2="180" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="60" x2="450" y2="260" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="60" x2="450" y2="340" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="60" x2="450" y2="420" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="140" x2="450" y2="100" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="140" x2="450" y2="180" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="140" x2="450" y2="260" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="140" x2="450" y2="340" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="140" x2="450" y2="420" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="220" x2="450" y2="100" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="220" x2="450" y2="180" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="220" x2="450" y2="260" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="220" x2="450" y2="340" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="220" x2="450" y2="420" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="300" x2="450" y2="100" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="300" x2="450" y2="180" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="300" x2="450" y2="260" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="300" x2="450" y2="340" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="300" x2="450" y2="420" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="380" x2="450" y2="100" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="380" x2="450" y2="180" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="380" x2="450" y2="260" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="380" x2="450" y2="340" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="380" x2="450" y2="420" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="460" x2="450" y2="100" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="460" x2="450" y2="180" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="460" x2="450" y2="260" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="460" x2="450" y2="340" stroke="#4a4a4e" stroke-width="1.5"/><line x1="90" y1="460" x2="450" y2="420" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="100" x2="810" y2="140" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="100" x2="810" y2="220" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="100" x2="810" y2="300" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="100" x2="810" y2="380" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="180" x2="810" y2="140" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="180" x2="810" y2="220" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="180" x2="810" y2="300" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="180" x2="810" y2="380" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="260" x2="810" y2="140" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="260" x2="810" y2="220" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="260" x2="810" y2="300" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="260" x2="810" y2="380" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="340" x2="810" y2="140" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="340" x2="810" y2="220" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="340" x2="810" y2="300" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="340" x2="810" y2="380" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="420" x2="810" y2="140" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="420" x2="810" y2="220" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="420" x2="810" y2="300" stroke="#4a4a4e" stroke-width="1.5"/><line x1="450" y1="420" x2="810" y2="380" stroke="#4a4a4e" stroke-width="1.5"/><line x1="810" y1="140" x2="1170" y2="180" stroke="#4a4a4e" stroke-width="1.5"/><line x1="810" y1="140" x2="1170" y2="260" stroke="#4a4a4e" stroke-width="1.5"/><line x1="810" y1="140" x2="1170" y2="340" stroke="#4a4a4e" stroke-width="1.5"/><line x1="810" y1="220" x2="1170" y2="180" stroke="#4a4a4e" stroke-width="1.5"/><line x1="810" y1="220" x2="1170" y2="260" stroke="#4a4a4e" stroke-width="1.5"/><line x1="810" y1="220" x2="1170" y2="340" stroke="#4a4a4e" stroke-width="1.5"/><line x1="810" y1="300" x2="1170" y2="180" stroke="#4a4a4e" stroke-width="1.5"/><line x1="810" y1="300" x2="1170" y2="260" stroke="#4a4a4e" stroke-width="1.5"/><line x1="810" y1="300" x2="1170" y2="340" stroke="#4a4a4e" stroke-width="1.5"/><line x1="810" y1="380" x2="1170" y2="180" stroke="#4a4a4e" stroke-width="1.5"/><line x1="810" y1="380" x2="1170" y2="260" stroke="#4a4a4e" stroke-width="1.5"/><line x1="810" y1="380" x2="1170" y2="340" stroke="#4a4a4e" stroke-width="1.5"/><line x1="1170" y1="180" x2="1530" y2="260" stroke="#4a4a4e" stroke-width="1.5"/><line x1="1170" y1="260" x2="1530" y2="260" stroke="#4a4a4e" stroke-width="1.5"/><line x1="1170" y1="340" x2="1530" y2="260" stroke="#4a4a4e" stroke-width="1.5"/>
+<circle cx="90" cy="60" r="18" fill="#f2f1ec"/><circle cx="90" cy="140" r="18" fill="#f2f1ec"/><circle cx="90" cy="220" r="18" fill="#f2f1ec"/><circle cx="90" cy="300" r="18" fill="#f2f1ec"/><circle cx="90" cy="380" r="18" fill="#f2f1ec"/><circle cx="90" cy="460" r="18" fill="#f2f1ec"/><circle cx="450" cy="100" r="18" fill="#f2f1ec"/><circle cx="450" cy="180" r="18" fill="#f2f1ec"/><circle cx="450" cy="260" r="18" fill="#f2f1ec"/><circle cx="450" cy="340" r="18" fill="#f2f1ec"/><circle cx="450" cy="420" r="18" fill="#f2f1ec"/><circle cx="810" cy="140" r="18" fill="#f2f1ec"/><circle cx="810" cy="220" r="18" fill="#f2f1ec"/><circle cx="810" cy="300" r="18" fill="#f2f1ec"/><circle cx="810" cy="380" r="18" fill="#f2f1ec"/><circle cx="1170" cy="180" r="18" fill="#f2f1ec"/><circle cx="1170" cy="260" r="18" fill="#f2f1ec"/><circle cx="1170" cy="340" r="18" fill="#f2f1ec"/><circle cx="1530" cy="260" r="34" fill="#f2f1ec"/>
+<text x="90" y="550" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="30" fill="#f2f1ec">Pixely</text>
+<text x="90" y="592" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="24" fill="#acaba8">čísla 0–255</text>
+<text x="450" y="550" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="30" fill="#f2f1ec">Hrany</text>
+<text x="450" y="592" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="24" fill="#acaba8">čáry, přechody</text>
+<text x="810" y="550" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="30" fill="#f2f1ec">Tvary</text>
+<text x="810" y="592" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="24" fill="#acaba8">oblouky, kruhy, textury</text>
+<text x="1170" y="550" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="30" fill="#f2f1ec">Části</text>
+<text x="1170" y="592" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="24" fill="#acaba8">rohy, oči, bunda</text>
+<text x="1530" y="550" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="30" fill="#f2f1ec">Výsledek</text>
+<text x="1530" y="592" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="24" fill="#acaba8">„postava s rohy“</text>
+</svg>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="nn-vektory" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;gap:80px;align-items:center">
+<div style="width:620px;display:flex;flex-direction:column;gap:40px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Jak neuronka vidí obrázek · 4/5</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">VEKTORY</h2>
+<p style="font-size:30px;line-height:1.4">Na konci je každý obrázek i slovo jen seznam čísel – vektor. Podobné věci leží blízko sebe.</p>
+<p style="font-size:26px;color:#acaba8;border-top:1px solid #2b2b2d;padding-top:24px">pes = [0,21; −0,73; 0,05; …]</p>
+</div>
+<svg aria-label="Ilustrace prostoru významů: zvířata (pes, vlk, kočka, liška), příroda (les, strom, louka, hora) a technika (auto, dron, robot) tvoří tři skupiny; text a obrázek rohaté postavy leží ve stejném místě" viewBox="0 0 960 824" width="960" height="824">
+<line x1="40" y1="784" x2="940" y2="784" stroke="#4a4a4e" stroke-width="2"/>
+<line x1="40" y1="784" x2="40" y2="20" stroke="#4a4a4e" stroke-width="2"/>
+<circle cx="200" cy="600" r="12" fill="#f2f1ec"/><text x="222" y="609" font-family="Montserrat, Arial, sans-serif" font-size="28" fill="#f2f1ec">pes</text>
+<circle cx="250" cy="660" r="12" fill="#f2f1ec"/><text x="272" y="669" font-family="Montserrat, Arial, sans-serif" font-size="28" fill="#f2f1ec">vlk</text>
+<circle cx="140" cy="690" r="12" fill="#f2f1ec"/><text x="90" y="735" font-family="Montserrat, Arial, sans-serif" font-size="28" fill="#f2f1ec">kočka</text>
+<circle cx="300" cy="590" r="12" fill="#f2f1ec"/><text x="322" y="599" font-family="Montserrat, Arial, sans-serif" font-size="28" fill="#f2f1ec">liška</text>
+<circle cx="560" cy="300" r="12" fill="#9f9e9a"/><text x="582" y="309" font-family="Montserrat, Arial, sans-serif" font-size="28" fill="#c9c8c3">les</text>
+<circle cx="620" cy="370" r="12" fill="#9f9e9a"/><text x="642" y="379" font-family="Montserrat, Arial, sans-serif" font-size="28" fill="#c9c8c3">strom</text>
+<circle cx="500" cy="380" r="12" fill="#9f9e9a"/><text x="380" y="420" font-family="Montserrat, Arial, sans-serif" font-size="28" fill="#c9c8c3">louka</text>
+<circle cx="660" cy="250" r="12" fill="#9f9e9a"/><text x="682" y="259" font-family="Montserrat, Arial, sans-serif" font-size="28" fill="#c9c8c3">hora</text>
+<rect x="760" y="580" width="22" height="22" fill="#6f6e6b"/><text x="796" y="600" font-family="Montserrat, Arial, sans-serif" font-size="28" fill="#acaba8">auto</text>
+<rect x="800" y="650" width="22" height="22" fill="#6f6e6b"/><text x="836" y="670" font-family="Montserrat, Arial, sans-serif" font-size="28" fill="#acaba8">dron</text>
+<rect x="720" y="680" width="22" height="22" fill="#6f6e6b"/><text x="640" y="735" font-family="Montserrat, Arial, sans-serif" font-size="28" fill="#acaba8">robot</text>
+<circle cx="420" cy="170" r="22" fill="none" stroke="#f2f1ec" stroke-width="3"/>
+<circle cx="420" cy="170" r="8" fill="#f2f1ec"/>
+<text x="456" y="150" font-family="Montserrat, Arial, sans-serif" font-size="28" fill="#f2f1ec">„postava s rohy“ (text)</text>
+<text x="456" y="190" font-family="Montserrat, Arial, sans-serif" font-size="28" fill="#f2f1ec">+ její obrázek</text>
+<text x="40" y="816" font-family="Montserrat, Arial, sans-serif" font-size="24" fill="#acaba8">Ilustrace: miliony rozměrů zmáčknuté do 2D</text>
+</svg>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="nn-difuze" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Jak neuronka vidí obrázek · 5/5</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">ZE ŠUMU OBRAZ</h2>
+</div>
+<p style="font-size:32px;line-height:1.3;border-top:1px solid #2b2b2d;padding-top:24px">Prompt: „a deep valley at dusk with grey granite rocks peeking through…“ → vektor → model</p>
+<div style="display:flex;gap:16px;align-items:flex-start">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px">
+<img src="../assets/c62f1e1b70e136e30c8e66f5241e9f70.webp" alt="Čistý šum" style="width:320px;height:180px;object-fit:cover;border-radius:12px">
+<p style="font-size:24px;color:#acaba8">Start: čistý šum</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px">
+<img src="../assets/e7c74de0824972cf6c92e958012e29d0.webp" alt="Šum s náznakem tvarů" style="width:320px;height:180px;object-fit:cover;border-radius:12px">
+<p style="font-size:24px;color:#acaba8">Krok po kroku…</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px">
+<img src="../assets/4ea3e0b84ea09f3d1e11950ea426932c.webp" alt="Napůl odšuměný obraz" style="width:320px;height:180px;object-fit:cover;border-radius:12px">
+<p style="font-size:24px;color:#acaba8">…ubírá šum…</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px">
+<img src="../assets/d095a64bc536cc6b5b8072ce92fa567d.webp" alt="Skoro hotový obraz" style="width:320px;height:180px;object-fit:cover;border-radius:12px">
+<p style="font-size:24px;color:#acaba8">…podle promptu</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px">
+<img src="../assets/3b1cd231a24d1d2e59d0068c0c830efd.webp" alt="Hotový obraz údolí za soumraku" style="width:320px;height:180px;object-fit:cover;border-radius:12px">
+<p style="font-size:24px">Hotovo</p>
+</div>
+</div>
+<p style="font-size:24px;color:#acaba8">Ilustrace principu na hotovém AI obrázku – mezikroky jsou simulované.</p>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="gen-autoreg" data-transition="fade" style="display:flex; flex-direction:column; gap:56px; padding:128px; background:#08080a">
+  <div style="display:flex; flex-direction:column; gap:24px">
+    <p style="font-family:Montserrat, Arial, sans-serif; font-size:24px; font-weight:500; color:#acaba8">Další typy generování · 1/3</p>
+    <h2 style="font-family:'Josefin Sans', Arial, sans-serif; font-size:96px; font-weight:200; line-height:1; letter-spacing:7.7px; color:#f2f1ec">PO KOUSCÍCH</h2>
+  </div>
+  <div style="display:flex; flex-direction:row; gap:24px">
+    <div style="display:flex; flex-direction:column; gap:16px">
+      <img src="../assets/156a93d203411524d409b7fef176afa7.webp" alt="Čtvrtina obrázku poskládaná z dílků" style="width:384px; height:216px; border-radius:12px">
+      <p style="font-family:Montserrat, Arial, sans-serif; font-size:24px; color:#acaba8">12 dílků</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px">
+      <img src="../assets/2fc2aadc9efc270b5875664dd2ec389f.webp" alt="Polovina obrázku poskládaná z dílků" style="width:384px; height:216px; border-radius:12px">
+      <p style="font-family:Montserrat, Arial, sans-serif; font-size:24px; color:#acaba8">24 dílků</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px">
+      <img src="../assets/2c3f4909a852f3ce67cae060e719e8fd.webp" alt="Tři čtvrtiny obrázku poskládané z dílků" style="width:384px; height:216px; border-radius:12px">
+      <p style="font-family:Montserrat, Arial, sans-serif; font-size:24px; color:#acaba8">36 dílků</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px">
+      <img src="../assets/2f77381f53d74fc34a80215b9efffa85.webp" alt="Celý obrázek ulice za soumraku" style="width:384px; height:216px; border-radius:12px">
+      <p style="font-family:Montserrat, Arial, sans-serif; font-size:24px; color:#f2f1ec">Hotovo</p>
+    </div>
+  </div>
+  <p style="width:1300px; padding:32px 0 0; font-family:Montserrat, Arial, sans-serif; font-size:34px; line-height:1.4; color:#f2f1ec; border-top:1px solid #2b2b2d">Model skládá obrázek dílek po dílku – stejně jako chatbot píše slovo po slově. Každý nový dílek navazuje na ty předchozí.</p>
+  <img src="../assets/wx.png" alt="Logo WX" style="position:absolute; right:64px; bottom:52px; width:52px; height:40px; object-fit:contain">
+  
+</section>
+<section id="gen-postupne" data-transition="fade" style="display:flex; flex-direction:column; gap:56px; padding:128px; background:#08080a">
+  <div style="display:flex; flex-direction:column; gap:24px">
+    <p style="font-family:Montserrat, Arial, sans-serif; font-size:24px; font-weight:500; color:#acaba8">Další typy generování · 1/3</p>
+    <h2 style="font-family:'Josefin Sans', Arial, sans-serif; font-size:96px; font-weight:200; line-height:1; letter-spacing:7.7px; color:#f2f1ec">OD HRUBÉHO K DETAILU</h2>
+  </div>
+  <div style="display:flex; flex-direction:row; gap:24px">
+    <div style="display:flex; flex-direction:column; gap:16px">
+      <img src="../assets/1a6547b899d94e5676c15a46740e0b00.webp" alt="Obrázek v rozlišení 8 pixelů na šířku" style="width:384px; height:216px; border-radius:12px">
+      <p style="font-family:Montserrat, Arial, sans-serif; font-size:24px; color:#acaba8">8 px – rozvržení</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px">
+      <img src="../assets/a5bde8b9417552a13d822a538098f7f4.webp" alt="Obrázek v rozlišení 24 pixelů na šířku" style="width:384px; height:216px; border-radius:12px">
+      <p style="font-family:Montserrat, Arial, sans-serif; font-size:24px; color:#acaba8">24 px – tvary</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px">
+      <img src="../assets/9872b624aa2303aca0612f084f17692d.webp" alt="Obrázek v rozlišení 80 pixelů na šířku" style="width:384px; height:216px; border-radius:12px">
+      <p style="font-family:Montserrat, Arial, sans-serif; font-size:24px; color:#acaba8">80 px – objekty</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px">
+      <img src="../assets/70c51c2b853f976b181e2348d5567806.webp" alt="Hotový obrázek kopců s vojáky u ohně" style="width:384px; height:216px; border-radius:12px">
+      <p style="font-family:Montserrat, Arial, sans-serif; font-size:24px; color:#f2f1ec">Plné rozlišení – detaily</p>
+    </div>
+  </div>
+  <p style="width:1300px; padding:32px 0 0; font-family:Montserrat, Arial, sans-serif; font-size:34px; line-height:1.4; color:#f2f1ec; border-top:1px solid #2b2b2d">Nejdřív hrubá geometrie scény – kde je obloha, kopec, postava. Detaily přibývají až v dalších krocích.</p>
+  <img src="../assets/wx.png" alt="Logo WX" style="position:absolute; right:64px; bottom:52px; width:52px; height:40px; object-fit:contain">
+  
+</section>
+<section id="gen-3d" data-transition="fade" style="display:flex; flex-direction:column; gap:48px; padding:128px; background:#08080a">
+  <div style="display:flex; flex-direction:column; gap:24px">
+    <p style="font-family:Montserrat, Arial, sans-serif; font-size:24px; font-weight:500; color:#acaba8">Další typy generování · 3/3</p>
+    <h2 style="font-family:'Josefin Sans', Arial, sans-serif; font-size:96px; font-weight:200; line-height:1; letter-spacing:7.7px; color:#f2f1ec">3D: TVAR POSTUPNĚ</h2>
+  </div>
+  <div style="display:flex; flex-direction:row; gap:48px; align-items:center">
+    <div style="display:flex; flex-direction:column; gap:16px; align-items:center">
+      <svg xmlns="http://www.w3.org/2000/svg" aria-label="Mrak bodů ve tvaru koule" viewBox="0 0 300 300" style="width:400px; height:400px"><circle cx="230" cy="92" r="4" fill="#f2f1ec"/><circle cx="184" cy="168" r="4" fill="#f2f1ec"/><circle cx="240" cy="135" r="4" fill="#f2f1ec"/><circle cx="70" cy="75" r="4" fill="#f2f1ec"/><circle cx="143" cy="65" r="4" fill="#f2f1ec"/><circle cx="65" cy="154" r="4" fill="#f2f1ec"/><circle cx="52" cy="169" r="4" fill="#f2f1ec"/><circle cx="147" cy="250" r="4" fill="#f2f1ec"/><circle cx="128" cy="183" r="4" fill="#f2f1ec"/><circle cx="117" cy="104" r="4" fill="#f2f1ec"/><circle cx="185" cy="254" r="4" fill="#f2f1ec"/><circle cx="119" cy="109" r="4" fill="#f2f1ec"/><circle cx="234" cy="169" r="4" fill="#f2f1ec"/><circle cx="59" cy="210" r="4" fill="#f2f1ec"/><circle cx="248" cy="196" r="4" fill="#f2f1ec"/><circle cx="106" cy="60" r="4" fill="#f2f1ec"/><circle cx="120" cy="245" r="4" fill="#f2f1ec"/><circle cx="178" cy="179" r="4" fill="#f2f1ec"/><circle cx="121" cy="203" r="4" fill="#f2f1ec"/><circle cx="134" cy="88" r="4" fill="#f2f1ec"/><circle cx="200" cy="185" r="4" fill="#f2f1ec"/><circle cx="115" cy="220" r="4" fill="#f2f1ec"/><circle cx="65" cy="207" r="4" fill="#f2f1ec"/><circle cx="198" cy="63" r="4" fill="#f2f1ec"/><circle cx="213" cy="127" r="4" fill="#f2f1ec"/><circle cx="73" cy="72" r="4" fill="#f2f1ec"/><circle cx="218" cy="101" r="4" fill="#f2f1ec"/><circle cx="50" cy="128" r="4" fill="#f2f1ec"/><circle cx="84" cy="83" r="4" fill="#f2f1ec"/><circle cx="191" cy="204" r="4" fill="#f2f1ec"/><circle cx="152" cy="165" r="4" fill="#f2f1ec"/><circle cx="228" cy="85" r="4" fill="#f2f1ec"/><circle cx="199" cy="77" r="4" fill="#f2f1ec"/><circle cx="254" cy="177" r="4" fill="#f2f1ec"/><circle cx="121" cy="254" r="4" fill="#f2f1ec"/><circle cx="171" cy="214" r="4" fill="#f2f1ec"/><circle cx="250" cy="121" r="4" fill="#f2f1ec"/><circle cx="167" cy="229" r="4" fill="#f2f1ec"/><circle cx="71" cy="227" r="4" fill="#f2f1ec"/><circle cx="175" cy="160" r="4" fill="#f2f1ec"/><circle cx="137" cy="51" r="4" fill="#f2f1ec"/><circle cx="105" cy="121" r="4" fill="#f2f1ec"/><circle cx="63" cy="187" r="4" fill="#f2f1ec"/><circle cx="97" cy="155" r="4" fill="#f2f1ec"/><circle cx="67" cy="84" r="4" fill="#f2f1ec"/><circle cx="41" cy="158" r="4" fill="#f2f1ec"/><circle cx="166" cy="127" r="4" fill="#f2f1ec"/><circle cx="259" cy="156" r="4" fill="#f2f1ec"/><circle cx="177" cy="203" r="4" fill="#f2f1ec"/><circle cx="68" cy="124" r="4" fill="#f2f1ec"/><circle cx="89" cy="117" r="4" fill="#f2f1ec"/><circle cx="86" cy="61" r="4" fill="#f2f1ec"/><circle cx="93" cy="243" r="4" fill="#f2f1ec"/><circle cx="226" cy="225" r="4" fill="#f2f1ec"/><circle cx="147" cy="219" r="4" fill="#f2f1ec"/><circle cx="191" cy="96" r="4" fill="#f2f1ec"/><circle cx="46" cy="115" r="4" fill="#f2f1ec"/><circle cx="142" cy="166" r="4" fill="#f2f1ec"/><circle cx="106" cy="176" r="4" fill="#f2f1ec"/><circle cx="133" cy="59" r="4" fill="#f2f1ec"/><circle cx="204" cy="153" r="4" fill="#f2f1ec"/></svg>
+      <p style="font-family:Montserrat, Arial, sans-serif; font-size:26px; color:#f2f1ec">Mrak bodů</p>
+    </div>
+    <p style="font-family:Montserrat, Arial, sans-serif; font-size:44px; color:#acaba8">→</p>
+    <div style="display:flex; flex-direction:column; gap:16px; align-items:center">
+      <svg xmlns="http://www.w3.org/2000/svg" aria-label="Hrubá síť z trojúhelníků" viewBox="0 0 300 300" style="width:400px; height:400px"><polygon points="260,150 228,228 150,260 72,228 40,150 72,72 150,40 228,72" fill="#2b2b2d"/><line x1="260" y1="150" x2="228" y2="228" stroke="#f2f1ec" stroke-width="2"/><line x1="228" y1="228" x2="150" y2="260" stroke="#f2f1ec" stroke-width="2"/><line x1="150" y1="260" x2="72" y2="228" stroke="#f2f1ec" stroke-width="2"/><line x1="72" y1="228" x2="40" y2="150" stroke="#f2f1ec" stroke-width="2"/><line x1="40" y1="150" x2="72" y2="72" stroke="#f2f1ec" stroke-width="2"/><line x1="72" y1="72" x2="150" y2="40" stroke="#f2f1ec" stroke-width="2"/><line x1="150" y1="40" x2="228" y2="72" stroke="#f2f1ec" stroke-width="2"/><line x1="228" y1="72" x2="260" y2="150" stroke="#f2f1ec" stroke-width="2"/><line x1="201" y1="171" x2="129" y2="201" stroke="#f2f1ec" stroke-width="2"/><line x1="201" y1="171" x2="260" y2="150" stroke="#f2f1ec" stroke-width="2"/><line x1="201" y1="171" x2="228" y2="228" stroke="#f2f1ec" stroke-width="2"/><line x1="201" y1="171" x2="150" y2="260" stroke="#f2f1ec" stroke-width="2"/><line x1="201" y1="171" x2="228" y2="72" stroke="#f2f1ec" stroke-width="2"/><line x1="129" y1="201" x2="99" y2="129" stroke="#f2f1ec" stroke-width="2"/><line x1="129" y1="201" x2="228" y2="228" stroke="#f2f1ec" stroke-width="2"/><line x1="129" y1="201" x2="150" y2="260" stroke="#f2f1ec" stroke-width="2"/><line x1="129" y1="201" x2="72" y2="228" stroke="#f2f1ec" stroke-width="2"/><line x1="129" y1="201" x2="40" y2="150" stroke="#f2f1ec" stroke-width="2"/><line x1="99" y1="129" x2="171" y2="99" stroke="#f2f1ec" stroke-width="2"/><line x1="99" y1="129" x2="72" y2="228" stroke="#f2f1ec" stroke-width="2"/><line x1="99" y1="129" x2="40" y2="150" stroke="#f2f1ec" stroke-width="2"/><line x1="99" y1="129" x2="72" y2="72" stroke="#f2f1ec" stroke-width="2"/><line x1="99" y1="129" x2="150" y2="40" stroke="#f2f1ec" stroke-width="2"/><line x1="171" y1="99" x2="201" y2="171" stroke="#f2f1ec" stroke-width="2"/><line x1="171" y1="99" x2="260" y2="150" stroke="#f2f1ec" stroke-width="2"/><line x1="171" y1="99" x2="72" y2="72" stroke="#f2f1ec" stroke-width="2"/><line x1="171" y1="99" x2="150" y2="40" stroke="#f2f1ec" stroke-width="2"/><line x1="171" y1="99" x2="228" y2="72" stroke="#f2f1ec" stroke-width="2"/><line x1="201" y1="171" x2="99" y2="129" stroke="#f2f1ec" stroke-width="2"/></svg>
+      <p style="font-family:Montserrat, Arial, sans-serif; font-size:26px; color:#f2f1ec">Hrubá síť (low-poly)</p>
+    </div>
+    <p style="font-family:Montserrat, Arial, sans-serif; font-size:44px; color:#acaba8">→</p>
+    <div style="display:flex; flex-direction:column; gap:16px; align-items:center">
+      <svg xmlns="http://www.w3.org/2000/svg" aria-label="Hladká stínovaná koule" viewBox="0 0 300 300" style="width:400px; height:400px"><defs><radialGradient id="g3d" cx="38%" cy="34%" r="70%"><stop offset="0%" stop-color="#ffffff"/><stop offset="35%" stop-color="#c9c8c3"/><stop offset="75%" stop-color="#4a4a4e"/><stop offset="100%" stop-color="#17171b"/></radialGradient></defs><circle cx="150" cy="150" r="110" fill="url(#g3d)"/></svg>
+      <p style="font-family:Montserrat, Arial, sans-serif; font-size:26px; color:#f2f1ec">Hladký povrch</p>
+    </div>
+  </div>
+  <p style="font-family:Montserrat, Arial, sans-serif; font-size:30px; line-height:1.4; color:#d8d7d2">Z textu nebo fotky vznikne nejdřív hrubá geometrie, pak se zjemní a dostane texturu.</p>
+  <img src="../assets/wx.png" alt="Logo WX" style="position:absolute; right:64px; bottom:52px; width:52px; height:40px; object-fit:contain">
+  
+</section>
+<section id="seed" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;gap:48px;align-items:center">
+<div style="width:520px;display:flex;flex-direction:column;gap:40px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Pojmy</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:120px;font-weight:200;letter-spacing:0.08em;line-height:1">SEED</h2>
+<p style="font-size:32px;line-height:1.35">Číslo, ze kterého vznikne počáteční šum.</p>
+<div style="display:flex;flex-direction:column">
+<p style="font-size:26px;line-height:1.4;border-top:1px solid #2b2b2d;padding:20px 0">Stejný prompt + jiný seed = <b>jiný obrázek</b></p>
+<p style="font-size:26px;line-height:1.4;border-top:1px solid #2b2b2d;border-bottom:1px solid #2b2b2d;padding:20px 0">Stejný prompt + stejný seed = <b>skoro stejný obrázek</b></p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px">
+<img src="../assets/9fc8bd723ec785ad005b740615bbc9bd.webp" alt="Zahalená postava s holí – varianta 1" style="width:520px;height:693px;object-fit:cover;border-radius:16px">
+<p style="font-size:24px;color:#acaba8">Varianta 1</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px">
+<img src="../assets/63263e3279b642c61b33735d01d1bbf5.webp" alt="Zahalená postava s holí – varianta 2" style="width:520px;height:693px;object-fit:cover;border-radius:16px">
+<p style="font-size:24px;color:#acaba8">Varianta 2 – stejný prompt</p>
+</div>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="pojmy" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<img src="../assets/8ce7e6ce5e8117752db5bf1ca0042e54.webp" alt="" style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover">
+<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:rgba(8,8,10,0.72)"></div>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">POJMY</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;column-gap:40px;row-gap:40px">
+<div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #f2f1ec;padding-top:18px"><h3 style="font-size:30px;font-weight:400">Prompt</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.3">Textový popis toho, co chceš vidět</p></div>
+<div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #f2f1ec;padding-top:18px"><h3 style="font-size:30px;font-weight:400">Negativní prompt</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.3">Co v obrázku být nemá</p></div>
+<div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #f2f1ec;padding-top:18px"><h3 style="font-size:30px;font-weight:400">Seed</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.3">Číslo počátečního šumu – opakovatelný výsledek</p></div>
+<div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #f2f1ec;padding-top:18px"><h3 style="font-size:30px;font-weight:400">Poměr stran</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.3">Formát: na výšku, na šířku, čtverec</p></div>
+<div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #f2f1ec;padding-top:18px"><h3 style="font-size:30px;font-weight:400">Kroky</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.3">Kolikrát model ubere šum – víc kroků, víc detailu</p></div>
+<div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #f2f1ec;padding-top:18px"><h3 style="font-size:30px;font-weight:400">Síla promptu</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.3">Jak přesně se model drží zadání (CFG)</p></div>
+<div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #f2f1ec;padding-top:18px"><h3 style="font-size:30px;font-weight:400">Reference stylu</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.3">Převezme styl z jiného obrázku</p></div>
+<div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #f2f1ec;padding-top:18px"><h3 style="font-size:30px;font-weight:400">Model</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.3">Který natrénovaný „mozek“ obrázek kreslí</p></div>
+<div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #f2f1ec;padding-top:18px"><h3 style="font-size:30px;font-weight:400">LoRA</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.3">Malý doplněk, který model doučí styl nebo postavu</p></div>
+<div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #f2f1ec;padding-top:18px"><h3 style="font-size:30px;font-weight:400">Variace</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.3">Nové verze podle vybraného obrázku</p></div>
+<div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #f2f1ec;padding-top:18px"><h3 style="font-size:30px;font-weight:400">Upscale</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.3">Zvětšení obrázku a doplnění detailů</p></div>
+<div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #f2f1ec;padding-top:18px"><h3 style="font-size:30px;font-weight:400">Inpainting</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.3">Překreslí jen vybranou část obrázku</p></div>
+</div>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="formy" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:64px">
+<img src="../assets/5ff9cc008390ada9312c9b08f0a27dab.webp" alt="" style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover">
+<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:rgba(8,8,10,0.7)"></div>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">FORMY AI</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:48px;row-gap:56px">
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #4a4a4e;padding-top:24px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;letter-spacing:0.08em">T2T</p>
+<h3 style="font-size:32px;font-weight:400">Text → text</h3>
+<p style="font-size:24px;color:#d8d7d2">Chat, texty, překlady</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #4a4a4e;padding-top:24px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;letter-spacing:0.08em">I2V</p>
+<h3 style="font-size:32px;font-weight:400">Obrázek → video</h3>
+<p style="font-size:24px;color:#d8d7d2">Rozpohybuje statický obrázek</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #4a4a4e;padding-top:24px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;letter-spacing:0.08em">T2V</p>
+<h3 style="font-size:32px;font-weight:400">Text → video</h3>
+<p style="font-size:24px;color:#d8d7d2">Krátké klipy z popisu</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #4a4a4e;padding-top:24px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;letter-spacing:0.08em">TTS</p>
+<h3 style="font-size:32px;font-weight:400">Text → řeč</h3>
+<p style="font-size:24px;color:#d8d7d2">Namluví text syntetickým hlasem</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #4a4a4e;padding-top:24px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;letter-spacing:0.08em">T2M</p>
+<h3 style="font-size:32px;font-weight:400">Text → hudba</h3>
+<p style="font-size:24px;color:#d8d7d2">Celé písně i se zpěvem</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #4a4a4e;padding-top:24px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;letter-spacing:0.08em">T2-3D</p>
+<h3 style="font-size:32px;font-weight:400">Text → 3D model</h3>
+<p style="font-size:24px;color:#d8d7d2">Modely pro hry, animace a tisk</p>
+</div>
+</div>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="prompt-anatomie" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<img src="../assets/0044b1f031ae28dc893426ef93cab08c.webp" alt="" style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover">
+<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:rgba(8,8,10,0.76)"></div>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">ANATOMIE PROMPTU</h2>
+<div style="display:flex;flex-direction:column">
+<div style="display:flex;gap:48px;align-items:baseline;border-top:1px solid #4a4a4e;padding:26px 0">
+<h3 style="width:400px;font-size:40px;font-weight:400">Subjekt</h3>
+<p style="flex:1;font-size:28px;color:#d8d7d2;line-height:1.4">Kdo nebo co, jak vypadá, co dělá: „starý rybář s šedivými vousy drží síť“</p>
+</div>
+<div style="display:flex;gap:48px;align-items:baseline;border-top:1px solid #4a4a4e;padding:26px 0">
+<h3 style="width:400px;font-size:40px;font-weight:400">Pozadí</h3>
+<p style="flex:1;font-size:28px;color:#d8d7d2;line-height:1.4">Kde to je: „mlhavý přístav brzy ráno“</p>
+</div>
+<div style="display:flex;gap:48px;align-items:baseline;border-top:1px solid #4a4a4e;padding:26px 0">
+<h3 style="width:400px;font-size:40px;font-weight:400">Detaily</h3>
+<p style="flex:1;font-size:28px;color:#d8d7d2;line-height:1.4">Materiály a drobnosti: „mokrá vlněná čepice, rezavé háčky“</p>
+</div>
+<div style="display:flex;gap:48px;align-items:baseline;border-top:1px solid #4a4a4e;padding:26px 0">
+<h3 style="width:400px;font-size:40px;font-weight:400">Systém</h3>
+<p style="flex:1;font-size:28px;color:#d8d7d2;line-height:1.4">Styl, světlo, fotoaparát: „fotorealistické, měkké boční světlo, 85mm objektiv“</p>
+</div>
+<div style="display:flex;gap:48px;align-items:baseline;border-top:1px solid #4a4a4e;border-bottom:1px solid #4a4a4e;padding:26px 0">
+<h3 style="width:400px;font-size:40px;font-weight:400">Negace</h3>
+<p style="flex:1;font-size:28px;color:#d8d7d2;line-height:1.4">Co tam nechceš: „bez textu, bez vodoznaku, bez rozmazání“</p>
+</div>
+</div>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="prompt-obraz" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;gap:56px;align-items:stretch">
+<div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:48px">
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">ROZBOR PROMPTU</h2>
+<div style="display:flex;flex-direction:row;flex-wrap:wrap;gap:10px;align-items:center">
+<p style="font-size:28px;line-height:1.3;border:2px solid #f2f1ec;border-radius:8px;padding:4px 10px">photorealistic</p>
+<p style="font-size:28px;line-height:1.3;border:2px solid #f2f1ec;border-radius:8px;padding:4px 10px">portrait</p>
+<p style="font-size:28px;line-height:1.3;color:#acaba8;padding:4px 0">of a</p>
+<p style="font-size:28px;line-height:1.3;border:2px solid #f2f1ec;border-radius:8px;padding:4px 10px">shrouded figure,</p>
+<p style="font-size:28px;line-height:1.3;color:#acaba8;padding:4px 0">the entire body wrapped in</p>
+<p style="font-size:28px;line-height:1.3;border:2px solid #f2f1ec;border-radius:8px;padding:4px 10px">layers of white scarves and sheets,</p>
+<p style="font-size:28px;line-height:1.3;color:#acaba8;padding:4px 0">one hand reaching out</p>
+<p style="font-size:28px;line-height:1.3;color:#acaba8;padding:4px 0">from the white fabric,</p>
+<p style="font-size:28px;line-height:1.3;color:#acaba8;padding:4px 0">its skin covered in</p>
+<p style="font-size:28px;line-height:1.3;border:2px solid #f2f1ec;border-radius:8px;padding:4px 10px">black and red blisters,</p>
+<p style="font-size:28px;line-height:1.3;color:#acaba8;padding:4px 0">the hand gripping</p>
+<p style="font-size:28px;line-height:1.3;color:#acaba8;padding:4px 0">a silver lance,</p>
+<p style="font-size:28px;line-height:1.3;border:2px solid #f2f1ec;border-radius:8px;padding:4px 10px">a solid rod of pure polished silver metal</p>
+<p style="font-size:28px;line-height:1.3;border:2px solid #f2f1ec;border-radius:8px;padding:4px 10px">with no detail,</p>
+<p style="font-size:28px;line-height:1.3;color:#acaba8;padding:4px 0">metallic finish,</p>
+<p style="font-size:28px;line-height:1.3;border:2px solid #f2f1ec;border-radius:8px;padding:4px 10px">the face completely covered</p>
+<p style="font-size:28px;line-height:1.3;color:#acaba8;padding:4px 0">by the white sheets</p>
+<p style="font-size:28px;line-height:1.3;color:#acaba8;padding:4px 0">with only a few drops of blood</p>
+<p style="font-size:28px;line-height:1.3;color:#acaba8;padding:4px 0">on the area of the face,</p>
+<p style="font-size:28px;line-height:1.3;border:2px solid #f2f1ec;border-radius:8px;padding:4px 10px">solid sky blue background,</p>
+<p style="font-size:28px;line-height:1.3;border:2px solid #f2f1ec;border-radius:8px;padding:4px 10px">hyper realistic,</p>
+<p style="font-size:28px;line-height:1.3;border:2px solid #f2f1ec;border-radius:8px;padding:4px 10px">microdetails,</p>
+<p style="font-size:28px;line-height:1.3;border:2px solid #f2f1ec;border-radius:8px;padding:4px 10px">professional studio lighting,</p>
+<p style="font-size:28px;line-height:1.3;border:2px solid #f2f1ec;border-radius:8px;padding:4px 10px">faint film grain,</p>
+<p style="font-size:28px;line-height:1.3;border:2px solid #f2f1ec;border-radius:8px;padding:4px 10px">ethereal glow,</p>
+<p style="font-size:28px;line-height:1.3;border:2px solid #f2f1ec;border-radius:8px;padding:4px 10px">shot on Nikon Z5,</p>
+<p style="font-size:28px;line-height:1.3;border:2px solid #f2f1ec;border-radius:8px;padding:4px 10px">175mm lens</p>
+</div>
+</div>
+<img src="../assets/63263e3279b642c61b33735d01d1bbf5.webp" alt="Fotorealistický portrét postavy zahalené do bílých šátků, ruka s puchýři drží stříbrnou kopí, modré pozadí" style="width:560px;height:824px;object-fit:cover;border-radius:16px">
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="galerie" data-transition="fade" style="display:flex; flex-direction:column; gap:56px; padding:128px; background:#08080a">
+  <h2 style="font-family:'Josefin Sans', Arial, sans-serif; font-size:96px; font-weight:200; line-height:1; letter-spacing:7.7px; color:#f2f1ec">STYL JE V PROMPTU</h2>
+  <div style="display:flex; flex-direction:row; gap:26px; align-items:start">
+    <div style="width:312px; display:flex; flex-direction:column; gap:16px">
+      <img src="../assets/91f99223cc57d6200a7db9053906422b.webp" alt="Vitrážová mozaika s okřídlenou postavou" style="width:312px; height:416px; border-radius:16px">
+      <h3 style="font-family:Montserrat, Arial, sans-serif; font-size:28px; font-weight:400; color:#f2f1ec">Fantasi</h3>
+      <p style="font-family:Montserrat, Arial, sans-serif; font-size:24px; line-height:1.3; color:#acaba8">„a dreamy mansion...“</p>
+    </div>
+    <div style="width:312px; display:flex; flex-direction:column; gap:16px">
+      <img src="../assets/13222d59b92168dc62b72c0ce8981c5a.webp" alt="Jezdec na koni ve stylu středověké iluminace" style="width:312px; height:416px; border-radius:16px">
+      <h3 style="font-family:Montserrat, Arial, sans-serif; font-size:28px; font-weight:400; color:#f2f1ec">Středověký rukopis</h3>
+      <p style="font-family:Montserrat, Arial, sans-serif; font-size:24px; line-height:1.3; color:#acaba8">„13th-century manuscript illumination…“</p>
+    </div>
+    <div style="width:312px; display:flex; flex-direction:column; gap:16px">
+      <img src="../assets/c3be9b7263725a085e4d0ab3df0f6783.webp" alt="Anime dívka mezi okvětními lístky" style="width:312px; height:416px; border-radius:16px">
+      <h3 style="font-family:Montserrat, Arial, sans-serif; font-size:28px; font-weight:400; color:#f2f1ec">Anime</h3>
+      <p style="font-family:Montserrat, Arial, sans-serif; font-size:24px; line-height:1.3; color:#acaba8">styl z referenčního obrázku</p>
+    </div>
+    <div style="width:312px; display:flex; flex-direction:column; gap:16px">
+      <img src="../assets/75591c3e6553dc1e6ae9ab21ad1c074a.webp" alt="Módní fotka v interiéru ze 70. let" style="width:312px; height:416px; border-radius:16px">
+      <h3 style="font-family:Montserrat, Arial, sans-serif; font-size:28px; font-weight:400; color:#f2f1ec">Módní foto</h3>
+      <p style="font-family:Montserrat, Arial, sans-serif; font-size:24px; line-height:1.3; color:#acaba8">„fashion photoshoot in a 1970s…“</p>
+    </div>
+    <div style="width:312px; display:flex; flex-direction:column; gap:16px">
+      <img src="../assets/12925f55b44809b57f61eb391e2570dc.webp" alt="Abstraktní průsvitné organické tvary" style="width:312px; height:416px; border-radius:16px">
+      <h3 style="font-family:Montserrat, Arial, sans-serif; font-size:28px; font-weight:400; color:#f2f1ec">Abstrakce</h3>
+      <p style="font-family:Montserrat, Arial, sans-serif; font-size:24px; line-height:1.3; color:#acaba8">„abstract art composition…“</p>
+    </div>
+  </div>
+  <img src="../assets/wx.png" alt="Logo WX" style="position:absolute; right:64px; bottom:52px; width:52px; height:40px; object-fit:contain">
+  
+</section>
+<section id="techniky" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<img src="../assets/0bce336f1b6c0d018a4c2828281b767d.webp" alt="" style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover">
+<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:rgba(8,8,10,0.76)"></div>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">CO SI ODNÉST</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:56px;row-gap:56px">
+<div style="display:flex;flex-direction:column;gap:14px;border-top:1px solid #f2f1ec;padding-top:20px"><h3 style="font-size:32px;font-weight:400">Subjekt hned na začátek</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.35"><i>„portrait of a shrouded figure“</i></p></div>
+<div style="display:flex;flex-direction:column;gap:14px;border-top:1px solid #f2f1ec;padding-top:20px"><h3 style="font-size:32px;font-weight:400">Materiál konkrétně</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.35"><i>„pure polished silver metal with no detail“</i></p></div>
+<div style="display:flex;flex-direction:column;gap:14px;border-top:1px solid #f2f1ec;padding-top:20px"><h3 style="font-size:32px;font-weight:400">Co skrýt, řekni výslovně</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.35"><i>„the face completely covered“</i></p></div>
+<div style="display:flex;flex-direction:column;gap:14px;border-top:1px solid #f2f1ec;padding-top:20px"><h3 style="font-size:32px;font-weight:400">Jednoduché pozadí</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.35"><i>„solid sky blue background“</i></p></div>
+<div style="display:flex;flex-direction:column;gap:14px;border-top:1px solid #f2f1ec;padding-top:20px"><h3 style="font-size:32px;font-weight:400">Světlo a atmosféra</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.35"><i>„studio lighting, film grain, ethereal glow“</i></p></div>
+<div style="display:flex;flex-direction:column;gap:14px;border-top:1px solid #f2f1ec;padding-top:20px"><h3 style="font-size:32px;font-weight:400">Fotoaparát a objektiv</h3><p style="font-size:24px;color:#d8d7d2;line-height:1.35"><i>„shot on Nikon Z5, 175mm lens“</i></p></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-left:2px solid #f2f1ec;padding-left:28px;width:1400px">
+<p style="font-size:52px;line-height:1.25"><i>„Není nic horšího než ostrý obraz neostré myšlenky.“</i></p>
+<p style="font-size:26px;color:#d8d7d2;line-height:1.4">— Ansel Adams, fotograf</p>
+</div>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="leonardo" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<img src="../assets/e630686632fa7d950cc25e2b6015048e.webp" alt="" style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover">
+<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:linear-gradient(90deg, rgba(8,8,10,0.9) 0%, rgba(8,8,10,0.7) 60%, rgba(8,8,10,0.35) 100%)"></div>
+<p style="font-size:24px;font-weight:500;color:#d8d7d2">Zkuste si to</p>
+<h2 style="font-size:120px;font-weight:400;line-height:1"><a href="https://leonardo.ai" style="color:#f2f1ec">leonardo.ai</a></h2>
+<p style="font-size:30px;color:#d8d7d2;line-height:1.4">Zdarma: denní příděl tokenů (cca 150), který stačí na první pokusy.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;column-gap:40px">
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #f2f1ec;padding-top:24px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200">1</p>
+<p style="font-size:28px;line-height:1.35">Přihlas se přes Google účet</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #f2f1ec;padding-top:24px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200">2</p>
+<p style="font-size:28px;line-height:1.35">Otevři generování obrázků</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #f2f1ec;padding-top:24px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200">3</p>
+<p style="font-size:28px;line-height:1.35">Napiš prompt, vyber styl a poměr stran</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #f2f1ec;padding-top:24px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200">4</p>
+<p style="font-size:28px;line-height:1.35">Generuj, porovnej a uprav</p>
+</div>
+</div>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="zaver" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:flex-end;gap:40px">
+<img src="../assets/0befd0c6caebea9b5764a1a2b4d7bf59.webp" alt="" style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover">
+<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:linear-gradient(0deg, rgba(8,8,10,0.92) 0%, rgba(8,8,10,0.45) 55%, rgba(8,8,10,0.05) 100%)"></div>
+<img src="../assets/wx.png" alt="Logo WX" style="width:105px;height:80px;object-fit:contain">
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:168px;font-weight:200;letter-spacing:0.08em;line-height:1">DÍKY</h2>
+<p style="font-size:44px;font-weight:400;color:#d8d7d2">Otázky?</p>
+
+</section>
+</div></div>
+<div id="ui">
+ <a href="../"><span class="arr">&larr;</span> Školení</a>
+ <span class="sp"></span>
+ <button id="prev" aria-label="Předchozí"><span class="arr">&larr;</span></button>
+ <span class="n" id="n"></span>
+ <button id="next" aria-label="Další"><span class="arr">&rarr;</span></button>
+ <button id="fs" aria-label="Celá obrazovka">⛶</button>
+</div>
+<script>
+const deck=document.getElementById('deck'),S=[...deck.children],N=S.length;let i=0;
+function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);deck.style.transform='scale('+s+')'}
+function go(k){i=Math.max(0,Math.min(N-1,k));S.forEach((s,j)=>s.classList.toggle('on',j===i));document.getElementById('n').textContent=(i+1)+' / '+N;document.getElementById('bar').style.width=((i+1)/N*100)+'%';history.replaceState(null,'','#'+(i+1))}
+addEventListener('resize',fit);fit();
+go((parseInt(location.hash.slice(1))||1)-1);
+addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();go(i+1)}else if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){e.preventDefault();go(i-1)}else if(e.key==='Home')go(0);else if(e.key==='End')go(N-1);else if(e.key==='f'||e.key==='F')fs()});
+document.getElementById('stage').addEventListener('click',e=>{if(e.target.closest('a'))return;go(e.clientX<innerWidth*.3?i-1:i+1)});
+document.getElementById('prev').onclick=()=>go(i-1);document.getElementById('next').onclick=()=>go(i+1);
+function fs(){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()}
+document.getElementById('fs').onclick=fs;
+let x0=null;addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});addEventListener('touchend',e=>{if(x0===null)return;const d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>50)go(d<0?i+1:i-1);x0=null});
+const ui=document.getElementById('ui');let t;function wake(){ui.classList.remove('idle');clearTimeout(t);t=setTimeout(()=>ui.classList.add('idle'),2500)}addEventListener('mousemove',wake);addEventListener('touchstart',wake,{passive:true});wake();
+</script>
+</body></html>
