@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gallery — woffx</title>
+<style>
+*{box-sizing:border-box;margin:0}
+body{background:#0b0b0c;color:#e8e6e3;font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:48px 20px 28px;text-align:center}
+h1{font-weight:500;letter-spacing:.3em;text-transform:uppercase;font-size:14px;color:#9a9690}
+.grid{columns:4 280px;column-gap:10px;padding:0 10px 40px;max-width:1800px;margin:auto}
+.grid a{display:block;margin-bottom:10px;break-inside:avoid;overflow:hidden;border-radius:4px;background:#161618;cursor:zoom-in}
+.grid img{width:100%;height:auto;display:block;transition:transform .5s,opacity .5s;opacity:0}
+.grid img.on{opacity:1}
+.grid a:hover img{transform:scale(1.03)}
+#lb{position:fixed;inset:0;background:rgba(0,0,0,.94);display:none;align-items:center;justify-content:center;z-index:9}
+#lb.open{display:flex}
+#lb img{max-width:94vw;max-height:92vh;object-fit:contain}
+#lb button{position:absolute;background:none;border:0;color:#fff;font-size:34px;padding:16px;cursor:pointer;opacity:.6}
+#lb button:hover{opacity:1}
+#x{top:6px;right:10px}#p{left:6px;top:50%;transform:translateY(-50%)}#n{right:6px;top:50%;transform:translateY(-50%)}
+footer{text-align:center;padding:20px;color:#5c5a57;font-size:12px}
+</style></head><body>
+<header><h1>Gallery</h1></header>
+<main class="grid" id="g"></main>
+<div id="lb"><button id="x" aria-label="Zavřít">&times;</button><button id="p" aria-label="Předchozí">&#8249;</button><img alt=""><button id="n" aria-label="Další">&#8250;</button></div>
+<footer>&copy; woffx</footer>
+<script>
+const D=[["01.webp", 1024, 1024], ["02.webp", 1024, 1024], ["03.webp", 1024, 1024], ["04.webp", 1024, 1024], ["05.webp", 1024, 1024], ["06.webp", 1024, 1024], ["07.webp", 1024, 1024], ["08.webp", 1024, 1024], ["09.webp", 1024, 1024], ["10.webp", 1024, 1024], ["11.webp", 1456, 816], ["12.webp", 816, 1456], ["13.webp", 1456, 816], ["14.webp", 1456, 816], ["15.webp", 816, 1456], ["16.webp", 816, 1456], ["17.webp", 816, 1456], ["18.webp", 816, 1456], ["19.webp", 1456, 816], ["20.webp", 1456, 816], ["21.webp", 1456, 816], ["22.webp", 1456, 816], ["23.webp", 1456, 816], ["24.webp", 1456, 816], ["25.webp", 816, 1456], ["26.webp", 1456, 816], ["27.webp", 1456, 816], ["28.webp", 928, 1232], ["29.webp", 928, 1232], ["30.webp", 1456, 816], ["31.webp", 1456, 816], ["32.webp", 928, 1232], ["33.webp", 1456, 816], ["34.webp", 1344, 896], ["35.webp", 928, 1232], ["36.webp", 1232, 928], ["37.webp", 1232, 928], ["38.webp", 1232, 928]],g=document.getElementById('g'),lb=document.getElementById('lb'),li=lb.querySelector('img');let c=0;
+D.forEach(([f,w,h],i)=>{const a=document.createElement('a');a.href='img/'+f;const im=new Image();im.loading='lazy';im.width=w;im.height=h;im.alt='';im.onload=()=>im.classList.add('on');im.src='thumb/'+f;a.append(im);a.onclick=e=>{e.preventDefault();show(i)};g.append(a)});
+function show(i){c=(i+D.length)%D.length;li.src='img/'+D[c][0];lb.classList.add('open')}
+function close(){lb.classList.remove('open');li.src=''}
+x.onclick=close;p.onclick=e=>{e.stopPropagation();show(c-1)};n.onclick=e=>{e.stopPropagation();show(c+1)};
+lb.onclick=e=>{if(e.target===lb)close()};
+addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;if(e.key=='Escape')close();if(e.key=='ArrowLeft')show(c-1);if(e.key=='ArrowRight')show(c+1)});
+let sx=0;lb.addEventListener('touchstart',e=>sx=e.touches[0].clientX);lb.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>50)show(c+(d<0?1:-1))});
+</script></body></html>
