@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI v kanceláři | woffx</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;height:100%;background:#08080a;overflow:hidden;-webkit-font-smoothing:antialiased}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;cursor:pointer;touch-action:pan-y}
+#deck{position:relative;width:1920px;height:1080px;flex:none;transform-origin:center center}
+#deck>section{position:absolute;left:0;top:0;width:1920px;height:1080px;box-sizing:border-box;overflow:hidden;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+#deck>section.on{opacity:1;visibility:visible}
+#deck section *{box-sizing:border-box;margin:0}
+#deck>section>*{position:relative}
+#deck section h1,#deck section h2,#deck section h3{font-weight:400}
+#deck section a{cursor:pointer}
+#deck table{border-collapse:collapse;width:100%}
+#deck th,#deck td{padding:.35em .6em;border-bottom:1px solid #2b2b2d;vertical-align:top;text-align:left;line-height:1.35}
+#deck th{border-bottom:1px solid #4a4a4e}
+#ui{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:18px;padding:14px 20px;font:500 14px Montserrat,system-ui,sans-serif;color:#f2f1ec;background:linear-gradient(0deg,rgba(8,8,10,.85),rgba(8,8,10,0));transition:opacity .4s;z-index:5}
+#ui.idle{opacity:0}
+#ui a,#ui button{color:#f2f1ec;text-decoration:none;background:none;border:1px solid #ffffff24;border-radius:999px;padding:7px 14px;font:inherit;cursor:pointer;backdrop-filter:blur(14px)}
+#ui a:hover,#ui button:hover{border-color:#ffffff60}
+#ui .sp{flex:1}
+#ui .n{color:#acaba8;min-width:64px;text-align:center;font-variant-numeric:tabular-nums}
+#bar{position:fixed;left:0;top:0;height:2px;background:#f2f1ec;transition:width .35s;z-index:6}
+.arr{font-family:system-ui}
+</style></head><body>
+<div id="bar"></div>
+<div id="stage"><div id="deck">
+<section id="cover" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:flex-end;gap:40px">
+<img src="../assets/121ddf23ccd26215451fd423bba7f1a2.webp" alt="" style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover">
+<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:linear-gradient(0deg, rgba(8,8,10,0.95) 0%, rgba(8,8,10,0.6) 55%, rgba(8,8,10,0.25) 100%)"></div>
+<img src="../assets/wx.png" alt="Logo WX" style="width:157px;height:120px;object-fit:contain">
+<h1 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:168px;font-weight:200;letter-spacing:0.08em;line-height:1">AI V KANCELÁŘI</h1>
+<p style="font-size:44px;font-weight:400;color:#d8d7d2;line-height:1.3;width:1300px">Co uleví, co zklame a co se stane bez jediného kliknutí</p>
+<hr style="border:none;border-top:1px solid #4a4a4e;width:1300px">
+<p style="font-size:24px;font-weight:400;color:#f2f1ec">Školení pro kancelář a administrativu · 90 minut</p>
+
+</section>
+<section id="plan" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">PROGRAM</h2>
+<div style="display:flex;flex-direction:column">
+<div style="display:flex;gap:40px;align-items:baseline;border-top:1px solid #4a4a4e;padding:18px 0">
+<p style="width:72px;font-family:'Josefin Sans', Arial, sans-serif;font-size:44px;font-weight:200;color:#acaba8">01</p>
+<p style="width:620px;font-size:32px">Jak jazykový model funguje</p>
+<p style="flex:1;font-size:24px;color:#acaba8">Principy, na kterých stojí každé rozhodnutí o AI.</p>
+<p style="width:120px;font-size:24px;color:#acaba8;text-align:right">18 min</p>
+</div>
+<div style="display:flex;gap:40px;align-items:baseline;border-top:1px solid #2b2b2d;padding:18px 0">
+<p style="width:72px;font-family:'Josefin Sans', Arial, sans-serif;font-size:44px;font-weight:200;color:#acaba8">02</p>
+<p style="width:620px;font-size:32px">Copilot v praxi</p>
+<p style="flex:1;font-size:24px;color:#acaba8">Živě, na úkolech z běžné kancelářské agendy.</p>
+<p style="width:120px;font-size:24px;color:#acaba8;text-align:right">20 min</p>
+</div>
+<div style="display:flex;gap:40px;align-items:baseline;border-top:1px solid #2b2b2d;padding:18px 0">
+<p style="width:72px;font-family:'Josefin Sans', Arial, sans-serif;font-size:44px;font-weight:200;color:#acaba8">03</p>
+<p style="width:620px;font-size:32px">Kde to selže a kdy zůstat doma</p>
+<p style="flex:1;font-size:24px;color:#acaba8">Limity, které vám dodavatelé sami neřeknou.</p>
+<p style="width:120px;font-size:24px;color:#acaba8;text-align:right">10 min</p>
+</div>
+<div style="display:flex;gap:40px;align-items:baseline;border-top:1px solid #2b2b2d;padding:18px 0">
+<p style="width:72px;font-family:'Josefin Sans', Arial, sans-serif;font-size:44px;font-weight:200;color:#acaba8">04</p>
+<p style="width:620px;font-size:32px">Asistent, workflow, agent</p>
+<p style="flex:1;font-size:24px;color:#acaba8">Tři věci, kterým se říká AI. Rozdíl rozhoduje o penězích.</p>
+<p style="width:120px;font-size:24px;color:#acaba8;text-align:right">12 min</p>
+</div>
+<div style="display:flex;gap:40px;align-items:baseline;border-top:1px solid #2b2b2d;padding:18px 0">
+<p style="width:72px;font-family:'Josefin Sans', Arial, sans-serif;font-size:44px;font-weight:200;color:#acaba8">05</p>
+<p style="width:620px;font-size:32px">Co se děje bez kliknutí</p>
+<p style="flex:1;font-size:24px;color:#acaba8">Živá ukázka automatizace, která běží sama.</p>
+<p style="width:120px;font-size:24px;color:#acaba8;text-align:right">15 min</p>
+</div>
+<div style="display:flex;gap:40px;align-items:baseline;border-top:1px solid #2b2b2d;border-bottom:1px solid #2b2b2d;padding:18px 0">
+<p style="width:72px;font-family:'Josefin Sans', Arial, sans-serif;font-size:44px;font-weight:200;color:#acaba8">06</p>
+<p style="width:620px;font-size:32px">Jak poznat dobré nasazení</p>
+<p style="flex:1;font-size:24px;color:#acaba8">Pět kritérií a otázky.</p>
+<p style="width:120px;font-size:24px;color:#acaba8;text-align:right">10 min</p>
+</div>
+</div>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="jak-funguje" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Jak to funguje</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">MODEL NENÍ VYHLEDÁVAČ</h2>
+</div>
+<p style="font-size:32px;line-height:1.4;width:1400px">Je to stroj, který doplňuje text. Nezná fakta, zná, jak fakta obvykle znějí.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #4a4a4e;padding-top:28px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;line-height:1">01</p>
+<h3 style="font-size:32px;font-weight:400">Nehledá, skládá</h3>
+<p style="font-size:24px;line-height:1.45;color:#acaba8">Odpověď nevytáhne z databáze. Píše ji slovo po slově tak, aby zněla správně. Většinou správná i je. To „většinou“ je celý dnešek.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #4a4a4e;padding-top:28px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;line-height:1">02</p>
+<h3 style="font-size:32px;font-weight:400">Nemá nic, co mu nedáte</h3>
+<p style="font-size:24px;line-height:1.45;color:#acaba8">Neví, co leží ve vašich složkách, co psal klient minulý týden, ani co stojí v poslední výzvě. Dokud mu to nedáte.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #4a4a4e;padding-top:28px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;line-height:1">03</p>
+<h3 style="font-size:32px;font-weight:400">Stroj na formu, ne na pravdu</h3>
+<p style="font-size:24px;line-height:1.45;color:#acaba8">Silný v tvaru textu: shrnout, přeformulovat, roztřídit, přeložit. Slabý tam, kde jde o ověřitelný údaj.</p>
+</div>
+</div>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="dve-odpovedi" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Ukázka</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">STEJNÁ OTÁZKA, DVĚ ODPOVĚDI</h2>
+</div>
+<p style="font-size:32px;line-height:1.4">„Do kdy se podávají žádosti do aktuální dotační výzvy?“</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;column-gap:64px">
+<div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #4a4a4e;padding-top:28px">
+<h3 style="font-size:32px;font-weight:400">A · Bez podkladu</h3>
+<p style="font-size:24px;line-height:1.45;color:#acaba8">Model odpoví a uvede datum. Bude znít naprosto jistě. A klidně si ho vymyslí: nezná dnešek a k textu výzvy nemá přístup, tak dopoví, co je pravděpodobné.</p>
+<p style="font-size:24px;color:#f2f1ec">Riziko, které stojí termín</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #4a4a4e;padding-top:28px">
+<h3 style="font-size:32px;font-weight:400">B · S přiloženým PDF výzvy</h3>
+<p style="font-size:24px;line-height:1.45;color:#acaba8">Stejná otázka, jen s nahraným dokumentem. Teď odpovídá z dokumentu, ne z paměti. A zvládne i to, co byste hledali půl hodiny: pro koho je, co je způsobilý výdaj, jaké přílohy chce.</p>
+<p style="font-size:24px;color:#f2f1ec">Použitelný nástroj</p>
+</div>
+</div>
+<p style="font-size:32px;line-height:1.4;border:2px solid #f2f1ec;border-radius:8px;padding:20px 28px">Ptát se na fakta zpaměti je loterie. Ptát se nad přiloženým dokumentem je práce.</p>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="data" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Data</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">KUDY TEČOU PODKLADY</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;column-gap:64px">
+<div style="display:flex;flex-direction:column;gap:20px;border-top:1px solid #4a4a4e;padding-top:28px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Model běží u dodavatele · Copilot, ChatGPT</p>
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:44px;font-weight:200;letter-spacing:0.08em">VY → SERVER DODAVATELE</p>
+<p style="font-size:24px;line-height:1.45;color:#acaba8">U firemních licencí obvykle platí, že se na vašich datech netrénuje. Ale odejdou. S tím se pracuje, nastavením se to nevyřeší.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px;border-top:1px solid #4a4a4e;padding-top:28px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Model běží u vás · Ollama</p>
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:44px;font-weight:200;letter-spacing:0.08em">VY → VÁŠ POČÍTAČ</p>
+<p style="font-size:24px;line-height:1.45;color:#acaba8">Nic neopustí zařízení. Žádný účet, žádný přenos, žádná třetí strana. Za cenu nižšího výkonu a vlastní správy.</p>
+</div>
+</div>
+<p style="font-size:32px;line-height:1.4;width:1400px">Neptejte se, jestli je AI bezpečná. Ptejte se, <span style="color:#f2f1ec">který podklad smí opustit vaši budovu.</span></p>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="tridy" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:44px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Pravidlo, které přežije dnešek</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">TŘI TŘÍDY PODKLADŮ</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #4a4a4e;padding-top:24px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;line-height:1">A</p>
+<h3 style="font-size:32px;font-weight:400">Veřejné</h3>
+<p style="font-size:24px;line-height:1.45;color:#acaba8">Tiskové zprávy, web, pozvánky, publikované výstupy. Už venku jsou.</p>
+<p style="font-size:24px;color:#f2f1ec">Kterýkoliv nástroj</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #4a4a4e;padding-top:24px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;line-height:1">B</p>
+<h3 style="font-size:32px;font-weight:400">Interní</h3>
+<p style="font-size:24px;line-height:1.45;color:#acaba8">Zápisy, interní tabulky, koncepty, korespondence. Provozní věci firmy.</p>
+<p style="font-size:24px;color:#f2f1ec">Firemní licence s dohodou o datech</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #4a4a4e;padding-top:24px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;line-height:1">C</p>
+<h3 style="font-size:32px;font-weight:400">Svěřené</h3>
+<p style="font-size:24px;line-height:1.45;color:#acaba8">Cokoliv pod NDA: dokumentace klientů, rozpočty, nabídky před podáním. Není to vaše, je to svěřené.</p>
+<p style="font-size:24px;color:#f2f1ec;border:2px solid #f2f1ec;border-radius:8px;padding:6px 14px">Jen lokálně, nebo vůbec</p>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#d8d7d2;width:1500px">Jeden svěřený podklad ve špatném nástroji je rozhovor s klientem, který nechcete vést. Rozřazení je zadarmo, ten rozhovor ne.</p>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="kde-ano" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Použitelnost</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">KDE ANO A KDE NE</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;column-gap:64px">
+<div style="display:flex;flex-direction:column">
+<h3 style="font-size:32px;font-weight:400;padding-bottom:16px">Spolehněte se</h3>
+<p style="font-size:24px;line-height:1.4;color:#d8d7d2;border-top:1px solid #4a4a4e;padding:14px 0">Shrnout čtyřicetistránkový dokument na jednu stranu</p>
+<p style="font-size:24px;line-height:1.4;color:#d8d7d2;border-top:1px solid #2b2b2d;padding:14px 0">Z přepisu jednání vytáhnout úkoly, jména a termíny</p>
+<p style="font-size:24px;line-height:1.4;color:#d8d7d2;border-top:1px solid #2b2b2d;padding:14px 0">Přepsat poznámky do tiskové zprávy nebo do angličtiny</p>
+<p style="font-size:24px;line-height:1.4;color:#d8d7d2;border-top:1px solid #2b2b2d;padding:14px 0">Vytáhnout údaje z volného textu do tabulky</p>
+<p style="font-size:24px;line-height:1.4;color:#d8d7d2;border-top:1px solid #2b2b2d;border-bottom:1px solid #2b2b2d;padding:14px 0">Roztřídit poštu podle toho, co se s ní má stát</p>
+</div>
+<div style="display:flex;flex-direction:column">
+<h3 style="font-size:32px;font-weight:400;padding-bottom:16px">Ověřujte vždy</h3>
+<p style="font-size:24px;line-height:1.4;color:#d8d7d2;border-top:1px solid #4a4a4e;padding:14px 0">Termíny a čísla zpaměti: vymyslí si je stejně jistě, jako je uvede správně</p>
+<p style="font-size:24px;line-height:1.4;color:#d8d7d2;border-top:1px solid #2b2b2d;padding:14px 0">Počítání: na to je Excel, ne chat</p>
+<p style="font-size:24px;line-height:1.4;color:#d8d7d2;border-top:1px solid #2b2b2d;padding:14px 0">Zdroje a odkazy: umí vyrobit adresu, která neexistuje</p>
+<p style="font-size:24px;line-height:1.4;color:#d8d7d2;border-top:1px solid #2b2b2d;border-bottom:1px solid #2b2b2d;padding:14px 0">Cokoliv, co podepisujete: smluvní a právní texty čte člověk</p>
+</div>
+</div>
+<p style="font-size:32px;line-height:1.4">Draft dělá stroj, podpis dává člověk.</p>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="copilot" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Copilot v praxi</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">TAK DOBRÝ, JAK MÁTE UKLIZENO</h2>
+</div>
+<p style="font-size:32px;line-height:1.4;width:1500px">Model je stejný, jaký znáte odjinud. Síla je v tom, že vidí vaše maily, soubory a schůzky. Když je nemáte v Microsoftu, zbude vám o něco lepší chat.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;column-gap:64px">
+<div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #4a4a4e;padding-top:28px">
+<h3 style="font-size:32px;font-weight:400">Copilot Chat</h3>
+<p style="font-size:24px;font-weight:500;color:#acaba8">v ceně Microsoft 365</p>
+<p style="font-size:24px;line-height:1.45;color:#d8d7d2">Chat uvnitř Microsoftu. Pracuje jen s tím, co mu vložíte. Sám na vaše dokumenty a maily nesáhne.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #4a4a4e;padding-top:28px">
+<h3 style="font-size:32px;font-weight:400">Microsoft 365 Copilot</h3>
+<p style="font-size:24px;font-weight:500;color:#acaba8">placený za uživatele</p>
+<p style="font-size:24px;line-height:1.45;color:#d8d7d2">Přímo ve Wordu, Outlooku a Teams. Vidí, co vidíte vy. Odtud plyne většina užitku i většina rizik.</p>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.4;border:2px solid #f2f1ec;border-radius:8px;padding:18px 26px">Dvě otázky předem: jakou máte licenci a kde reálně leží vaše dokumenty.</p>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="prompty" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Živé ukázky</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">PĚT PROMPTŮ NA ZKOUŠKU</h2>
+</div>
+<div style="display:flex;flex-direction:column">
+<div style="display:flex;gap:40px;align-items:baseline;border-top:1px solid #4a4a4e;padding:16px 0">
+<p style="width:300px;font-size:24px;font-weight:500;color:#acaba8">01 · Outlook · vlákno</p>
+<p style="flex:1;font-size:26px;line-height:1.4">Shrň toto vlákno do pěti bodů a označ, co po nás kdo chce a do kdy. Pak navrhni odpověď: účast potvrzujeme, podklady dodáme do pátku.</p>
+</div>
+<div style="display:flex;gap:40px;align-items:baseline;border-top:1px solid #2b2b2d;padding:16px 0">
+<p style="width:300px;font-size:24px;font-weight:500;color:#acaba8">02 · Teams · jednání</p>
+<p style="flex:1;font-size:26px;line-height:1.4">Z přepisu jednání vytvoř zápis: přijatá rozhodnutí, úkoly s odpovědnou osobou a termínem, otevřené body na příště.</p>
+</div>
+<div style="display:flex;gap:40px;align-items:baseline;border-top:1px solid #2b2b2d;padding:16px 0">
+<p style="width:300px;font-size:24px;font-weight:500;color:#acaba8">03 · Word · poznámky</p>
+<p style="flex:1;font-size:26px;line-height:1.4">Z těchto poznámek napiš tiskovou zprávu, max. jedna normostrana: titulek, perex, tři odstavce. Věcný tón, žádná superlativa.</p>
+</div>
+<div style="display:flex;gap:40px;align-items:baseline;border-top:1px solid #2b2b2d;padding:16px 0">
+<p style="width:300px;font-size:24px;font-weight:500;color:#acaba8">04 · Excel · platby</p>
+<p style="flex:1;font-size:26px;line-height:1.4">Rozděl odběratele podle kategorie a stavu úhrady a udělej přehled, komu chybí platba déle než 30 dní.</p>
+</div>
+<div style="display:flex;gap:40px;align-items:baseline;border-top:1px solid #2b2b2d;border-bottom:1px solid #2b2b2d;padding:16px 0">
+<p style="width:300px;font-size:24px;font-weight:500;color:#acaba8">05 · Vyhledávání</p>
+<p style="flex:1;font-size:26px;line-height:1.4">Najdi náš poslední dokument k projektu [název] a shrň, k čemu jsme se zavázali a co z toho ještě neproběhlo.</p>
+</div>
+</div>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="limity" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Limity</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">KDE TO SELŽE</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:48px;row-gap:40px">
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #4a4a4e;padding-top:22px">
+<h3 style="font-size:28px;font-weight:400;line-height:1.3">Vidí vše, na co máte práva</h3>
+<p style="font-size:24px;line-height:1.45;color:#d8d7d2">Složka sdílená omylem s celým týmem? Copilot ji ochotně použije a nikdo se to nedozví.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #4a4a4e;padding-top:22px">
+<h3 style="font-size:28px;font-weight:400;line-height:1.3">Čeština je slabší</h3>
+<p style="font-size:24px;line-height:1.45;color:#d8d7d2">U formálních textů počítejte s korekturou. Draft ano, finální znění ne.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #4a4a4e;padding-top:22px">
+<h3 style="font-size:28px;font-weight:400;line-height:1.3">Dvakrát stejný dotaz, dvě odpovědi</h3>
+<p style="font-size:24px;line-height:1.45;color:#d8d7d2">Není to chyba, je to vlastnost. Proces bez kontroly na tom nepostavíte.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #4a4a4e;padding-top:22px">
+<h3 style="font-size:28px;font-weight:400;line-height:1.3">Sebejistota není správnost</h3>
+<p style="font-size:24px;line-height:1.45;color:#d8d7d2">Špatné i správné číslo zní stejně. Rozliší je jen kontrola.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #4a4a4e;padding-top:22px">
+<h3 style="font-size:28px;font-weight:400;line-height:1.3">Platí se za každé křeslo</h3>
+<p style="font-size:24px;line-height:1.45;color:#d8d7d2">Licence pro pět lidí je jiná úvaha než pro pět set.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border:2px solid #f2f1ec;border-radius:8px;padding:20px 22px">
+<h3 style="font-size:28px;font-weight:400;line-height:1.3">A hlavně: nezačne sám</h3>
+<p style="font-size:24px;line-height:1.45;color:#d8d7d2">Čeká, až otevřete okno a napíšete. Pondělní přehled vám sám od sebe nepošle. Nikdy.</p>
+</div>
+</div>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="lokalne" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Lokální model · Ollama</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">KDY ZŮSTAT DOMA</h2>
+</div>
+<p style="font-size:30px;line-height:1.4;width:1500px">Lokální model není bezpečnější Copilot. Je to jiný nástroj s jiným kompromisem a má jedno přesné místo: svěřené podklady, třída C.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;column-gap:64px">
+<div style="display:flex;flex-direction:column">
+<h3 style="font-size:32px;font-weight:400;padding-bottom:16px">Kdy ano</h3>
+<p style="font-size:24px;line-height:1.45;color:#d8d7d2;border-top:1px solid #4a4a4e;padding:14px 0">Dokumentace klientů pod NDA, rozpočty, nabídky před podáním</p>
+<p style="font-size:24px;line-height:1.45;color:#d8d7d2;border-top:1px solid #2b2b2d;padding:14px 0">Rutina nad citlivým textem: roztřídit, shrnout, vytáhnout údaje</p>
+<p style="font-size:24px;line-height:1.45;color:#d8d7d2;border-top:1px solid #2b2b2d;border-bottom:1px solid #2b2b2d;padding:14px 0">Fixní náklad místo licence za každého uživatele</p>
+</div>
+<div style="display:flex;flex-direction:column">
+<h3 style="font-size:32px;font-weight:400;padding-bottom:16px">Za cenu čeho</h3>
+<p style="font-size:24px;line-height:1.45;color:#d8d7d2;border-top:1px solid #4a4a4e;padding:14px 0">Výkonný počítač a někdo, kdo ho udržuje. Závazek na správu, ne nákup.</p>
+<p style="font-size:24px;line-height:1.45;color:#d8d7d2;border-top:1px solid #2b2b2d;border-bottom:1px solid #2b2b2d;padding:14px 0">Kvalitou pod špičkovým cloudem. Na třídění a shrnutí stačí, na náročné psaní ne.</p>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.4;border:2px solid #f2f1ec;border-radius:8px;padding:18px 26px">Realisticky: hybrid podle tříd. A a B v cloudu, C doma.</p>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="tri-veci" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Jádro dneška · asistent, workflow, agent</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">TŘI RŮZNÉ VĚCI</h2>
+</div>
+<table style="font-family:'Montserrat', Arial, sans-serif;font-size:24px;color:#d8d7d2">
+<tr><th style="width:22%;color:#acaba8;font-weight:500;text-align:left"></th><th style="width:26%;color:#f2f1ec;font-weight:500;text-align:left">Asistent</th><th style="width:26%;color:#f2f1ec;font-weight:500;text-align:left">Workflow</th><th style="width:26%;color:#f2f1ec;font-weight:500;text-align:left">Agent</th></tr>
+<tr><td style="color:#acaba8">Co to je</td><td>okno, do kterého píšete</td><td>pevná posloupnost kroků</td><td>model, který si kroky volí sám</td></tr>
+<tr><td style="color:#acaba8">Kdo spustí</td><td>vy, pokaždé znovu</td><td>čas nebo událost</td><td>workflow, případně vy</td></tr>
+<tr><td style="color:#acaba8">Výsledek</td><td>pokaždé trochu jinak</td><td>pokaždé stejně</td><td>většinou správně, hlídat</td></tr>
+<tr><td style="color:#acaba8">Příklad</td><td>„přepiš odstavec do angličtiny“</td><td>každé pondělí přehled výzev</td><td>z přihlášky vytěž údaje a založ záznam</td></tr>
+<tr><td style="color:#acaba8">Nástroj</td><td>Copilot, ChatGPT, Claude</td><td>Power Automate, n8n</td><td>n8n s modelem, Copilot Studio</td></tr>
+<tr><td style="color:#acaba8">Co se pokazí</td><td>nikdo to nezkontroluje</td><td>změní se vstup a přestane sedět</td><td>udělá něco jiného, než čekáte</td></tr>
+</table>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="jedna-veta" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:28px">
+<img src="../assets/3dba9482b5c40f0c751adfc42319acc0.webp" alt="" style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover">
+<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:linear-gradient(90deg, rgba(8,8,10,0.9) 0%, rgba(8,8,10,0.65) 55%, rgba(8,8,10,0.35) 100%)"></div>
+<p style="font-size:24px;font-weight:500;color:#d8d7d2">Jedna věta</p>
+<p style="font-size:52px;line-height:1.25;width:1300px">Asistent zrychlí člověka.</p>
+<p style="font-size:52px;line-height:1.25;width:1300px">Workflow ho z úkolu odstraní.</p>
+<p style="font-size:52px;line-height:1.25;width:1300px">Agent je workflow, které si smí rozmyslet, co udělá.</p>
+<hr style="border:none;border-top:1px solid #4a4a4e;width:1300px">
+<p style="font-size:28px;line-height:1.4;color:#d8d7d2;width:1300px">Většina firem zůstane u první věty a myslí si, že nasadila AI. Úspora práce je ve druhé a třetí.</p>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="pravidlo" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Rozhodovací pravidlo</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">ZKUSTE TO NA SVÉM ÚKOLU</h2>
+</div>
+<p style="font-size:30px;line-height:1.4;width:1500px">Vezměte jednu věc, kterou tento týden děláte. Opakuje se? A vypadá vstup pokaždé zhruba stejně?</p>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #4a4a4e;padding-top:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Jednorázově, pokaždé jinak</p>
+<h3 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;letter-spacing:0.08em;line-height:1">ASISTENT</h3>
+<p style="font-size:24px;line-height:1.45;color:#d8d7d2">Otevřete Copilot, popište úkol, zkontrolujte výsledek. Nic nestavějte, nevrátilo by se to.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #4a4a4e;padding-top:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Opakovaně, vstup stejný</p>
+<h3 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;letter-spacing:0.08em;line-height:1">WORKFLOW</h3>
+<p style="font-size:24px;line-height:1.45;color:#d8d7d2">Postaví se jednou, pak běží samo na čas nebo událost. Vy dostanete hotový výstup ke schválení.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #4a4a4e;padding-top:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Opakovaně, vstup pokaždé jiný</p>
+<h3 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;letter-spacing:0.08em;line-height:1">S AGENTEM</h3>
+<p style="font-size:24px;line-height:1.45;color:#d8d7d2">Volný text, různé formáty. Uvnitř rozhoduje model, vy kontrolujete výstup. Dražší a chce dohled.</p>
+</div>
+</div>
+<p style="font-size:26px;line-height:1.4;color:#acaba8">Funguje na každý úkol v kanceláři. A na každou nabídku, kterou vám kdokoliv pošle.</p>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="bez-kliknuti" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:flex-end;gap:32px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Co Copilot neumí</p>
+<p style="font-size:52px;line-height:1.25;width:1500px">Všechno, co jste dosud viděli, začalo tím, že někdo klikl.</p>
+<p style="font-size:52px;line-height:1.25;width:1500px;color:#d8d7d2">Následujících pár minut nikdo klikat nebude.</p>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="pudorys" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:44px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Živá ukázka</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">Z NAHRÁVKY HOTOVÝ ZÁPIS</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;column-gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #f2f1ec;padding-top:24px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;line-height:1">00</p>
+<h3 style="font-size:28px;font-weight:400">Přijde nahrávka</h3>
+<p style="font-size:24px;line-height:1.45;color:#acaba8">Spouští to událost, ne člověk. Přepis je první krok téhož běhu.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #f2f1ec;padding-top:24px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;line-height:1">01</p>
+<h3 style="font-size:28px;font-weight:400">Model vytěží obsah</h3>
+<p style="font-size:24px;line-height:1.45;color:#acaba8">Rozhodnutí, úkoly, odpovědné osoby, termíny.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #f2f1ec;padding-top:24px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;line-height:1">02</p>
+<h3 style="font-size:28px;font-weight:400">Složí se zápis</h3>
+<p style="font-size:24px;line-height:1.45;color:#acaba8">Pevná šablona, pokaždé stejná struktura.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid #f2f1ec;padding-top:24px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;line-height:1">03</p>
+<h3 style="font-size:28px;font-weight:400">Doručí se mailem</h3>
+<p style="font-size:24px;line-height:1.45;color:#acaba8">Ke schválení člověkem, ne rovnou ven.</p>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;column-gap:64px">
+<p style="font-size:26px;line-height:1.45;color:#d8d7d2"><span style="color:#f2f1ec">Nikdo u toho nesedí.</span> Spouští to událost: přišla nahrávka. To je rozdíl mezi asistentem a workflow.</p>
+<p style="font-size:26px;line-height:1.45;color:#d8d7d2"><span style="color:#f2f1ec">Končí to u člověka.</span> Stroj připravil, člověk podepsal. Přesně podle pravidla z úvodu.</p>
+</div>
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:44px;font-weight:200;letter-spacing:0.08em;border:2px solid #f2f1ec;border-radius:8px;padding:16px 28px">UDÁLOST → ZPRACOVÁNÍ → DORUČENÍ → SCHVÁLENÍ</p>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="co-postavit" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Stejný půdorys</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">CO SE DÁ POSTAVIT STEJNĚ</h2>
+</div>
+<table style="font-family:'Montserrat', Arial, sans-serif;font-size:24px;color:#d8d7d2">
+<tr><th style="width:24%;color:#acaba8;font-weight:500;text-align:left">Úloha · spouštěč</th><th style="width:30%;color:#acaba8;font-weight:500;text-align:left">Co udělá samo</th><th style="width:22%;color:#acaba8;font-weight:500;text-align:left">Co doručí</th><th style="width:24%;color:#acaba8;font-weight:500;text-align:left">Kdo rozhodne</th></tr>
+<tr><td style="color:#f2f1ec">Přehled výzev · pondělí ráno</td><td>projde zdroje, vyhodí duplicity, posoudí relevanci</td><td>jeden mail s termíny</td><td>člověk škrtne a přepošle</td></tr>
+<tr><td style="color:#f2f1ec">Newsletter · uzávěrka</td><td>rozešle výzvu, sesbírá příspěvky, urguje, sjednotí tón</td><td>koncept k redakci</td><td>člověk dorediguje a vydá</td></tr>
+<tr><td style="color:#f2f1ec">Pošta · došlý mail</td><td>roztřídí, na opakované dotazy připraví odpověď</td><td>schránku s koncepty</td><td>člověk odesílá, vždy</td></tr>
+<tr><td style="color:#f2f1ec">Dvojjazyčnost · nový text</td><td>přeloží se slovníkem oborových pojmů</td><td>verzi ke korektuře</td><td>člověk projde a publikuje</td></tr>
+<tr><td style="color:#f2f1ec">Splatnosti · nová faktura</td><td>hlídá termíny, připraví podklady</td><td>přehled, kdo dluží</td><td>člověk kontroluje a odesílá</td></tr>
+</table>
+<p style="font-size:26px;line-height:1.4;color:#acaba8">Peníze a osobní údaje se automatizují poslední, až když je půdorys ověřený jinde.</p>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="nasazeni" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Než cokoliv podepíšete</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">JAK POZNAT DOBRÉ NASAZENÍ</h2>
+</div>
+<div style="display:flex;flex-direction:column">
+<div style="display:flex;gap:32px;align-items:baseline;border-top:1px solid #4a4a4e;padding:16px 0">
+<p style="width:72px;font-family:'Josefin Sans', Arial, sans-serif;font-size:44px;font-weight:200">01</p>
+<p style="width:520px;font-size:28px">Malý rozsah, viditelný výstup</p>
+<p style="flex:1;font-size:24px;line-height:1.45;color:#acaba8">Jedna úloha, výsledek, na který se dá ukázat. „Digitalizace agendy“ není rozsah, to je mlha.</p>
+</div>
+<div style="display:flex;gap:32px;align-items:baseline;border-top:1px solid #2b2b2d;padding:16px 0">
+<p style="width:72px;font-family:'Josefin Sans', Arial, sans-serif;font-size:44px;font-weight:200">02</p>
+<p style="width:520px;font-size:28px">Člověk schvaluje</p>
+<p style="flex:1;font-size:24px;line-height:1.45;color:#acaba8">Nic neodchází klientům, úřadům ani do banky bez lidského kliknutí. Odebrat kontrolu jde vždycky, vrátit důvěru ne.</p>
+</div>
+<div style="display:flex;gap:32px;align-items:baseline;border-top:1px solid #2b2b2d;padding:16px 0">
+<p style="width:72px;font-family:'Josefin Sans', Arial, sans-serif;font-size:44px;font-weight:200">03</p>
+<p style="width:520px;font-size:28px">Záznam o každém běhu</p>
+<p style="flex:1;font-size:24px;line-height:1.45;color:#acaba8">Jde dohledat, co se kdy stalo a s jakým vstupem. Bez logu se nedá říct, že to funguje.</p>
+</div>
+<div style="display:flex;gap:32px;align-items:baseline;border-top:1px solid #2b2b2d;padding:16px 0">
+<p style="width:72px;font-family:'Josefin Sans', Arial, sans-serif;font-size:44px;font-weight:200">04</p>
+<p style="width:520px;font-size:28px">Respektuje třídy podkladů</p>
+<p style="flex:1;font-size:24px;line-height:1.45;color:#acaba8">Dodavatel, který se nezeptá, co smí ven, se neptal ani sám sebe.</p>
+</div>
+<div style="display:flex;gap:32px;align-items:baseline;border-top:1px solid #2b2b2d;border-bottom:1px solid #2b2b2d;padding:16px 0">
+<p style="width:72px;font-family:'Josefin Sans', Arial, sans-serif;font-size:44px;font-weight:200">05</p>
+<p style="width:520px;font-size:28px">Odchod bez rukojmí</p>
+<p style="flex:1;font-size:24px;line-height:1.45;color:#acaba8">Data i postup zůstávají vaše. Když spolupráce skončí, workflow předáte jinam, nebo vypnete.</p>
+</div>
+</div>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="souhrn" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-size:24px;font-weight:500;color:#acaba8">Souhrn</p>
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:96px;font-weight:200;letter-spacing:0.08em;line-height:1">CO SI ODNÉST</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #f2f1ec;padding-top:28px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;line-height:1">01</p>
+<h3 style="font-size:32px;font-weight:400">Fakta jen nad dokumentem</h3>
+<p style="font-size:24px;line-height:1.45;color:#acaba8">Zpaměti je to loterie, s přiloženým podkladem práce. Draft dělá stroj, podpis dává člověk.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #f2f1ec;padding-top:28px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;line-height:1">02</p>
+<h3 style="font-size:32px;font-weight:400">Tři třídy podkladů</h3>
+<p style="font-size:24px;line-height:1.45;color:#acaba8">Veřejné kamkoliv, interní do firemní licence, svěřené jen lokálně, nebo vůbec.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;border-top:1px solid #f2f1ec;padding-top:28px">
+<p style="font-family:'Josefin Sans', Arial, sans-serif;font-size:56px;font-weight:200;line-height:1">03</p>
+<h3 style="font-size:32px;font-weight:400">Asistent má strop</h3>
+<p style="font-size:24px;line-height:1.45;color:#acaba8">Zrychlí člověka, ale čeká na kliknutí. Práce mizí tam, kde běží událost → zpracování → doručení → schválení.</p>
+</div>
+</div>
+<img src="../assets/wx.png" alt="Logo WX" style="position:absolute;right:64px;bottom:52px;width:52px;height:40px;object-fit:contain">
+
+</section>
+<section id="zaver" data-transition="fade" style="background:#08080a;color:#f2f1ec;font-family:'Montserrat', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:flex-end;gap:36px">
+<img src="../assets/c285afb39c6522e74b229f424d1622da.webp" alt="" style="position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover">
+<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:linear-gradient(0deg, rgba(8,8,10,0.92) 0%, rgba(8,8,10,0.45) 55%, rgba(8,8,10,0.05) 100%)"></div>
+<img src="../assets/wx.png" alt="Logo WX" style="width:105px;height:80px;object-fit:contain">
+<h2 style="font-family:'Josefin Sans', Arial, sans-serif;font-size:168px;font-weight:200;letter-spacing:0.08em;line-height:1">DÍKY</h2>
+<p style="font-size:44px;font-weight:400;color:#d8d7d2">Otázky?</p>
+<div style="display:flex;gap:40px;flex-wrap:wrap;border-top:1px solid #4a4a4e;padding-top:24px;width:1664px">
+<p style="font-size:24px;color:#d8d7d2">Kolik stojí takový půdorys provozovat?</p>
+<p style="font-size:24px;color:#d8d7d2">Co když dodavatel změní model?</p>
+<p style="font-size:24px;color:#d8d7d2">Můžeme to mít celé u sebe?</p>
+<p style="font-size:24px;color:#d8d7d2">Kdo to bude spravovat?</p>
+</div>
+
+</section>
+</div></div>
+<div id="ui">
+ <a href="../"><span class="arr">&larr;</span> Školení</a>
+ <span class="sp"></span>
+ <button id="prev" aria-label="Předchozí"><span class="arr">&larr;</span></button>
+ <span class="n" id="n"></span>
+ <button id="next" aria-label="Další"><span class="arr">&rarr;</span></button>
+ <button id="fs" aria-label="Celá obrazovka">⛶</button>
+</div>
+<script>
+const deck=document.getElementById('deck'),S=[...deck.children],N=S.length;let i=0;
+function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);deck.style.transform='scale('+s+')'}
+function go(k){i=Math.max(0,Math.min(N-1,k));S.forEach((s,j)=>s.classList.toggle('on',j===i));document.getElementById('n').textContent=(i+1)+' / '+N;document.getElementById('bar').style.width=((i+1)/N*100)+'%';history.replaceState(null,'','#'+(i+1))}
+addEventListener('resize',fit);fit();
+go((parseInt(location.hash.slice(1))||1)-1);
+addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();go(i+1)}else if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){e.preventDefault();go(i-1)}else if(e.key==='Home')go(0);else if(e.key==='End')go(N-1);else if(e.key==='f'||e.key==='F')fs()});
+document.getElementById('stage').addEventListener('click',e=>{if(e.target.closest('a'))return;go(e.clientX<innerWidth*.3?i-1:i+1)});
+document.getElementById('prev').onclick=()=>go(i-1);document.getElementById('next').onclick=()=>go(i+1);
+function fs(){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()}
+document.getElementById('fs').onclick=fs;
+let x0=null;addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});addEventListener('touchend',e=>{if(x0===null)return;const d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>50)go(d<0?i+1:i-1);x0=null});
+const ui=document.getElementById('ui');let t;function wake(){ui.classList.remove('idle');clearTimeout(t);t=setTimeout(()=>ui.classList.add('idle'),2500)}addEventListener('mousemove',wake);addEventListener('touchstart',wake,{passive:true});wake();
+</script>
+</body></html>
